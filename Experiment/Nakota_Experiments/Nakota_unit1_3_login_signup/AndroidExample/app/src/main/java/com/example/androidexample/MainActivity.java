@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_main);
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
