@@ -115,6 +115,29 @@ public class PeopleController {
         return peopleList.get(firstName);
     }
 
+    //Update address based on last name
+    @PutMapping("/people/{firstName}/lastname/{lastname}")
+    public Person updatePersonLname(@PathVariable String firstName, Person p, @PathVariable String lastname) {
+        p = peopleList.get(firstName);
+        p.setLastName(lastname);
+        return peopleList.get(firstName);
+    }
+
+    //Update address based on first name
+    @PutMapping("/people/{firstName}/address/{address}")
+    public Person updatePersonAdd(@PathVariable String firstName, Person p, @PathVariable String address) {
+        p = peopleList.get(firstName);
+        p.setAddress(address);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}/phone/{phone}")
+    public Person updatePersonPhone(@PathVariable String firstName, Person p, @PathVariable String phone) {
+        p = peopleList.get(firstName);
+        p.setAddress(phone);
+        return peopleList.get(firstName);
+    }
+
     // THIS IS THE DELETE OPERATION
     // Springboot gets the PATHVARIABLE from the URL
     // We return the entire list -- converted to JSON
