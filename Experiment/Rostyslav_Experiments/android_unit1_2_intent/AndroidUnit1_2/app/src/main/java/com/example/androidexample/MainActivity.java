@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity
             "ONLINE!!!!!!!!!!"
     };
     private Button randomButton;
+    public Intent intent1 = new Intent(MainActivity.this, Main1Activity.class);
 
 @Override
 protected void onCreate(Bundle savedInstanceState)
@@ -34,14 +35,14 @@ this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 openingMessage = findViewById(R.id.openingMessage);
 openingMessage.setTexts(openingMessageText);
 
-Intent intent = new Intent(MainActivity.this, Main1Activity.class);
 new Timer().schedule(new TimerTask()
 {
     @Override
     public void run() {
-        startActivity(intent);
+        startActivity(intent1);
     }
-}, 20000);
+}, 10000);
+
 
 
 }
