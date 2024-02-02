@@ -25,33 +25,23 @@ public class PeopleController {
     // Springboot system.
     HashMap<String, Person> peopleList = new  HashMap<>();
 
-    //CRUDL (create/read/update/delete/list)
-    // use POST, GET, PUT, DELETE, GET methods for CRUDL
-
-    // THIS IS THE LIST OPERATION
-    // gets all the people in the list and returns it in JSON format
-    // This controller takes no input. 
-    // Springboot automatically converts the list to JSON format 
-    // in this case because of @ResponseBody
-    // Note: To LIST, we use the GET method
     @GetMapping("/people")
     public  HashMap<String,Person> getAllPersons() {
         return peopleList;
     }
 
-    // THIS IS THE CREATE OPERATION
-    // springboot automatically converts JSON input into a person object and 
-    // the method below enters it into the list.
-    // It returns a string message in THIS example.
-    // in this case because of @ResponseBody
-    // Note: To CREATE we use POST method
-    @PostMapping("/people")
-    public  String createPerson(Person person) {
-        System.out.println(person);
-        peopleList.put(person.getFirstName(), person);
-        return "New person "+ person.getFirstName() + " Saved";
-    }
+    /*
+    deleted their postfunction, because it created blank space and I thought that was both
+    bad, and was unsure if it was dangerous to create an empty key value relation.
+     */
 
+    //made post that allows you make a new person with all info
+    @PostMapping("/people/{first_name}/{last_name}/{address}/{telephone}")
+    public String createPerson(@PathVariable String first_name, @PathVariable String last_name, @PathVariable String address, @PathVariable String telephone) {
+        Person p = new Person(first_name, last_name, address, telephone);
+        peopleList.put(p.getFirstName(), p);
+        return "New person "+ p.getFirstName() + " full info saved success.";
+    }
     // THIS IS THE READ OPERATION
     // Springboot gets the PATHVARIABLE from the URL
     // We extract the person from the HashMap.
@@ -76,6 +66,116 @@ public class PeopleController {
         peopleList.replace(firstName, p);
         return peopleList.get(firstName);
     }
+
+    @PutMapping("/people/{firstName}/{lastName}")
+    public Person updatePerson(@PathVariable String firstName,
+                               @PathVariable String lastName, Person p) {
+        p.setLastName(lastName);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}/{lastName}/{address}")
+    public Person updatePerson(@PathVariable String firstName,
+                               @PathVariable String lastName,
+                               @PathVariable String address, Person p) {
+        p.setLastName(lastName);
+        p.setAddress(address);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}/{lastName}/{address}/{telephone}")
+    public Person updatePerson(@PathVariable String firstName,
+                               @PathVariable String lastName,
+                               @PathVariable String address,
+                               @PathVariable String telephone, Person p) {
+        p.setLastName(lastName);
+        p.setAddress(address);
+        p.setAddress(telephone);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}//{address}/{telephone}")
+    public Person updatePersone(@PathVariable String firstName,
+                               @PathVariable String address,
+                               @PathVariable String telephone, Person p) {
+        p.setAddress(address);
+        p.setAddress(telephone);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}//{address}")
+    public Person updatePersone(@PathVariable String firstName,
+                                @PathVariable String address, Person p) {
+        p.setAddress(address);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}///{telephone}")
+    public Person updatePersoone(@PathVariable String firstName,
+                                @PathVariable String telephone, Person p) {
+        p.setAddress(telephone);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+    @PutMapping("/people/{firstName}/{lastName}//{telephone}")
+    public Person updatePersoon(@PathVariable String firstName,
+                               @PathVariable String lastName,
+                               @PathVariable String telephone, Person p) {
+        p.setLastName(lastName);
+        p.setAddress(telephone);
+
+        p.setFirstName(peopleList.get(firstName).getFirstName());
+        p.setLastName(peopleList.get(firstName).getLastName());
+        p.setAddress(peopleList.get(firstName).getAddress());
+        p.setTelephone(peopleList.get(firstName).getTelephone());
+
+        peopleList.replace(firstName, p);
+        return peopleList.get(firstName);
+    }
+
+
 
     // THIS IS THE DELETE OPERATION
     // Springboot gets the PATHVARIABLE from the URL
