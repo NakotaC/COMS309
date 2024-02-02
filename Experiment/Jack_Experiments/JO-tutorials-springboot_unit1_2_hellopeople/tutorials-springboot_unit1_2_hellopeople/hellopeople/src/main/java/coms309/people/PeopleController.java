@@ -115,7 +115,17 @@ public class PeopleController {
         return peopleList.get(firstName);
     }
 
-    //Update address based on last name
+    //Update first name based on first name
+    @PutMapping("/people/{firstName}/firstname/{firstnameNew}")
+    public Person updatePersonFname(@PathVariable String firstName, Person p, @PathVariable String firstnameNew) {
+        p = peopleList.get(firstName);
+        p.setFirstName(firstnameNew);
+        peopleList.remove(firstName);
+        peopleList.put(firstnameNew, p);
+        return peopleList.get(firstnameNew);
+    }
+
+    //Update last name based on first name
     @PutMapping("/people/{firstName}/lastname/{lastname}")
     public Person updatePersonLname(@PathVariable String firstName, Person p, @PathVariable String lastname) {
         p = peopleList.get(firstName);
@@ -131,10 +141,11 @@ public class PeopleController {
         return peopleList.get(firstName);
     }
 
+    //update phone based on first name
     @PutMapping("/people/{firstName}/phone/{phone}")
     public Person updatePersonPhone(@PathVariable String firstName, Person p, @PathVariable String phone) {
         p = peopleList.get(firstName);
-        p.setAddress(phone);
+        p.setTelephone(phone);
         return peopleList.get(firstName);
     }
 
