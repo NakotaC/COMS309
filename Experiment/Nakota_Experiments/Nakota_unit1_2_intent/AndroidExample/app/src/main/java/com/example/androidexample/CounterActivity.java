@@ -33,7 +33,7 @@ public class CounterActivity extends AppCompatActivity {
         decreaseBtn = findViewById(R.id.counter_decrease_btn);
         backBtn = findViewById(R.id.counter_back_btn);
         toggleBtn = findViewById(R.id.toggle_btn);
-        toggleValue = findViewById(R.id.toggleValue);
+        toggleValue = findViewById(R.id.toggleValuetxt);
         toggletxt = findViewById(R.id.Toggletxt);
 
 

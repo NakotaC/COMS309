@@ -2,7 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:text="0"
         android:textColor="#E91E63"
         android:textSize="150sp"></TextView>
@@ -52,21 +52,23 @@
 
     <TextView
         android:id="@+id/Toggletxt"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Toggle Value: "
         android:textSize="24sp"
-        android:translationY="-700dp" />
+        android:translationX="-50dp"
+        android:translationY="-700dp"
+        tools:text="Toggle Value: " />
 
     <TextView
-        android:id="@+id/toggleValue"
-        android:layout_width="wrap_content"
+        android:id="@+id/toggleValuetxt"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="0"
+        android:text="false"
         android:textSize="24sp"
-        android:translationX="100dp"
-        android:translationY="-720dp" />
+        android:translationX="80dp"
+        android:translationY="-735dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
