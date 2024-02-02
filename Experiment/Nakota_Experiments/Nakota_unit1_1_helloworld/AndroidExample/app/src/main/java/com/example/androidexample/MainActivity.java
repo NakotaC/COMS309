@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView messageText;   // define message textview variable
     private Object TimeUnit;
 
+    private TextClock textClock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
         messageText = findViewById(R.id.main_msg_txt);      // link to message textview in the Main activity XML
         messageText.setText("Experimenting with Text!");
 
-    messageText = findViewById(R.id.second_message);      // link to message textview in the Main activity XML
-    messageText.setText("Another text Box");
+        messageText = findViewById(R.id.second_message);      // link to message textview in the Main activity XML
+        messageText.setText("Another text Box");
+
+        textClock = findViewById(R.id.textClock);
 
 
     }
