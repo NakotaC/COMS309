@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller used to showcase Create and Read from a LIST
@@ -39,6 +40,53 @@ public class PeopleController {
         return peopleList;
     }
 
+    //Lists only the first names and keys
+    @GetMapping("/people/firstnames")
+    public  HashMap<String,String> getAllPersonsfnames() {
+        HashMap<String, String> firstNamesMap = new HashMap<>();
+        for (Map.Entry<String, Person> entry : peopleList.entrySet()) {
+            String key = entry.getKey();
+            Person person = entry.getValue();
+            firstNamesMap.put(key, person.getFirstName());
+        }
+        return firstNamesMap;
+    }
+
+    //Lists only the last names and keys
+    @GetMapping("/people/lastnames")
+    public  HashMap<String,String> getAllPersonslnames() {
+        HashMap<String, String> firstNamesMap = new HashMap<>();
+        for (Map.Entry<String, Person> entry : peopleList.entrySet()) {
+            String key = entry.getKey();
+            Person person = entry.getValue();
+            firstNamesMap.put(key, person.getLastName());
+        }
+        return firstNamesMap;
+    }
+
+    //Lists only the addresses and keys
+    @GetMapping("/people/addresses")
+    public  HashMap<String,String> getAllPersonsaddr() {
+        HashMap<String, String> firstNamesMap = new HashMap<>();
+        for (Map.Entry<String, Person> entry : peopleList.entrySet()) {
+            String key = entry.getKey();
+            Person person = entry.getValue();
+            firstNamesMap.put(key, person.getAddress());
+        }
+        return firstNamesMap;
+    }
+
+    //Lists only the phone numbers and keys
+    @GetMapping("/people/phones")
+    public  HashMap<String,String> getAllPersonsphone() {
+        HashMap<String, String> firstNamesMap = new HashMap<>();
+        for (Map.Entry<String, Person> entry : peopleList.entrySet()) {
+            String key = entry.getKey();
+            Person person = entry.getValue();
+            firstNamesMap.put(key, person.getTelephone());
+        }
+        return firstNamesMap;
+    }
 
     // THIS IS THE CREATE OPERATION
     // springboot automatically converts JSON input into a person object and 
