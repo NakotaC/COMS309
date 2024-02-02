@@ -115,14 +115,22 @@ public class PeopleController {
         return peopleList.get(firstName);
     }
 
-    //Update first name based on first name
-    @PutMapping("/people/{firstName}/firstname/{firstnameNew}")
-    public Person updatePersonFname(@PathVariable String firstName, Person p, @PathVariable String firstnameNew) {
+    //Update first name and key based on first name
+    @PutMapping("/people/{firstName}/firstnameandkey/{firstnameNew}")
+    public Person updatePersonFnameAndKey(@PathVariable String firstName, Person p, @PathVariable String firstnameNew) {
         p = peopleList.get(firstName);
         p.setFirstName(firstnameNew);
         peopleList.remove(firstName);
         peopleList.put(firstnameNew, p);
         return peopleList.get(firstnameNew);
+    }
+
+    //Update first name but not the key based on first name
+    @PutMapping("/people/{firstName}/firstname/{firstnameNew}")
+    public Person updatePersonFname(@PathVariable String firstName, Person p, @PathVariable String firstnameNew) {
+        p = peopleList.get(firstName);
+        p.setFirstName(firstnameNew);
+        return peopleList.get(firstName);
     }
 
     //Update last name based on first name
