@@ -39,6 +39,7 @@ public class PeopleController {
         return peopleList;
     }
 
+
     // THIS IS THE CREATE OPERATION
     // springboot automatically converts JSON input into a person object and 
     // the method below enters it into the list.
@@ -47,6 +48,10 @@ public class PeopleController {
     // Note: To CREATE we use POST method
     @PostMapping("/people")
     public  String createPerson(Person person) {
+        person.setFirstName("null");
+        person.setLastName("null");
+        person.setAddress("null");
+        person.setTelephone("null");
         System.out.println(person);
         peopleList.put(person.getFirstName(), person);
         return "New person "+ person.getFirstName() + " Saved";
