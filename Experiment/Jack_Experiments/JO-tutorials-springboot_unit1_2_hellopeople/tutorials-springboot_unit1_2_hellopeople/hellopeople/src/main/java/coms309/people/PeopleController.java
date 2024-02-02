@@ -52,6 +52,15 @@ public class PeopleController {
         return "New person "+ person.getFirstName() + " Saved";
     }
 
+    //Creates a person with a provided firstname
+    @PostMapping("/people/{firstname}")
+    public  String createPersonWithName(Person person, @PathVariable String firstname) {
+        person.setFirstName(firstname);
+        System.out.println(person);
+        peopleList.put(person.getFirstName(), person);
+        return "New person "+ person.getFirstName() + " Saved";
+    }
+
     // THIS IS THE READ OPERATION
     // Springboot gets the PATHVARIABLE from the URL
     // We extract the person from the HashMap.
