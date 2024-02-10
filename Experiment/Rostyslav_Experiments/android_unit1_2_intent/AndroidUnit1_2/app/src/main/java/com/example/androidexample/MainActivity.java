@@ -41,7 +41,7 @@ new Timer().schedule(new TimerTask()
     public void run() {
         startActivity(intent);
     }
-}, 10000);
+}, 20000);
 
 
 }
