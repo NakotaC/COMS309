@@ -51,9 +51,35 @@ public class UserController {
         return success;
     }
 
+    @PutMapping("/users/{name}/{meebo}")
+    String updateUserjon(@PathVariable String name, @RequestBody User updatee) {
+        User user;
+        int i = 0;
+        while(i < userRepository.count()) {
+            System.out.println(userRepository.count());
+            user = userRepository.findById(++i);
+            if (user.getName().equals(name)) {
+                if (updatee.getName() != null)
+                    user.setName(updatee.getName());
+                if (updatee.getName() != null)
+                    user.setEmailId(updatee.getEmailId());
+                if (updatee.getLaptop() != null)
+                    user.setLaptop(updatee.getLaptop());
+                if (updatee.getIsActive())
+                    user.setIfActive(true);
+                else {
+                    user.setIfActive(false);
+                }
+                userRepository.save(user);
+
+                return success;
+            }
+        }
+        return failure;
+    }
     /* not safe to update */
 //    @PutMapping("/users/{id}")
-//    User updateUser(@PathVariable int id, @RequestBody User request){
+//    User updateUserById(@PathVariable int id, @RequestBody User request){
 //        User user = userRepository.findById(id);
 //        if(user == null)
 //            return null;
