@@ -51,6 +51,14 @@ public class UserController {
         return success;
     }
 
+    @PostMapping(path = "/laptops")
+    String createUser(@RequestBody Laptop laptop){
+        if (laptop == null)
+            return failure;
+        laptopRepository.save(laptop);
+        return success;
+    }
+
     /* not safe to update */
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){
