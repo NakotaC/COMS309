@@ -9,23 +9,23 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn;
+    private Button strButton, jsonObjButton, jsonArrButton, imgButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        strBtn = findViewById(R.id.btnStringRequest);
-        jsonObjBtn = findViewById(R.id.btnJsonObjRequest);
-        jsonArrBtn = findViewById(R.id.btnJsonArrRequest);
-        imgBtn = findViewById(R.id.btnImageRequest);
+        strButton = findViewById(R.id.btnStringRequest);
+        jsonObjButton = findViewById(R.id.btnJsonObjRequest);
+        jsonArrButton = findViewById(R.id.btnJsonArrRequest);
+        imgButton = findViewById(R.id.btnImageRequest);
 
         /* button click listeners */
-        strBtn.setOnClickListener(this);
-        jsonObjBtn.setOnClickListener(this);
-        jsonArrBtn.setOnClickListener(this);
-        imgBtn.setOnClickListener(this);
+        strButton.setOnClickListener(this);
+        jsonObjButton.setOnClickListener(this);
+        jsonArrButton.setOnClickListener(this);
+        imgButton.setOnClickListener(this);
     }
 
     @Override
