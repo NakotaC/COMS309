@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -15,9 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JsonObjReqActivity extends AppCompatActivity {
@@ -26,7 +31,9 @@ public class JsonObjReqActivity extends AppCompatActivity {
     private TextView msgResponse;
 
     private static final String URL_JSON_OBJECT =
-            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/givedata";
+            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/givedata?1=1";
+    private ListView random;
+    public String[] random1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,8 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
         btnJsonObjReq = findViewById(R.id.btnJsonObj);
         msgResponse = findViewById(R.id.msgResponse);
+
+
 
         btnJsonObjReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +65,16 @@ public class JsonObjReqActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-                        msgResponse.setText(response.toString());
+                        try
+                        {
+                        msgResponse.setText(response.getString("name") + " is a " +
+                                response.getString("profession") + ". She lives in " +
+                                response.getString("place"));
+
+                        }
+                        catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {

@@ -26,6 +26,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="" />
+        android:fontFamily="@font/inter_thin"
+        android:text=""
+        android:textSize="20sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
