@@ -1,14 +1,13 @@
 package onetoone.Users;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import onetoone.Cosmetics.Cosmetic;
 import onetoone.Laptops.Laptop;
+import onetoone.Clans.Clan;
+
+import java.util.List;
 
 /**
  * 
@@ -30,6 +29,17 @@ public class User {
     private String emailId;
     private boolean ifActive;
 
+    @ManyToOne
+    @JoinColumn(name = "clan_id")
+    private Clan clan;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_cosmetic",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cosmetic_id")
+    )
+    private List<Cosmetic> inventory;
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected

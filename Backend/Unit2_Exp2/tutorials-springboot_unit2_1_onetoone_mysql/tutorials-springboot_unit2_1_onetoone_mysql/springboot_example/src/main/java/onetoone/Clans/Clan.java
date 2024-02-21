@@ -1,22 +1,19 @@
-package onetoone.Cosmetics;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+package onetoone.Clans;
 
 import onetoone.Users.User;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Cosmetic {
+public class Clan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String item_name;
+    private String clan_name;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "clan")
     private List<User> users;
 }

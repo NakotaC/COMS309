@@ -2,6 +2,8 @@ package onetoone.Users;
 
 import java.util.List;
 
+import onetoone.Clans.ClanRepository;
+import onetoone.Cosmetics.CosmeticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,12 @@ public class UserController {
 
     @Autowired
     LaptopRepository laptopRepository;
+
+    @Autowired
+    CosmeticRepository cosmeticRepository;
+
+    @Autowired
+    ClanRepository clanRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
