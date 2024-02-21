@@ -21,11 +21,12 @@
         android:textSize="30sp"
         android:text="Response: " />
 
-    <TextView
-        android:id="@+id/msgResponse"
-        android:layout_width="fill_parent"
+    <ListView
+        android:id="@+id/randomList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

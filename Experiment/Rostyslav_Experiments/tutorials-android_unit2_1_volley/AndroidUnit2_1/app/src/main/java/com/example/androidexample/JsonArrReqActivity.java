@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,24 +16,34 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class JsonArrReqActivity extends AppCompatActivity {
 
     private Button btnJsonArrReq;
     private TextView msgResponse;
+    private ListAdapter randomAdapter;
+    private ListView randomList;
 
-    private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/users";
-
+    // private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/users";
+    private static final String URL_JSON_ARRAY =
+            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/users";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json_arr_req);
 
         btnJsonArrReq = findViewById(R.id.btnJsonArr);
-        msgResponse = findViewById(R.id.msgResponse);
+        randomList = findViewById(R.id.randomList);
+
+        randomAdapter = new ListAdapter(this, new LinkedList<>());
+        randomList.setAdapter(randomAdapter);
 
         btnJsonArrReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +65,22 @@ public class JsonArrReqActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
-                        msgResponse.setText(response.toString());
+                        for (int i = 0; i < response.length(); i++)
+                        {
+                            try
+                            {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String name = jsonObject.getString("name");
+                                String email = jsonObject.getString("email");
+
+                                ListItemType item = new ListItemType(name, email);
+                                randomAdapter.add(item);
+
+                            } catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 },
                 new Response.ErrorListener() {
