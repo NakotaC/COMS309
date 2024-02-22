@@ -8,6 +8,7 @@ import onetomany.Monitors.Monitor;
 import onetomany.Phones.Phone;
 import onetomany.Users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,8 +120,15 @@ public class Laptop {
         return monitors;
     }
 
-    public void setPhones(List<Monitor> monitors) {
+    public void setMonitors(List<Monitor> monitors) {
         this.monitors = monitors;
+    }
+
+    public void addMonitors(Monitor monitor){
+        if (this.monitors == null) {
+            this.monitors = new ArrayList<>();
+        }
+        this.monitors.add(monitor);
     }
 
 }
