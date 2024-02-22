@@ -1,14 +1,14 @@
 package onetomany.Laptops;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import onetomany.Monitors.Monitor;
+import onetomany.Phones.Phone;
 import onetomany.Users.User;
+
+import java.util.List;
 
 /**
  * 
@@ -38,6 +38,9 @@ public class Laptop {
     @OneToOne
     @JsonIgnore
     private User user;
+
+    @OneToMany
+    private List<Monitor> monitors;
 
     
      // =============================== Constructors ================================== //
@@ -110,6 +113,14 @@ public class Laptop {
 
     public void setRam(int ram){
         this.ram = ram;
+    }
+
+    public List<Monitor> getMonitors() {
+        return monitors;
+    }
+
+    public void setPhones(List<Monitor> monitors) {
+        this.monitors = monitors;
     }
 
 }

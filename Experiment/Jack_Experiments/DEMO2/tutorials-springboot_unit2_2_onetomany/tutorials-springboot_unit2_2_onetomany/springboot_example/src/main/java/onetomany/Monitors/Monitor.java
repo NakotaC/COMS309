@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import onetomany.Laptops.Laptop;
 import onetomany.Users.User;
 @Entity
 public class Monitor {
@@ -25,6 +26,11 @@ public class Monitor {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "laptop_id")
+    @JsonIgnore
+    private Laptop laptop;
 
     public Monitor(){
 
@@ -67,6 +73,14 @@ public class Monitor {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void setLaptop(Laptop laptop) {
+        this.laptop = laptop;
     }
 
     public int getPrice() {
