@@ -18,6 +18,9 @@
             android:name=".LoginActivity"
             android:exported="false"/>
         <activity
+            android:name=".SignupActivity"
+            android:exported="false"/>
+        <activity
             android:name=".DummyHome"
             android:exported="false"/>
         <activity
