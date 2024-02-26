@@ -58,26 +58,34 @@ public class UserController {
         return success;
     }
 
-    @PutMapping("/users/{id}")
-    User updateUser(@PathVariable int id, @RequestBody User request){
+    @PostMapping(path = "/users/{id}/{score}")
+    String userAddToUserScore(@PathVariable int id, @PathVariable int score) {
         User user = userRepository.findById(id);
-        if(user == null)
-            return null;
-        userRepository.save(request);
-        return userRepository.findById(id);
-    }   
-    
-    @PutMapping("/users/{userId}/laptops/{laptopId}")
-    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
-        User user = userRepository.findById(userId);
-        Laptop laptop = laptopRepository.findById(laptopId);
-        if(user == null || laptop == null)
-            return failure;
-        laptop.setUser(user);
-        user.setLaptop(laptop);
+        user.setScore(user.getScore() + score);
         userRepository.save(user);
         return success;
     }
+
+//    @PutMapping("/users/{id}")
+//    User updateUser(@PathVariable int id, @RequestBody User request){
+//        User user = userRepository.findById(id);
+//        if(user == null)
+//            return null;
+//        userRepository.save(request);
+//        return userRepository.findById(id);
+//    }
+
+//    @PutMapping("/users/{userId}/laptops/{laptopId}")
+//    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
+//        User user = userRepository.findById(userId);
+//        Laptop laptop = laptopRepository.findById(laptopId);
+//        if(user == null || laptop == null)
+//            return failure;
+//        laptop.setUser(user);
+//        user.setLaptop(laptop);
+//        userRepository.save(user);
+//        return success;
+//    }
 
     @DeleteMapping(path = "/users/{id}")
     String deleteUser(@PathVariable int id){

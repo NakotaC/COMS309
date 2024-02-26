@@ -28,6 +28,7 @@ public class User {
     private String name;
     private String emailId;
     private boolean ifActive;
+    private int score;
 
     @ManyToOne
     @JoinColumn(name = "clan_id")
@@ -68,6 +69,8 @@ public class User {
     public void setId(int id){
         this.id = id;
     }
+    public int getScore() {return score; }
+    public void setScore(int score) {this.score = score; }
 
     public String getName(){
         return name;
