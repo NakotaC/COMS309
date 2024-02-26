@@ -21,6 +21,9 @@
             android:name=".SignupActivity"
             android:exported="false"/>
         <activity
+            android:name=".ShopActivity"
+            android:exported="false"/>
+        <activity
             android:name=".DummyHome"
             android:exported="false"/>
         <activity
