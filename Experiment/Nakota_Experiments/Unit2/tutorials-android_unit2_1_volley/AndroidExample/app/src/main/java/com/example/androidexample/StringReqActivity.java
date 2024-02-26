@@ -23,7 +23,7 @@ public class StringReqActivity extends AppCompatActivity {
     private Button btnStringReq;
     private TextView msgResponse;
     private Button menu_button;
-    private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/1";
+    private static final String URL_STRING_REQ = "https://ef1121ad-2002-4195-9fa4-b838cf616118.mock.pstmn.io/string";
     //   public static final String URL_STRING_REQ = "https://2aa87adf-ff7c-45c8-89bc-f3fbfaa16d15.mock.pstmn.io/users/1";
     // public static final String URL_STRING_REQ = "http://10.0.2.2:8080/users/1";
     //private static final String URL_STRING_REQ = "https://ip.jsontest.com";
@@ -78,16 +78,16 @@ public class StringReqActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-//                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                headers.put("Content-Type", "application/json");
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-//                params.put("param1", "value1");
-//                params.put("param2", "value2");
+                params.put("param1", "username");
+                params.put("param2", "value2");
                 return params;
             }
         };
