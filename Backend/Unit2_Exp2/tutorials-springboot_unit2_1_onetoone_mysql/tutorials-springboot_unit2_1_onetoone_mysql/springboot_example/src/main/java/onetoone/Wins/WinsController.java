@@ -15,7 +15,7 @@ public class WinsController {
     private String failure = "{\"message\":\"failure\"}";
 
     //return all cosmetics in the game (in the DB)
-    @GetMapping(path = "/shopItems")
-    List<Wins> getShopItems() { return winsRepository.findAll(); }
+    @GetMapping(path = "/wins")
+    List<Wins> getWins() { return winsRepository.findAll(); }
 
 }
