@@ -16,6 +16,6 @@ public class ShopItemsController {
 
     //return all cosmetics in the game (in the DB)
     @GetMapping(path = "/shopItems")
-    List<ShopItems> getShopItems() { return shopItemsRepository.findAll(); }
+    List<ShopItem> getShopItems() { return shopItemsRepository.findAll(); }
 
 }

@@ -2,7 +2,7 @@ package onetoone.Inventory;
 
 import javax.persistence.*;
 
-import onetoone.Users.User;
+import onetoone.ShopItems.ShopItem;
 
 import java.util.List;
 
@@ -13,8 +13,26 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String item_name;
-
     @ManyToMany
-    private List<User> users;
+    private List<ShopItem> shopItems;
+
+
+    public Inventory() {
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public List<ShopItem> getShopItems(){
+        return shopItems;
+    }
+
+    public void setShopItems(List<ShopItem> shopItems){
+        this.shopItems = shopItems;
+    }
 }
