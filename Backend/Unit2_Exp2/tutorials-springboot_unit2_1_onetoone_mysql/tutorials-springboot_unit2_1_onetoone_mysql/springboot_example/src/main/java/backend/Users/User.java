@@ -2,12 +2,8 @@ package onetoone.Users;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import onetoone.Cosmetics.Cosmetic;
-import onetoone.Laptops.Laptop;
 import onetoone.Clans.Clan;
-
-import java.util.List;
+import onetoone.Inventory.Inventory;
 
 /**
  * 

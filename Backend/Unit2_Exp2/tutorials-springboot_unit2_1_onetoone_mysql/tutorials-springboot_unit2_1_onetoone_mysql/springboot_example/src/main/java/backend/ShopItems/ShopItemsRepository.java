@@ -1,11 +1,11 @@
-package onetoone.Cosmetics;
+package backend.Inventory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 
-public interface CosmeticRepository extends JpaRepository<Cosmetic, Long> {
-    Cosmetic findById(int id);
+public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+    Inventory findById(int id);
 
     @Transactional
     void deleteById(int id);

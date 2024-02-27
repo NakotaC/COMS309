@@ -1,6 +1,4 @@
-package onetoone.Cosmetics;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package onetoone.Inventory;
 
 import javax.persistence.*;
 
@@ -9,7 +7,7 @@ import onetoone.Users.User;
 import java.util.List;
 
 @Entity
-public class Cosmetic {
+public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
