@@ -12,8 +12,5 @@ public class Wins {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String item_name;
-
-    @ManyToMany
-    private List<User> users;
+    private Integer wins;
 }

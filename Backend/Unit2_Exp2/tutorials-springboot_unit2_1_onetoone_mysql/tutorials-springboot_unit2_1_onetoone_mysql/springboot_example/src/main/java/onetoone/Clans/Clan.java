@@ -12,6 +12,7 @@ public class Clan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private User clan_leader;
     private String clan_name;
 
     @OneToMany(mappedBy = "clan")
