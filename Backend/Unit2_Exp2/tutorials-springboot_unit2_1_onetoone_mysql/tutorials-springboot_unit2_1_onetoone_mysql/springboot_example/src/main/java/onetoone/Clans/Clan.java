@@ -16,5 +16,34 @@ public class Clan {
     private String clan_name;
 
     @OneToMany(mappedBy = "clan")
-    private List<User> users;
+    private List<User> members;
+
+    public Integer getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public User getLeader() {
+        return clan_leader;
+    }
+    public void setLeader(User user) {
+        this.clan_leader = user;
+    }
+
+    public String getClanName() {
+        return clan_name;
+    }
+
+    public void setClanName(String name) {
+        this.clan_name = name;
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
+    }
 }
