@@ -25,36 +25,30 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String emailId;
-    private boolean ifActive;
-    private int score;
+    private String username;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "clan_id")
     private Clan clan;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_cosmetic",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "cosmetic_id")
-    )
-    private List<Cosmetic> inventory;
+    @OneToOne
+    @JoinColumn(name = "inv_id")
+    private Inventory inventory;
+
+    @OneToOne
+    @JoinColumn(name = "wins_id")
+    private Wins wins;
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
-    private Laptop laptop;
 
-    public User(String name, String emailId) {
-        this.name = name;
-        this.emailId = emailId;
-        this.ifActive = true;
+    public User(String Username, String password) {
+        this.username = Username;
+        this.password = password;
     }
 
     public User() {
@@ -69,39 +63,40 @@ public class User {
     public void setId(int id){
         this.id = id;
     }
-    public int getScore() {return score; }
-    public void setScore(int score) {this.score = score; }
-
-    public String getName(){
-        return name;
+    public String getUsername(){
+        return username;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setUsername(String Username){
+        this.username = Username;
+    }
+    public String getPassword(){
+        return password;
     }
 
-    public String getEmailId(){
-        return emailId;
+    public void setPassword(String Password){
+        this.password = Password;
+    }
+    public Clan getClan(){
+        return clan;
     }
 
-    public void setEmailId(String emailId){
-        this.emailId = emailId;
+    public void setClan(Clan clan){
+        this.clan = clan;
+    }
+    public Inventory getInventory(){
+        return inventory;
     }
 
-    public boolean getIsActive(){
-        return ifActive;
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
+    }
+    public Wins getWins(){
+        return wins;
     }
 
-    public void setIfActive(boolean ifActive){
-        this.ifActive = ifActive;
+    public void setWins(Wins wins){
+        this.wins = wins;
     }
 
-    public Laptop getLaptop(){
-        return laptop;
-    }
-
-    public void setLaptop(Laptop laptop){
-        this.laptop = laptop;
-    }
-    
 }

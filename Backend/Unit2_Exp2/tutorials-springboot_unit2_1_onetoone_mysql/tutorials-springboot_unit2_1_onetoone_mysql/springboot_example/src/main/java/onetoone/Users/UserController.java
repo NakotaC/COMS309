@@ -58,13 +58,13 @@ public class UserController {
         return success;
     }
 
-    @PostMapping(path = "/users/{id}/{score}")
-    String userAddToUserScore(@PathVariable int id, @PathVariable int score) {
-        User user = userRepository.findById(id);
-        user.setScore(user.getScore() + score);
-        userRepository.save(user);
-        return success;
-    }
+//    @PostMapping(path = "/users/{id}/{score}")
+//    String userAddToUserScore(@PathVariable int id, @PathVariable int score) {
+//        User user = userRepository.findById(id);
+//        user.setScore(user.getScore() + score);
+//        userRepository.save(user);
+//        return success;
+//    }
 
 //    @PutMapping("/users/{id}")
 //    User updateUser(@PathVariable int id, @RequestBody User request){
