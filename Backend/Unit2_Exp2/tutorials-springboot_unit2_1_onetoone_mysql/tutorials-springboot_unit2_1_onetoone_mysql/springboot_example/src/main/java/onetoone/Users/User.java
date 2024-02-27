@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
+import onetoone.Wins.Wins;
 
 /**
  * 

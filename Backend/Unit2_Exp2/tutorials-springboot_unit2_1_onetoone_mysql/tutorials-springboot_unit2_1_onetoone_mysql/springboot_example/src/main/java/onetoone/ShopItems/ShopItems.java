@@ -1,13 +1,12 @@
-package backend.Inventory;
+package onetoone.ShopItems;
+
+import onetoone.Users.User;
 
 import javax.persistence.*;
-
-import backend.Users.User;
-
 import java.util.List;
 
 @Entity
-public class Inventory {
+public class ShopItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

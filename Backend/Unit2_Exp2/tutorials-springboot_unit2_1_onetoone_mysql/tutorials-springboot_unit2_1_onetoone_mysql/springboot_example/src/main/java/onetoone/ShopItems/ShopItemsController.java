@@ -1,4 +1,4 @@
-package backend.ShopItems;
+package onetoone.ShopItems;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

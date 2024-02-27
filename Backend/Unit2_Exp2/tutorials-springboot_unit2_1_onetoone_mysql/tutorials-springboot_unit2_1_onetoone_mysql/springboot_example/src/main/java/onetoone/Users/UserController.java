@@ -3,17 +3,15 @@ package onetoone.Users;
 import java.util.List;
 
 import onetoone.Clans.ClanRepository;
-import onetoone.Cosmetics.CosmeticRepository;
+import onetoone.Inventory.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import onetoone.Laptops.Laptop;
 import onetoone.Laptops.LaptopRepository;
 
 /**
@@ -32,7 +30,7 @@ public class UserController {
     LaptopRepository laptopRepository;
 
     @Autowired
-    CosmeticRepository cosmeticRepository;
+    InventoryRepository inventoryRepository;
 
     @Autowired
     ClanRepository clanRepository;

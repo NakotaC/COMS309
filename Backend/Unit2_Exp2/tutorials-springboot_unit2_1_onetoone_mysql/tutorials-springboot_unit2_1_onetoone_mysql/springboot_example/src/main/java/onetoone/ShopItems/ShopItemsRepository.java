@@ -1,11 +1,11 @@
-package backend.Inventory;
+package onetoone.ShopItems;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 
-public interface InventoryRepository extends JpaRepository<Inventory, Long> {
-    Inventory findById(int id);
+public interface ShopItemsRepository extends JpaRepository<ShopItems, Long> {
+    ShopItems findById(int id);
 
     @Transactional
     void deleteById(int id);
