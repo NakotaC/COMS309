@@ -45,7 +45,7 @@ public class Inventory {
     }
 
     public List<ShopItem> getShopItems(){
-        return shopItems;
+        return this.shopItems;
     }
 
     public void setShopItems(List<ShopItem> shopItems){
@@ -58,7 +58,10 @@ public class Inventory {
         if (this.shopItems == null){
             this.shopItems = new ArrayList<>();
         }
-        this.shopItems.add(shopItem);
+        List<ShopItem> inv = this.getShopItems();
+        inv.add(shopItem);
+        this.user.setItems(inv);
+        System.out.println(shopItems);
     }
 
 }

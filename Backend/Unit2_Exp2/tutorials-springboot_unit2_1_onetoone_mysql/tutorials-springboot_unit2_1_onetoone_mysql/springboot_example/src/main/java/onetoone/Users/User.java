@@ -52,7 +52,7 @@ public class User {
     public User(String Username, String password) {
         this.username = Username;
         this.password = password;
-
+        this.setWins(0);
     }
 
     public User() {
