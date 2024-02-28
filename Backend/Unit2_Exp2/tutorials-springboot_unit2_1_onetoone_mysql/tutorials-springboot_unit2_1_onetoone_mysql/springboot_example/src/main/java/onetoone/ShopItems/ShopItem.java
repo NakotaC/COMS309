@@ -11,15 +11,15 @@ public class ShopItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String item_name;
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "inventory_id")
-    private Inventory inventory;
+//    @ManyToOne
+//    @JoinColumn(name = "inventory_id")
+//    private Inventory inventory;
 
     public ShopItem(){
 
@@ -56,11 +56,11 @@ public class ShopItem {
         this.description = description;
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
+//    public Inventory getInventory() {
+//        return inventory;
+//    }
+//
+//    public void setInventory(Inventory inventory) {
+//        this.inventory = inventory;
+//    }
 }
