@@ -18,6 +18,7 @@ public class Wins {
     @JsonManagedReference
     private User user;
 
+    @Column(name="wins")
     private Integer wins;
 
     public Wins(Integer wins) {
