@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import onetoone.Laptops.LaptopRepository;
 import onetoone.Users.User;
 import onetoone.Users.UserRepository;
+import onetoone.Clans.Clan;
+import onetoone.Clans.ClanRepository;
 
 /**
  * 
@@ -28,26 +30,27 @@ class Main {
     /**
      * 
      * @param userRepository repository for the User entity
-     * @param laptopRepository repository for the Laptop entity
      * Creates a commandLine runner to enter dummy data into the database
      * As mentioned in User.java just associating the Laptop object with the User will save it into the database because of the CascadeType
      */
     @Bean
-    CommandLineRunner initUser(UserRepository userRepository, LaptopRepository laptopRepository) {
+    CommandLineRunner initUser(UserRepository userRepository, ClanRepository clanRepository) {
         return args -> {
-            User user1 = new User("John", "john@somemail.com");
-//            User user2 = new User("Jane", "jane@somemail.com");
-//            User user3 = new User("Justin", "justin@somemail.com");
-//            Laptop laptop1 = new Laptop( 2.5, 4, 8, "Lenovo", 300);
-//            Laptop laptop2 = new Laptop( 4.1, 8, 16, "Hp", 800);
-//            Laptop laptop3 = new Laptop( 3.5, 32, 32, "Dell", 2300);
-//            user1.setLaptop(laptop1);
-//            user2.setLaptop(laptop2);
-//            user3.setLaptop(laptop3);
-//            userRepository.save(user1);
-//            userRepository.save(user2);
-//            userRepository.save(user3);
+            User user1 = new User("John", "john2");
+            User user2 = new User("Jenny", "8675309");
 
+
+            userRepository.save(user1);
+            userRepository.save(user2);
+
+
+            Clan clan1 = new Clan("JennyClan", user2.getId());
+            //System.out.println(user2.getId());
+            clanRepository.save(clan1);
+            user2.setClan(clan1);
+            user1.setClan(clan1);
+            userRepository.save(user2);
+            userRepository.save(user1);
 
         };
     }

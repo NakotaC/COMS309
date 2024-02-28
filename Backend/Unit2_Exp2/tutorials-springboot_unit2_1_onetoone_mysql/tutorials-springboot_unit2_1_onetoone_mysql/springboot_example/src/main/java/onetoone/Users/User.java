@@ -74,8 +74,8 @@ public class User {
     public void setPassword(String Password){
         this.password = Password;
     }
-    public Clan getClan(){
-        return clan;
+    public int getClan(){
+        return clan.getId();
     }
 
     public void setClan(Clan clan){
