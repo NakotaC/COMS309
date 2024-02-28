@@ -18,4 +18,6 @@ public class InventoryController {
     @GetMapping(path = "/inventory")
     List<Inventory> getInventory() { return inventoryRepository.findAll(); }
 
+    //@GetMapping(path = "/inventory/shop")
+
 }
