@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/clanButton"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
@@ -15,26 +15,28 @@
         android:background="#D9D9D9"
         android:fontFamily="@font/im_fell_great_primer"
         android:text="Clan"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAllCaps="false"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/shopButton"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="7dp"
         android:background="#D9D9D9"
         android:fontFamily="@font/im_fell_great_primer"
         android:text="Shop"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAllCaps="false"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         android:textSize="27sp"
         app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/clanButton" />
 
     <TextView
         android:id="@+id/text1"
@@ -42,13 +44,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="297dp"
         android:fontFamily="@font/irish_grover"
-        android:text="Sorry! Plus"
+        android:text="@string/mainTitle"
+        android:textAppearance="?attr/textAppearanceHeadline1"
+        android:textColor="@color/black"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
@@ -57,7 +61,8 @@
         android:background="#D9D9D9"
         android:fontFamily="@font/im_fell_great_primer"
         android:text="Play"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAllCaps="false"
+        android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
