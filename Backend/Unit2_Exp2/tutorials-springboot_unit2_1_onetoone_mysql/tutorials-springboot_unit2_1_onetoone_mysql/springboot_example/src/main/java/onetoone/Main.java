@@ -45,7 +45,7 @@ class Main {
     @Bean
     CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository) {
         return args -> {
-//            User user1 = new User("John", "JohnPassword");
+            User user1 = new User("John", "JohnPassword");
 //            User user2 = new User("John2", "John2Password");
 //            Inventory inventory1 = new Inventory();
 //            ArrayList<ShopItem> bort = new ArrayList<>();
@@ -64,7 +64,7 @@ class Main {
 //            shopItemsRepository.save(SI3);
 //            shopItemsRepository.save(SI4);
 //            inventoryRepository.save(inventory1);
-//            userRepository.save(user1);
+            userRepository.save(user1);
 //            userRepository.save(user1);
 //            userRepository.save(user2);
 //            Clan clan1 = new Clan("JennyClan", user2.getId());
