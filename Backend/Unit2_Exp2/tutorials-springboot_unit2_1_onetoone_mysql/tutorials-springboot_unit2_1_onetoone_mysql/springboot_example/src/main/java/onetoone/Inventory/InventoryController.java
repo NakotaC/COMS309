@@ -43,12 +43,19 @@ public class InventoryController {
     }
 
     @PostMapping(path = "/inventory/shop/buy")
-    String buyItem(@RequestHeader("Item") int iid, @RequestBody int uid){
+    String buyItem(@RequestHeader("item") int iid, @RequestHeader("username") String username){
+        List<User> users = userRepository.findAll();
+        int uid = 1;
+        for (int i = 1; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username)) {
+                uid = users.get(i).getId();
+            }
+        }
+        User user = users.get(uid);
         ShopItem item = shopItemsRepository.findById(iid);
-        User user = userRepository.findById(uid);
         user.setItems(item);
         userRepository.save(user);
-        return success;
+        return "Success";
     }
 
 

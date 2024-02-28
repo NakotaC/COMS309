@@ -3,6 +3,7 @@ package onetoone.Users;
 import java.net.http.HttpHeaders;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import onetoone.Clans.ClanRepository;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.Wins.WinsRepository;
@@ -47,27 +48,28 @@ public class UserController {
 
 
     @PostMapping(path = "/users/signup")
-    String createUser(@RequestHeader("fort") String username, @RequestBody String password){
+
+    String createUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername())){
-                return failure;
+                return "Failure";
             }
         }
         User user = new User(username, password);
         userRepository.save(user);
-        return success;
+        return "Success";
     }
 
     @GetMapping(path = "/users/login")
-    String loginUser(@RequestHeader("fort") String username, @RequestBody String password){
+    String loginUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
-                return success;
+                return "Success";
             }
         }
-        return failure;
+        return "Failure";
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")
