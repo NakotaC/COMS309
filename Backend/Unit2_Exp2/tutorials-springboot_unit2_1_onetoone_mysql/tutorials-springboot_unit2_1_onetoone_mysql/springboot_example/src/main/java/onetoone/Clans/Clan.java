@@ -1,6 +1,7 @@
 package onetoone.Clans;
 
 import onetoone.Users.User;
+import onetoone.Users.UserRepository;
 
 import javax.persistence.*;
 import java.util.List;
