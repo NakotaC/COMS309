@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
-            startActivity(new Intent(MainActivity.this, ClanActivity.class));
+            startActivity(new Intent(MainActivity.this, LeaderboardActivity.class));
         } // else if (id1 == R.id.button) {
             //startActivity(new Intent(MainActivity.this, FindingAGameActivity.class));
       //  }

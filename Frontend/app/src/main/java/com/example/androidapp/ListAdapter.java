@@ -7,33 +7,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<ClanItemObject> {
+public class ListAdapter extends ArrayAdapter<LeaderboardItemObject> {
 
-    public ListAdapter(Context context, List<ClanItemObject> items) {
+    public ListAdapter(Context context, List<LeaderboardItemObject> items) {
         super(context, 0, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        ClanItemObject clan = getItem(position);
+        LeaderboardItemObject item = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.recycleview_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,
+                    false);
         }
 
         // Lookup view for data population
-        TextView clanName = convertView.findViewById(R.id.clan_name);
-        TextView clanID = convertView.findViewById(R.id.clan_level);
+        TextView itemName = convertView.findViewById(R.id.itemName);
+        TextView itemScore = convertView.findViewById(R.id.itemScore);
 
         // Populate the data into the template view using the data object
-        clanName.setText(clan.getClan_name());
-        clanID.setText(clan.getClanID());
+        itemName.setText(item.getName());
+        itemScore.setText(item.getScore());
 
         // Return the completed view to render on screen
         return convertView;

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ClanActivity"
+            android:name=".LeaderboardActivity"
             android:exported="false"
             />
         <meta-data
