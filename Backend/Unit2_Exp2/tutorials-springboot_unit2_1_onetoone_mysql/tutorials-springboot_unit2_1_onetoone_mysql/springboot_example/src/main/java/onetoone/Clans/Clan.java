@@ -12,7 +12,7 @@ public class Clan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private User clan_leader;
+    private Integer clan_leader;
     private String clan_name;
 
     @OneToMany(mappedBy = "clan")
@@ -24,11 +24,11 @@ public class Clan {
     public void setId(int id) {
         this.id = id;
     }
-    public User getLeader() {
+    public Integer getLeader() {
         return clan_leader;
     }
-    public void setLeader(User user) {
-        this.clan_leader = user;
+    public void setLeader(Integer id) {
+        this.clan_leader = id;
     }
 
     public String getClanName() {
