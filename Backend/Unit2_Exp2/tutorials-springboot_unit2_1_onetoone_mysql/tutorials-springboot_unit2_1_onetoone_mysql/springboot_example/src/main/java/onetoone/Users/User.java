@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
+import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
+import java.util.List;
 
 /**
  * 
@@ -29,13 +31,12 @@ public class User {
     @JoinColumn(name = "clan_id")
     private Clan clan;
 
-    @OneToOne
-    @JoinColumn(name = "inv_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
     private Inventory inventory;
 
-    @OneToOne
-    @JoinColumn(name = "wins_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Wins wins;
+
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
@@ -53,13 +54,13 @@ public class User {
 
     // =============================== Getters and Setters for each field ================================== //
 
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
+//    public int getId(){
+//        return id;
+//    }
+//
+//    public void setId(int id){
+//        this.id = id;
+//    }
     public String getUsername(){
         return username;
     }
@@ -86,14 +87,42 @@ public class User {
     }
 
     public void setInventory(Inventory inventory){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
         this.inventory = inventory;
+        inventory.setUser(this);
+    }
+
+//    public void setInventory(List<ShopItem> shopItem){
+//        if (this.inventory == null) {
+//            this.inventory = new Inventory();
+//        }
+//        this.inventory = inventory;
+//    }
+    public void setItems(List<ShopItem> shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
+    }
+
+    public void setItems(ShopItem shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
     }
     public Wins getWins(){
         return wins;
     }
 
-    public void setWins(Wins wins){
-        this.wins = wins;
+    public void setWins(int wins){
+        if (this.wins == null) {
+            this.wins = new Wins(0);
+            this.wins.setUser(this);
+        }
+        this.wins.setWins(wins);
     }
 
 }

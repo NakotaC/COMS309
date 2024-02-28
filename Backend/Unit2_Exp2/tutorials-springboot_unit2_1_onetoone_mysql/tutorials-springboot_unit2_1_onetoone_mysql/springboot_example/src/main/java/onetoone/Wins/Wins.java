@@ -10,16 +10,26 @@ public class Wins {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private Integer wins;
 
-    public Integer getId() {
-        return id;
+    public Wins(Integer wins) {
+        this.wins = wins;
+    }
+    public Wins() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getWins() {
