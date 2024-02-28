@@ -15,8 +15,14 @@ public class Clan {
     private Integer clan_leader;
     private String clan_name;
 
-    @OneToMany(mappedBy = "clan")
+    @OneToMany(mappedBy = "clan", cascade = CascadeType.ALL)
     private List<User> members;
+
+    public Clan(String clan_name, int leader_id) {
+        this.clan_name = clan_name;
+        this.clan_leader = leader_id;
+    }
+    public Clan() {}
 
     public Integer getId() {
         return id;

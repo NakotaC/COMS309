@@ -16,6 +16,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import onetoone.Laptops.LaptopRepository;
 import onetoone.Users.User;
 import onetoone.Users.UserRepository;
+import onetoone.Clans.Clan;
+import onetoone.Clans.ClanRepository;
 
 import java.util.ArrayList;
 
@@ -37,7 +39,6 @@ class Main {
     /**
      * 
      * @param userRepository repository for the User entity
-     * @param laptopRepository repository for the Laptop entity
      * Creates a commandLine runner to enter dummy data into the database
      * As mentioned in User.java just associating the Laptop object with the User will save it into the database because of the CascadeType
      */
@@ -77,6 +78,18 @@ class Main {
 //            userRepository.save(user2);
 //            userRepository.save(user3);
 
+
+            userRepository.save(user1);
+            userRepository.save(user2);
+
+
+            Clan clan1 = new Clan("JennyClan", user2.getId());
+            //System.out.println(user2.getId());
+            clanRepository.save(clan1);
+            user2.setClan(clan1);
+            user1.setClan(clan1);
+            userRepository.save(user2);
+            userRepository.save(user1);
 
         };
     }
