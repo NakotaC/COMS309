@@ -2,6 +2,8 @@ package onetoone.Users;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
 import onetoone.ShopItems.ShopItem;
@@ -29,12 +31,15 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "clan_id")
+    @JsonIgnore
     private Clan clan;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonBackReference
     private Inventory inventory;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Wins wins;
 
     /*
@@ -47,6 +52,7 @@ public class User {
     public User(String Username, String password) {
         this.username = Username;
         this.password = password;
+
     }
 
     public User() {

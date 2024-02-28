@@ -2,7 +2,7 @@ package onetoone.Inventory;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Users.User;
 
@@ -21,6 +21,7 @@ public class Inventory {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 
 
@@ -35,8 +36,8 @@ public class Inventory {
         this.id = id;
     }
 
-    public Integer getUser() {
-        return user.getId();
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {

@@ -1,5 +1,6 @@
 package onetoone.Wins;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import onetoone.Users.User;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Wins {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 
     private Integer wins;
