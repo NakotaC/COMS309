@@ -32,7 +32,7 @@ public class ClanController {
     Clan getClan(@PathVariable int clan_id) {
         return clanRepository.findById(clan_id);
     }
-
+    //could possibly be replaced with a findByClanName JPA method (just learned about these)
     @PostMapping(path = "clans/{clan_name}/{user_id}")
     String newClan(@PathVariable int user_id, @PathVariable String clan_name) {
         for (int i = 1; i < clanRepository.count(); i++) {
