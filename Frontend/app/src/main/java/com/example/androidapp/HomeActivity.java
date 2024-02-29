@@ -48,8 +48,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } // else if (id1 == R.id.button) {
             //startActivity(new Intent(HomeActivity.this, FindingAGameActivity.class));
       //  }
-       // else if (id1 == R.id.shopButton) {
-     //       startActivity(new Intent(HomeActivity.this, ShopActivity.class));
-      //  }
+       else if (id1 == R.id.shopButton) {
+            startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+        }
     }
 }
