@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText passwordEntry;
 
-    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login";
+    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login3";
    // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
     @Override
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     private void makeStringReq() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
+               // "coms-309-033.class.las.iastate.edu:8080/users/login",
                 URL_STRING_REQ,
                 new Response.Listener<String>() {
                     @Override
@@ -73,10 +75,13 @@ public class LoginActivity extends AppCompatActivity {
                         // Handle the successful response here
                         Log.d("Volley Response", response);
                         String responseStr = response.replaceAll("\"", "");
-                        String temppass = password;
-                        if(responseStr.equals(password)){
+
+                        if(responseStr.equals("Success")){
                            Intent intent = new Intent(LoginActivity.this, DummyHome.class);
-                            intent.putExtra("USERNAME", username);
+                           User user = new User(username, 1000, null);
+                            Gson gson = new Gson();
+                            String userString = gson.toJson(user);
+                           intent.putExtra("USER", userString);
 
                             startActivity(intent);
                         }else{
@@ -95,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Username", username);
-//                headers.put("Content-Type", "application/json");
+                headers.put("username", username);
+                headers.put("password", password);
                 return headers;
             }
 
