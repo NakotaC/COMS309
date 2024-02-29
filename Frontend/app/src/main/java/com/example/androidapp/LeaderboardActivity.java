@@ -39,6 +39,8 @@ private ListView list1;
 private LinkedList clanListRandom;
 private static final String URL_LEADERBOARD_JSON_ARRAY =
         "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/users";
+private static final String URL_WINS_JSON_ARRAY =
+        "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/wins";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +70,9 @@ private static final String URL_LEADERBOARD_JSON_ARRAY =
     }
 
     private void makeLeaderboardJsonArrayReq() {
-        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+        LinkedList<String> names = new LinkedList();
+        LinkedList<String> wins = new LinkedList();
+        JsonArrayRequest jsonArrReq1 = new JsonArrayRequest(
                 Request.Method.GET,
                 URL_LEADERBOARD_JSON_ARRAY,
                 null, // Pass null as the request body since it's a GET request
@@ -82,12 +86,8 @@ private static final String URL_LEADERBOARD_JSON_ARRAY =
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String name = jsonObject.getString("name");
-                                String score = jsonObject.getString("emailId");
+                                names.add(i, jsonObject.getString("name"));
 
-                                // Create a ListItemObject and add it to the adapter
-                                LeaderboardItemObject item = new LeaderboardItemObject(name, score);
-                                adapter1.add(item);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -118,7 +118,42 @@ private static final String URL_LEADERBOARD_JSON_ARRAY =
             }
         };
 
+        JsonArrayRequest jsonArrReq2 = new JsonArrayRequest(
+                Request.Method.GET,
+                URL_WINS_JSON_ARRAY,
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+                        System.out.println(response.toString());
+
+                        // Parse the JSON array and add data to the adapter
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                wins.add(i,jsonObject.getString("wins"));
+
+                                // Create a ListItemObject and add it to the adapter
+                                LeaderboardItemObject item = new LeaderboardItemObject(names.get(i),
+                                        wins.get(i));
+                                adapter1.add(item);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                });
+
         // Adding request to request queue
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq1);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq2);
     }
 }
