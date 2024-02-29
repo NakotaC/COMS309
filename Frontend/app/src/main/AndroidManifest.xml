@@ -39,6 +39,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            />
+        <activity
             android:name=".LeaderboardActivity"
             android:exported="false"
             />

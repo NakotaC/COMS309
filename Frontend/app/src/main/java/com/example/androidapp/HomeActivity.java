@@ -1,12 +1,13 @@
 package com.example.androidapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -47,8 +48,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         } // else if (id1 == R.id.button) {
             //startActivity(new Intent(HomeActivity.this, FindingAGameActivity.class));
       //  }
-        else if (id1 == R.id.shopButton) {
-          startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+       else if (id1 == R.id.shopButton) {
+            startActivity(new Intent(HomeActivity.this, ShopActivity.class));
         }
     }
 }
