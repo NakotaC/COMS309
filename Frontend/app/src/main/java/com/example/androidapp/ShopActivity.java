@@ -79,7 +79,7 @@ private TextView shopHeader;
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.shopBackBtn){
-            startActivity(new Intent(ShopActivity.this, DummyHome.class));
+            startActivity(new Intent(ShopActivity.this, HomeActivity.class));
         }
     }
     /**
