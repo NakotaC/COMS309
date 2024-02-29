@@ -88,8 +88,8 @@ private TextView shopHeader;
     private void makeJsonArrayReq() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-               // "coms-309-033.class.las.iastate.edu:8080/inventory/shop",
-                URL,
+                "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop",
+               // URL,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -100,7 +100,7 @@ private TextView shopHeader;
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String name = jsonObject.getString("item_name");
+                                String name = jsonObject.getString("itemName");
                                 String description = jsonObject.getString("description");
 
                                 // Create a ListItemObject and add it to the adapter
@@ -156,8 +156,8 @@ private TextView shopHeader;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                //"coms-309-033.class.las.iastate.edu:8080/inventory/shop/buy",
-                URL,
+                "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop/buy",
+                //URL,
                 postBody,
                 new Response.Listener<JSONObject>() {
                     @Override
