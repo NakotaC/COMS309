@@ -55,7 +55,7 @@ public class InventoryController {
         ShopItem item = shopItemsRepository.findById(iid);
         user.setItems(item);
         userRepository.save(user);
-        return "Success";
+        return success;
     }
 
 

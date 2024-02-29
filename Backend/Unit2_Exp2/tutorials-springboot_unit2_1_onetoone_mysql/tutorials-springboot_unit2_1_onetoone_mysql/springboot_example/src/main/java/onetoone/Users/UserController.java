@@ -53,12 +53,12 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername())){
-                return "Failure";
+                return failure;
             }
         }
         User user = new User(username, password);
         userRepository.save(user);
-        return "Success";
+        return success;
     }
 
     @GetMapping(path = "/users/login")
@@ -66,10 +66,10 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
-                return "Success";
+                return success;
             }
         }
-        return "Failure";
+        return failure;
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")
