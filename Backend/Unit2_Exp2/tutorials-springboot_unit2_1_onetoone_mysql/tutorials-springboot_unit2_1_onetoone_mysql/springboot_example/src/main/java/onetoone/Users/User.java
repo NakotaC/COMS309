@@ -2,9 +2,13 @@ package onetoone.Users;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
+import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
+import java.util.List;
 
 /**
  * 
@@ -27,15 +31,17 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "clan_id")
+    @JsonIgnore
     private Clan clan;
 
-    @OneToOne
-    @JoinColumn(name = "inv_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonBackReference
     private Inventory inventory;
 
-    @OneToOne
-    @JoinColumn(name = "wins_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Wins wins;
+
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
@@ -44,8 +50,14 @@ public class User {
      */
 
     public User(String Username, String password) {
-        this.username = Username;
+        if(Username != null) {
+            this.username = Username;
+        }
+        else {
+            this.username = " ";
+        }
         this.password = password;
+        this.setWins(0);
     }
 
     public User() {
@@ -74,8 +86,8 @@ public class User {
     public void setPassword(String Password){
         this.password = Password;
     }
-    public Clan getClan(){
-        return clan;
+    public int getClan(){
+        return clan.getId();
     }
 
     public void setClan(Clan clan){
@@ -86,14 +98,42 @@ public class User {
     }
 
     public void setInventory(Inventory inventory){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
         this.inventory = inventory;
+        inventory.setUser(this);
+    }
+
+//    public void setInventory(List<ShopItem> shopItem){
+//        if (this.inventory == null) {
+//            this.inventory = new Inventory();
+//        }
+//        this.inventory = inventory;
+//    }
+    public void setItems(List<ShopItem> shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
+    }
+
+    public void setItems(ShopItem shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
     }
     public Wins getWins(){
         return wins;
     }
 
-    public void setWins(Wins wins){
-        this.wins = wins;
+    public void setWins(int wins){
+        if (this.wins == null) {
+            this.wins = new Wins(0);
+            this.wins.setUser(this);
+        }
+        this.wins.setWins(wins);
     }
 
 }

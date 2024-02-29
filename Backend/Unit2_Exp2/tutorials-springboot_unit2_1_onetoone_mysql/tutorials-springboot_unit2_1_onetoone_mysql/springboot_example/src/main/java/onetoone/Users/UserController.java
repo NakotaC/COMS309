@@ -1,16 +1,14 @@
 package onetoone.Users;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import onetoone.Clans.ClanRepository;
 import onetoone.Inventory.InventoryRepository;
+import onetoone.Wins.WinsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import onetoone.Laptops.LaptopRepository;
 
@@ -48,12 +46,30 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @PostMapping(path = "/users")
-    String createUser(@RequestBody User user){
-        if (user == null)
-            return failure;
+
+    @PostMapping(path = "/users/signup")
+
+    String createUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
+        List<User> users = userRepository.findAll();
+        for (int i = 1; i < users.size(); i++){
+            if (username.equals(users.get(i).getUsername())){
+                return failure;
+            }
+        }
+        User user = new User(username, password);
         userRepository.save(user);
         return success;
+    }
+
+    @GetMapping(path = "/users/login")
+    String loginUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
+        List<User> users = userRepository.findAll();
+        for (int i = 1; i < users.size(); i++){
+            if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
+                return "success";
+            }
+        }
+        return "failure";
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")
