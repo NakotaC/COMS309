@@ -37,7 +37,7 @@ private TextView shopHeader;
     Button back;
 
     String username;
-    private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop2";
+    private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shoptest3";
 
     //inverntory/shop
     //inventory/shop/buy
@@ -100,11 +100,11 @@ private TextView shopHeader;
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String name = jsonObject.getString("name");
-                                int price = jsonObject.getInt("price");
+                                String name = jsonObject.getString("item_name");
+                                String description = jsonObject.getString("description");
 
                                 // Create a ListItemObject and add it to the adapter
-                                ListItemObject item = new ListItemObject(name, price);
+                                ListItemObject item = new ListItemObject(name, description);
                                ListAdapter tmp = adapter;
                                 adapter.add(item);
 
@@ -163,9 +163,15 @@ private TextView shopHeader;
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        String msg = response.toString().replaceAll("\"", "");
+                        String msg = null;
+                        try {
+                            msg = response.getString("message").replaceAll("\"", "");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         respondText.setText(msg);
+                        respondText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         respondText.setVisibility(TextView.VISIBLE);
                     }
                 },

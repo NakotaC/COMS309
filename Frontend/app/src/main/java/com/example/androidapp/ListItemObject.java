@@ -2,11 +2,11 @@ package com.example.androidapp;
 
 public class ListItemObject {
     private String name;
-    private String price;
+    private String description;
 
-    public ListItemObject(String name, int price) {
+    public ListItemObject(String name, String description) {
         this.name = name;
-        this.price = String.valueOf(price);
+        this.description = String.valueOf(description);
     }
 
     public String getName() {
@@ -14,6 +14,6 @@ public class ListItemObject {
     }
 
     public String getPrice() {
-        return price;
+        return description;
     }
 }

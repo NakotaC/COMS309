@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText passwordEntry;
 
 private User user;
-    private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signup3";
+    private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signuptest";
     // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
 
@@ -82,10 +83,14 @@ private User user;
 
                         String responseString;
 
-                        responseString = response.toString().replaceAll("\"", "");
+                        try {
+                            responseString = response.getString("message").replaceAll("\"", "");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
-                       // if(responseString.equals("Success")){
-                        if(true){
+                         if(responseString.equals("success")){
+
                             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                         }else{
                             usernameTakenTxt.setVisibility(View.VISIBLE);

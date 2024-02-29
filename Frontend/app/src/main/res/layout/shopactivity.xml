@@ -5,94 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buy5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="204dp"
-        android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buy3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="32dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
-        android:id="@+id/buy4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
-        android:layout_marginEnd="32dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
-        android:id="@+id/buy7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="76dp"
-        android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buy8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="4dp"
-        android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buy6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="136dp"
-        android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/buy1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
-        android:id="@+id/buy2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="32dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
     <ListView
         android:id="@+id/shopList"
-        android:layout_width="245dp"
-        android:layout_height="522dp"
+        android:layout_width="377dp"
+        android:layout_height="573dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shop_text">
+        app:layout_constraintTop_toBottomOf="@+id/respondText">
 
     </ListView>
 
@@ -101,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/aldrich"
         android:text="Shop:"
         android:textSize="48sp"
@@ -121,10 +41,10 @@
 
     <TextView
         android:id="@+id/respondText"
-        android:layout_width="82dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="253dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="24dp"
         android:text="blank"
         android:textSize="20sp"
         android:visibility="invisible"
