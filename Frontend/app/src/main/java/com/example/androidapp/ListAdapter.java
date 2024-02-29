@@ -14,6 +14,7 @@ public class ListAdapter extends ArrayAdapter<ListItemObject> {
 
     public ListAdapter(Context context, List<ListItemObject> items) {
         super(context, 0, items);
+
     }
 
     @Override

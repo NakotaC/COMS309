@@ -6,11 +6,21 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/buy1"
+        android:id="@+id/buy5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="204dp"
+        android:text="Buy"
+        app:layout_constraintBottom_toBottomOf="@+id/shopList"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buy3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="32dp"
         android:text="Buy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/shopList" />
@@ -20,37 +30,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="204dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="32dp"
         android:text="Buy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
-        android:id="@+id/buy3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="44dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
-        android:id="@+id/buy8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="4dp"
-        android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/buy7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="76dp"
+        android:text="Buy"
+        app:layout_constraintBottom_toBottomOf="@+id/shopList"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buy8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:text="Buy"
         app:layout_constraintBottom_toBottomOf="@+id/shopList"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -59,26 +59,36 @@
         android:id="@+id/buy6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="28dp"
         android:layout_marginBottom="136dp"
         android:text="Buy"
         app:layout_constraintBottom_toBottomOf="@+id/shopList"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/buy5"
+        android:id="@+id/buy1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
         android:text="Buy"
-        app:layout_constraintBottom_toBottomOf="@+id/shopList"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shopList" />
+
+    <Button
+        android:id="@+id/buy2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="32dp"
+        android:text="Buy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shopList" />
 
     <ListView
         android:id="@+id/shopList"
-        android:layout_width="227dp"
-        android:layout_height="520dp"
+        android:layout_width="245dp"
+        android:layout_height="522dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,16 +109,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buy2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="44dp"
-        android:text="Buy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shopList" />
-
-    <Button
         android:id="@+id/shopBackBtn"
         android:layout_width="213dp"
         android:layout_height="77dp"
@@ -118,4 +118,16 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/respondText"
+        android:layout_width="82dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="20dp"
+        android:text="blank"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shop_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,18 +2,18 @@ package com.example.androidapp;
 
 public class ListItemObject {
     private String name;
-    private int price;
+    private String price;
 
     public ListItemObject(String name, int price) {
         this.name = name;
-        this.price = price;
+        this.price = String.valueOf(price);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 }

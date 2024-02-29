@@ -19,13 +19,18 @@ private Button shopButton;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dummyhomeactivity);
-    Bundle extras = getIntent().getExtras();
-     String username =  extras.getString("USERNAME");
+   // Bundle extras = getIntent().getExtras();
+//    if(extras != null) {
+//        String username = extras.getString("USERNAME");
+//        welcome.setText("Welcome " + username);
+//    }else{
+//        welcome.setText("Welcome");
+//    }
         header = findViewById(R.id.homeheader);
        welcome = findViewById(R.id.splash);
        shopButton = findViewById(R.id.shop_button);
 
-        welcome.setText("Welcome " + username);
+
         welcome.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER);
 
         shopButton.setOnClickListener(new View.OnClickListener() {

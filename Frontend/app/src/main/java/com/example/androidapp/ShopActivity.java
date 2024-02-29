@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,59 +28,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener{
-
+private TextView shopHeader;
+       private TextView respondText;
     private Button btnJsonArrReq;
     private ListAdapter adapter;
     private ListView listView;
+    int buyNum;
+    Button back;
 
-    Button buy1, buy2, buy3, buy4, buy5, buy6, buy7, buy8, back;
+    String username;
+    private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop2";
 
-
-    private static final String URL_JSON_ARRAY = "http://coms-309-033.class.las.iastate.edu:8080/shop";
+    //inverntory/shop
+    //inventory/shop/buy
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopactivity);
 
-
+        shopHeader = findViewById(R.id.shop_text);
+        respondText = findViewById(R.id.respondText);
         listView = findViewById(R.id.shopList);
-        buy1 = findViewById(R.id.buy1);
-        buy2 = findViewById(R.id.buy2);
-        buy3 = findViewById(R.id.buy3);
-        buy4 = findViewById(R.id.buy4);
-        buy5 = findViewById(R.id.buy5);
-        buy6 = findViewById(R.id.buy6);
-        buy7 = findViewById(R.id.buy7);
-        buy8 = findViewById(R.id.buy8);
         back = findViewById(R.id.shopBackBtn);
 
         // Initialize the adapter with an empty list (data will be added later)
         adapter = new ListAdapter(this, new ArrayList<>());
         listView.setAdapter(adapter);
 
-        buy1.setOnClickListener(this);
-        buy2.setOnClickListener(this);
-        buy3.setOnClickListener(this);
-        buy4.setOnClickListener(this);
-        buy5.setOnClickListener(this);
-        buy6.setOnClickListener(this);
-        buy7.setOnClickListener(this);
-        buy8.setOnClickListener(this);
+
         back.setOnClickListener(this);
 
 
         makeJsonArrayReq();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
+                buyNum = (int)id;
+                try {
+                    postRequest();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
+        });
     }
-    @Override
+
+        @Override
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.shopBackBtn){
             startActivity(new Intent(ShopActivity.this, DummyHome.class));
-        } else {
-
         }
     }
     /**
@@ -84,7 +88,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
     private void makeJsonArrayReq() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                URL_JSON_ARRAY,
+               // "coms-309-033.class.las.iastate.edu:8080/inventory/shop",
+                URL,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -100,6 +105,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
                                 // Create a ListItemObject and add it to the adapter
                                 ListItemObject item = new ListItemObject(name, price);
+                               ListAdapter tmp = adapter;
                                 adapter.add(item);
 
                             } catch (JSONException e) {
@@ -133,5 +139,61 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+
+    private void postRequest() throws JSONException {
+
+        // Convert input to JSONObject
+        Gson gson = new Gson();
+
+        String jsonString = "{\"buyNum\" : " + buyNum + "}";
+        JSONObject postBody = null;
+        try {
+            postBody = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                //"coms-309-033.class.las.iastate.edu:8080/inventory/shop/buy",
+                URL,
+                postBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String msg = response.toString().replaceAll("\"", "");
+
+                        respondText.setText(msg);
+                        respondText.setVisibility(TextView.VISIBLE);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                                headers.put("username", username);
+                               headers.put("item", String.valueOf(buyNum));
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 }

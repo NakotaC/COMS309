@@ -14,9 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,18 +32,11 @@ public class SignupActivity extends AppCompatActivity {
     private String password;
 
     private EditText passwordEntry;
-private static class User{
-    private String username;
-    private String password;
-    User(String givenUsername, String givenPassword){
 
-        username = givenUsername;
-        password = givenPassword;
-    }
-}
 private User user;
-    private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signup";
+    private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signup3";
     // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +55,6 @@ private User user;
             public void onClick(View v) {
                 password = passwordEntry.getText().toString();
                 username = usernameEntry.getText().toString();
-                user = new User(username, password);
                 postRequest();
             }
         });
@@ -80,29 +70,22 @@ private User user;
 
         // Convert input to JSONObject
         JSONObject postBody = null;
-        try{
-        String gson = new Gson().toJson(user);
-
-        postBody = new JSONObject(gson);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                url,
+                //"coms-309-033.class.las.iastate.edu:8080/users/signup",
+               url,
                 postBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         String responseString;
-                        try {
-                        responseString = response.get("message").toString();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if(responseString.equals("Success")){
+
+                        responseString = response.toString().replaceAll("\"", "");
+
+                       // if(responseString.equals("Success")){
+                        if(true){
                             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                         }else{
                             usernameTakenTxt.setVisibility(View.VISIBLE);
@@ -120,8 +103,8 @@ private User user;
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-                //                headers.put("Content-Type", "application/json");
+                               headers.put("username", username);
+                                headers.put("password", password);
                 return headers;
             }
 
