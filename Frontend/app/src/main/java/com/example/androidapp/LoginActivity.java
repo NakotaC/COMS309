@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
 
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         String responseStr = response.replaceAll("\"", "");
 
                         if(responseStr.equals("Success")){
-                           Intent intent = new Intent(LoginActivity.this, DummyHome.class);
+                           Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                            User user = new User(username, 1000, null);
                             Gson gson = new Gson();
                             String userString = gson.toJson(user);
