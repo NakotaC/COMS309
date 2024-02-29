@@ -33,8 +33,8 @@ public class ClanController {
         return clanRepository.findById(clan_id);
     }
 
-    @PostMapping(path = "clans/{clan_name}")
-    String newClan(@RequestBody int user_id, @PathVariable String clan_name) {
+    @PostMapping(path = "clans/{clan_name}/{user_id}")
+    String newClan(@PathVariable int user_id, @PathVariable String clan_name) {
         for (int i = 1; i < clanRepository.count(); i++) {
             if (clan_name.equals(clanRepository.findById(i).getClanName())) {
                 return failure;
