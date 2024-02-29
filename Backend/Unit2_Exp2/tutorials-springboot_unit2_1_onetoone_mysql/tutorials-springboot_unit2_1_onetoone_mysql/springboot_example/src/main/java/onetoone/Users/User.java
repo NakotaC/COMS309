@@ -50,7 +50,12 @@ public class User {
      */
 
     public User(String Username, String password) {
-        this.username = Username;
+        if(Username != null) {
+            this.username = Username;
+        }
+        else {
+            this.username = " ";
+        }
         this.password = password;
         this.setWins(0);
     }
