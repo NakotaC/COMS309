@@ -16,7 +16,7 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany
+    @ManyToMany
     private List<ShopItem> shopItems;
 
     @OneToOne(cascade = CascadeType.ALL)
