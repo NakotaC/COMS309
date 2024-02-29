@@ -29,7 +29,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
     private Button menu_button;
 
-    private static final String URL_JSON_OBJECT = "https://ef1121ad-2002-4195-9fa4-b838cf616118.mock.pstmn.io/Object";
+    private static final String URL_JSON_OBJECT = "coms-309-033.class.las.iastate.edu:8080/users/1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,8 @@ public class JsonObjReqActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
                         msgResponse.setText(response.toString());
+                        Object obj = new Object();
+
                     }
                 },
                 new Response.ErrorListener() {
