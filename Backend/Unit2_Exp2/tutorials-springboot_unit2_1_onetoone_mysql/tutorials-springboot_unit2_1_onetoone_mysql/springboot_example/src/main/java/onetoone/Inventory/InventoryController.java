@@ -43,7 +43,9 @@ public class InventoryController {
     }
 
     @PostMapping(path = "/inventory/shop/buy")
-    String buyItem(@RequestHeader("item") int iid, @RequestHeader("username") String username){
+    String buyItem(@RequestHeader String iiid, @RequestHeader("username") String username){
+        int iid = Integer.parseInt(iiid);
+        System.out.println(iid);
         List<User> users = userRepository.findAll();
         int uid = 1;
         for (int i = 1; i < users.size(); i++) {

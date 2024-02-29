@@ -66,10 +66,10 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
-                return success;
+                return "success";
             }
         }
-        return failure;
+        return "failure";
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")
