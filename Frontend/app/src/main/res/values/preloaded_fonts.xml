@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/im_fell_great_primer</item>
+        <item>@font/inter</item>
+        <item>@font/irish_grover</item>
+    </array>
+</resources>
