@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<LeaderboardItemObject> {
+public class ListAdapter1 extends ArrayAdapter<LeaderboardItemObject> {
 
-    public ListAdapter(Context context, List<LeaderboardItemObject> items) {
+    public ListAdapter1(Context context, List<LeaderboardItemObject> items) {
         super(context, 0, items);
     }
 
@@ -22,7 +22,7 @@ public class ListAdapter extends ArrayAdapter<LeaderboardItemObject> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent,
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item1, parent,
                     false);
         }
 

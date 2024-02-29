@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -40,7 +39,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
     private MaterialButton addWins;
     private EditText textInput1;
     private EditText textInput2;
-    private ListAdapter adapter1;
+    private ListAdapter1 adapter1;
     private ListView list1;
     private LinkedList clanListRandom;
     private static final String URL_LEADERBOARD_JSON_ARRAY =
@@ -66,7 +65,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
         addWins.setOnClickListener(this);
 
 
-        adapter1 = new ListAdapter(this, new LinkedList<>());
+        adapter1 = new ListAdapter1(this, new LinkedList<>());
         list1.setAdapter(adapter1);
 
         makeLeaderboardJsonArrayReq();
@@ -78,7 +77,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         int id1 = v.getId();
         if (id1 == R.id.toolbar1) {
-            startActivity(new Intent(LeaderboardActivity.this, MainActivity.class));
+            startActivity(new Intent(LeaderboardActivity.this, HomeActivity.class));
         }
         else if (id1 == R.id.addWinsButton)
         {

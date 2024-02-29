@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MaterialButton button1;
     private MaterialButton clanButton;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
 
        // imageButton1 = findViewById(R.id.imageButton1);
@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
-            startActivity(new Intent(MainActivity.this, LeaderboardActivity.class));
+            startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
         } // else if (id1 == R.id.button) {
-            //startActivity(new Intent(MainActivity.this, FindingAGameActivity.class));
+            //startActivity(new Intent(HomeActivity.this, FindingAGameActivity.class));
       //  }
        // else if (id1 == R.id.shopButton) {
-     //       startActivity(new Intent(MainActivity.this, ShopActivity.class));
+     //       startActivity(new Intent(HomeActivity.this, ShopActivity.class));
       //  }
     }
 }
