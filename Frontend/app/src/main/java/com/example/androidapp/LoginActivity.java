@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     private void makeStringReq() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-               // "coms-309-033.class.las.iastate.edu:8080/users/login",
-                URL_STRING_REQ,
+                "http://coms-309-033.class.las.iastate.edu:8080/users/login",
+               // URL_STRING_REQ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
