@@ -14,7 +14,7 @@
         android:layout_marginEnd="2dp"
         android:background="#D9D9D9"
         android:fontFamily="@font/im_fell_great_primer"
-        android:text="Stats"
+        android:text="Clans"
         android:textAllCaps="false"
         android:textAppearance="?attr/textAppearanceButton"
         android:textColor="@color/black"
@@ -69,5 +69,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text1" />
+
+    <ImageButton
+        android:id="@+id/statsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="623dp"
+        android:contentDescription="@string/statsButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
