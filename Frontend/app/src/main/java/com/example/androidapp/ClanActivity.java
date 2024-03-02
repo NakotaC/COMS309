@@ -2,9 +2,11 @@ package com.example.androidapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -14,12 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -29,7 +32,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 public class ClanActivity extends AppCompatActivity implements View.OnClickListener {
@@ -50,6 +55,8 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     private LinkedList<ClanItemObject> clanItemList;
     private MaterialToolbar materialToolbar;
     private Button newClanButton;
+    private TextView textView1;
+    private TextView textView2;
 
 
 
@@ -58,6 +65,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
+    private String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans";
     private ProgressBar progressBar;
 
 
@@ -71,6 +79,9 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
         courseRV = findViewById(R.id.idRVCourses);
         materialToolbar = findViewById(R.id.materialToolbar);
+        newClanButton = findViewById(R.id.newClanButton);
+        textView1 = findViewById(R.id.clanNameInput);
+        textView2 = findViewById(R.id.UserIdInput);
 
         materialToolbar.setOnClickListener(this);
 
@@ -86,9 +97,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         int id1 = v.getId();
         if (id1 == R.id.materialToolbar) {
             startActivity(new Intent(ClanActivity.this, HomeActivity.class));
-        } //else if (id1 == R.id.newClanButton) {
-           // startActivity(new Intent(ClanActivity.this, LeaderboardActivity.class));
-       // }
+        }
     }
 
 
@@ -130,6 +139,69 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         });
         queue.add(jsonArrayRequest);
 
+    }
+
+    private void postRequest() {
+
+        // Convert input to JSONObject
+        JSONObject postBody = null;
+        String finalUrlPostRequest = "";
+        try {
+            // etRequest should contain a JSON object string as your POST body
+            // similar to what you would have in POSTMAN-body field
+            // and the fields should match with the object structure of @RequestBody on sb
+            finalUrlPostRequest = URL_POST_REQUEST + textView1.getText().toString() + "/";
+            finalUrlPostRequest = finalUrlPostRequest + textView2.getText().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                finalUrlPostRequest,
+                postBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response to POST", response.toString());
+                        String responseString = "";
+                        try {
+                           responseString = response.getString("message").replaceAll("\"", "");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if(responseString == "success")
+                        {
+                            Toast.makeText(ClanActivity.this, "Clan has been succesfully added", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                //                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
 
