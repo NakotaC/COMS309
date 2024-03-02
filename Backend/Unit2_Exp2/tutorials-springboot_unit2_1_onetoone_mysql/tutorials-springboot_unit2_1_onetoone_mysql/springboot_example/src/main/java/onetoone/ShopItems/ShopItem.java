@@ -17,10 +17,6 @@ public class ShopItem {
 
     private String description;
 
-//    @ManyToOne
-//    @JoinColumn(name = "inventory_id")
-//    private Inventory inventory;
-
     public ShopItem(){
 
     }
