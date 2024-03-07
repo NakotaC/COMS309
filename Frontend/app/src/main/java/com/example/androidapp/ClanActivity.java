@@ -65,7 +65,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
-    private String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans";
+    private String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
     private ProgressBar progressBar;
 
 
@@ -84,6 +84,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         textView2 = findViewById(R.id.UserIdInput);
 
         materialToolbar.setOnClickListener(this);
+        newClanButton.setOnClickListener(this);
 
         clanItemList = new LinkedList<>();
         parseJsonArray();
@@ -97,6 +98,10 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         int id1 = v.getId();
         if (id1 == R.id.materialToolbar) {
             startActivity(new Intent(ClanActivity.this, HomeActivity.class));
+        } else if (id1 == R.id.newClanButton)
+        {
+            postRequest();
+            Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,9 +118,13 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
                         String clanName = responseObj.getString("clanName");
-                        String clanLevel = responseObj.getString("clanLevel");
-                        String clanAvailability = responseObj.getString("clanAvailability");
-                        clanItemList.add(new ClanItemObject(clanName, clanLevel, clanAvailability));
+                        JSONArray members = responseObj.getJSONArray("members");
+                        for (int j = 0; j < members.length(); j++)
+                        {
+                        Log.d("Clan Members", members.toString());
+                        }
+                        int clanLevel = responseObj.getInt("leader");
+                        clanItemList.add(new ClanItemObject(clanName, String.valueOf(clanLevel)));
                         constructRecyclerView();
 
                     } catch (JSONException e) {
@@ -166,14 +175,19 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("Volley Response to POST", response.toString());
                         String responseString = "";
                         try {
-                           responseString = response.getString("message").replaceAll("\"", "");
+                           responseString = response.getString("message");
+                            if(responseString.equals("success"))
+                            {
+                                Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (responseString.equals("failure"))
+                            {
+                                Toast.makeText(ClanActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        if(responseString == "success")
-                        {
-                            Toast.makeText(ClanActivity.this, "Clan has been succesfully added", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
                 },
                 new Response.ErrorListener() {

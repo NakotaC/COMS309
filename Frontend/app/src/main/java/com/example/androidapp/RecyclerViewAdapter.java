@@ -59,7 +59,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ClanItemObject item = clanItemList.get(position);
         holder.clanNameLabel.setText(item.getClanName());
         holder.clanAvailability.setText(item.getClanLevel());
-        holder.clanLevel.setText(item.getClanAvailability());
 
     }
 
