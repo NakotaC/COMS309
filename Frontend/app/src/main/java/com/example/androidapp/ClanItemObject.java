@@ -11,10 +11,9 @@ public class ClanItemObject
 
 
 
-    public ClanItemObject(String clanName, String clanLevel, String clanAvailability) {
+    public ClanItemObject(String clanName, String clanLevel) {
         this.clanName = clanName;
         this.clanLevel = clanLevel;
-        this.clanAvailability = clanAvailability;
 
     }
 
