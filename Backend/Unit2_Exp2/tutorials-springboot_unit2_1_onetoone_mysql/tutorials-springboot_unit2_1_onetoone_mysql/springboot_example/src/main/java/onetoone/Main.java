@@ -70,6 +70,7 @@ class Main {
             inv2items.add(SI6);
             inv3items.add(SI7);
             inv3items.add(SI8);
+            user2.setWins(14000);
             inventory1.setShopItems(inv1items);
             inventory2.setShopItems(inv2items);
             inventory3.setShopItems(inv3items);
