@@ -2,11 +2,12 @@ package onetoone.Users;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import onetoone.Cosmetics.Cosmetic;
-import onetoone.Laptops.Laptop;
 import onetoone.Clans.Clan;
-
+import onetoone.Inventory.Inventory;
+import onetoone.ShopItems.ShopItem;
+import onetoone.Wins.Wins;
 import java.util.List;
 
 /**
@@ -25,36 +26,38 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String emailId;
-    private boolean ifActive;
-    private int score;
+    private String username;
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "clan_id")
+    @JsonIgnore
     private Clan clan;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_cosmetic",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "cosmetic_id")
-    )
-    private List<Cosmetic> inventory;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonBackReference
+    private Inventory inventory;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Wins wins;
+
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
-    private Laptop laptop;
 
-    public User(String name, String emailId) {
-        this.name = name;
-        this.emailId = emailId;
-        this.ifActive = true;
+    public User(String Username, String password) {
+        if(Username != null) {
+            this.username = Username;
+        }
+        else {
+            this.username = " ";
+        }
+        this.password = password;
+        this.setWins(0);
     }
 
     public User() {
@@ -69,39 +72,68 @@ public class User {
     public void setId(int id){
         this.id = id;
     }
-    public int getScore() {return score; }
-    public void setScore(int score) {this.score = score; }
-
-    public String getName(){
-        return name;
+    public String getUsername(){
+        return username;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setUsername(String Username){
+        this.username = Username;
+    }
+    public String getPassword(){
+        return password;
     }
 
-    public String getEmailId(){
-        return emailId;
+    public void setPassword(String Password){
+        this.password = Password;
+    }
+    public int getClan(){
+        return clan.getId();
     }
 
-    public void setEmailId(String emailId){
-        this.emailId = emailId;
+    public void setClan(Clan clan){
+        this.clan = clan;
+    }
+    public Inventory getInventory(){
+        return inventory;
     }
 
-    public boolean getIsActive(){
-        return ifActive;
+    public void setInventory(Inventory inventory){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory = inventory;
+        inventory.setUser(this);
     }
 
-    public void setIfActive(boolean ifActive){
-        this.ifActive = ifActive;
+//    public void setInventory(List<ShopItem> shopItem){
+//        if (this.inventory == null) {
+//            this.inventory = new Inventory();
+//        }
+//        this.inventory = inventory;
+//    }
+    public void setItems(List<ShopItem> shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
     }
 
-    public Laptop getLaptop(){
-        return laptop;
+    public void setItems(ShopItem shopItem){
+        if (this.inventory == null) {
+            this.inventory = new Inventory();
+        }
+        this.inventory.setShopItems(shopItem);
+    }
+    public Wins getWins(){
+        return wins;
     }
 
-    public void setLaptop(Laptop laptop){
-        this.laptop = laptop;
+    public void setWins(int wins){
+        if (this.wins == null) {
+            this.wins = new Wins(0);
+            this.wins.setUser(this);
+        }
+        this.wins.setWins(wins);
     }
-    
+
 }
