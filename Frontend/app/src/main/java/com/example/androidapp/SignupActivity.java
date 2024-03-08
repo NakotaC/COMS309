@@ -74,8 +74,8 @@ private User user;
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                //"coms-309-033.class.las.iastate.edu:8080/users/signup",
-               url,
+                "http://coms-309-033.class.las.iastate.edu:8080/users/signup",
+               //url,
                 postBody,
                 new Response.Listener<JSONObject>() {
                     @Override
