@@ -60,6 +60,17 @@
 <!--&lt;!&ndash;      <version>5.4.32.Final</version>&ndash;&gt;-->
 <!--    </dependency>-->
 
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+
+
   </dependencies>
 
   <build>
