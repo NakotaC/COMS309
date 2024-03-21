@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,8 +35,8 @@ private TextView shopHeader;
     int buyNum;
     Button back;
 
-    String username;
-    private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shoptest3";
+    String username = "username";
+    private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
 
     //inverntory/shop
     //inventory/shop/buy
@@ -89,7 +88,7 @@ private TextView shopHeader;
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
                 "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop",
-               // URL,
+                //URL,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -144,15 +143,15 @@ private TextView shopHeader;
     private void postRequest() throws JSONException {
 
         // Convert input to JSONObject
-        Gson gson = new Gson();
 
-        String jsonString = "{\"buyNum\" : " + buyNum + "}";
-        JSONObject postBody = null;
-        try {
-            postBody = new JSONObject(jsonString);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        JSONObject postBody = new JSONObject("{\"item\" : \"1\"}");
+        postBody=null;
+//        Log.d("\n", postBody.toString());
+//        try {
+//            postBody = new JSONObject(jsonString);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
@@ -179,14 +178,18 @@ private TextView shopHeader;
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", error.toString());
+                        error.printStackTrace();
                     }
                 }
         ){
+
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                                headers.put("username", username);
-                               headers.put("item", String.valueOf(buyNum));
+                String temp = String.valueOf(buyNum);
+                headers.put("item", "5");
+                headers.put("username", "user");
                 return headers;
             }
 
@@ -198,7 +201,10 @@ private TextView shopHeader;
                 return params;
             }
         };
-
+//        request.setRetryPolicy(new DefaultRetryPolicy(
+//                1000*20,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
