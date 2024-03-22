@@ -18,11 +18,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton shopButton;
     private TextView text1;
     private ImageButton imageButton1;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        user = (User) extras.getSerializable("USEROBJ");
 
        // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);

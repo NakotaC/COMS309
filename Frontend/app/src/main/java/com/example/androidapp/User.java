@@ -1,8 +1,14 @@
 package com.example.androidapp;
 
-public class User {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String username;
-    private String[] ownedItems;
+    private SerializableJSONArray ownedItems;
     private int bank;
 
     User(){
@@ -10,17 +16,22 @@ public class User {
         ownedItems = null;
         bank = 0;
     }
-    User(String username, int bank, String[] items){
+    User(JSONObject object) throws JSONException {
+        this.username = object.getString("username");
+        this.bank = object.getInt("bank");
+        this.ownedItems = new SerializableJSONArray(object.getJSONArray("ownedItems"));
+    }
+    User(String username, int bank, JSONArray items){
         this.username = username;
         this.bank = bank;
-        this.ownedItems = items;
+        this.ownedItems = new SerializableJSONArray(items);
     }
 
     public int getBank() {
         return bank;
     }
 
-    public String[] getOwnedItems() {
+    public SerializableJSONArray getOwnedItems() {
         return ownedItems;
     }
 
@@ -28,13 +39,13 @@ public class User {
         return username;
     }
 
-    public String[] addItem(String item){
-        int length = this.ownedItems.length + 1;
-        String[] temp = new String[length];
+    public JSONArray addItem(String item) throws JSONException {
+        int length = this.ownedItems.getJSONArray().length() + 1;
+        JSONArray temp = new JSONArray();
         for (int i = 0; i < length - 1; i++){
-            temp[i] = this.ownedItems[i];
+            temp.put(this.ownedItems.getJSONArray().get(i));
         }
-        temp[length-1] = item;
+        temp.put(item);
         return temp;
     }
 }

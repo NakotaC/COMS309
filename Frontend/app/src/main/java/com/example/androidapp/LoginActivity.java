@@ -14,7 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText passwordEntry;
 
-    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login3";
+    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login5";
    // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
     @Override
@@ -65,23 +67,32 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void makeStringReq() {
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                //URL_STRING_REQ,
+                //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
+                URL_STRING_REQ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Handle the successful response here
                         Log.d("Volley Response", response);
                         String responseStr = response.replaceAll("\"", "");
-
-                        if(responseStr.equals("success")){
+                        JSONObject responseObj = null;
+                        try {
+                          responseObj = new JSONObject(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if(responseObj.has("username")){
                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                           User user = new User(username, 1000, null);
-                            Gson gson = new Gson();
-                            String userString = gson.toJson(user);
-                           intent.putExtra("USER", userString);
+                            User user = null;
+                            try {
+                                user = new User(responseObj);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                           intent.putExtra("USEROBJ", user);
 
                             startActivity(intent);
                         }else{
