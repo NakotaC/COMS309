@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.ShopInventory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.GameObjs.User;
+import com.example.androidapp.HomeActivity;
+import com.example.androidapp.ListItemObject;
+import com.example.androidapp.R;
+import com.example.androidapp.connectivity.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +39,7 @@ private TextView shopHeader;
     private ListView listView;
     int buyNum;
     Button back;
-
-    String username = "username";
+    User user;
     private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
 
     //inverntory/shop
@@ -45,6 +49,10 @@ private TextView shopHeader;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopactivity);
+
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        user = (User) extras.getSerializable("USEROBJ");
 
         shopHeader = findViewById(R.id.shop_text);
         respondText = findViewById(R.id.respondText);
@@ -78,7 +86,9 @@ private TextView shopHeader;
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.shopBackBtn){
-            startActivity(new Intent(ShopActivity.this, HomeActivity.class));
+            Intent intent = new Intent(ShopActivity.this, HomeActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
         }
     }
     /**
@@ -188,8 +198,8 @@ private TextView shopHeader;
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 String temp = String.valueOf(buyNum);
-                headers.put("item", "5");
-                headers.put("username", "user");
+                headers.put("item", String.valueOf(buyNum));
+                headers.put("username", user.getUsername());
                 return headers;
             }
 

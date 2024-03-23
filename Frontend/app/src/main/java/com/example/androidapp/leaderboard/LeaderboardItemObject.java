@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.leaderboard;
 
 public class LeaderboardItemObject {
     private String name;

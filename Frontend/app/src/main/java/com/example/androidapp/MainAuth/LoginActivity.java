@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.MainAuth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.androidapp.HomeActivity;
+import com.example.androidapp.R;
+import com.example.androidapp.GameObjs.User;
+import com.example.androidapp.connectivity.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // Adding request to request queue
-        com.example.androidapp.VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 }
 

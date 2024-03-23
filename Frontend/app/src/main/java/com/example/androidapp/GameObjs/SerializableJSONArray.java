@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.GameObjs;
 
 import org.json.JSONArray;
 import org.json.JSONException;

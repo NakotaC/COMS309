@@ -18,19 +18,19 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainAuth.LoginActivity"
             android:exported="false"/>
         <activity
-            android:name=".SignupActivity"
+            android:name=".MainAuth.SignupActivity"
             android:exported="false"/>
         <activity
-            android:name=".ShopActivity"
+            android:name=".ShopInventory.ShopActivity"
             android:exported="false"/>
         <activity
             android:name=".HomeActivity"
             android:exported="false"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".MainAuth.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LeaderboardActivity"
+            android:name=".leaderboard.LeaderboardActivity"
             android:exported="false"
             />
         <meta-data

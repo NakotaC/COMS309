@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidapp.GameObjs.User;
+import com.example.androidapp.ShopInventory.ShopActivity;
+import com.example.androidapp.leaderboard.LeaderboardActivity;
 import com.google.android.material.button.MaterialButton;
 
 
@@ -46,12 +49,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
-            startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
-        } // else if (id1 == R.id.button) {
-            //startActivity(new Intent(HomeActivity.this, FindingAGameActivity.class));
-      //  }
+            Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
+        }  else if (id1 == R.id.button) {
+            Intent intent = new Intent(HomeActivity.this, GameActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
+        }
         else if (id1 == R.id.shopButton) {
-          startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+            Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
         }
     }
 }
