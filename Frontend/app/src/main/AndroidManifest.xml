@@ -27,7 +27,7 @@
             android:name=".ShopActivity"
             android:exported="false"/>
         <activity
-            android:name=".DummyHome"
+            android:name=".HomeActivity"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"

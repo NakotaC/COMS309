@@ -100,7 +100,7 @@ private TextView shopHeader;
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                String name = jsonObject.getString("item_name");
+                                String name = jsonObject.getString("itemName");
                                 String description = jsonObject.getString("description");
 
                                 // Create a ListItemObject and add it to the adapter
