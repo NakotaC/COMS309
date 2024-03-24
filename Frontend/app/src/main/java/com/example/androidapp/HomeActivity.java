@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton button1;
     private MaterialButton clanButton;
     private MaterialButton shopButton;
+    private Button webSocketsTestButton;
     private TextView text1;
     private ImageButton statsButton;
     @Override
@@ -31,12 +33,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         clanButton = findViewById(R.id.clanButton);
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
+        webSocketsTestButton = findViewById(R.id.webSocketsTestButton);
 
 
         button1.setOnClickListener(this);
         clanButton.setOnClickListener(this);
         shopButton.setOnClickListener(this);
         statsButton.setOnClickListener(this);
+        webSocketsTestButton.setOnClickListener(this);
 
 
     }
@@ -45,13 +49,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v)
     {
         int id1 = v.getId();
-        if (id1 == R.id.clanButton) {
+        if (id1 == R.id.clanButton)
+        {
             startActivity(new Intent(HomeActivity.this, ClanActivity.class));
-        } else if (id1 == R.id.statsButton) {
+        } else if (id1 == R.id.statsButton)
+        {
             startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
         }
-       else if (id1 == R.id.shopButton) {
+       else if (id1 == R.id.shopButton)
+       {
             startActivity(new Intent(HomeActivity.this, ShopActivity.class));
-        }
+       }
+       else if (id1 == R.id.webSocketsTestButton)
+       {
+       startActivity(new Intent(HomeActivity.this, WebSocketTestActivity.class));
+       }
     }
 }

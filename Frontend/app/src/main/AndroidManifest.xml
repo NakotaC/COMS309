@@ -39,16 +39,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
-            android:exported="false"
-            />
-        <activity
             android:name=".LeaderboardActivity"
             android:exported="false"
             />
         <activity
             android:name=".ClanActivity"
             android:exported="false"
+            />
+        <activity
+            android:name=".WebSocketTestActivity"
+            android:exported="false"
+            />
+        <activity
+            android:name=".ChatActivity1"
+            android:exported="false"
+            />
+        <activity
+            android:name=".ChatActivity2"
+            android:exported="false"
+            />
+        <activity
+            android:name=".WebSocketService"
+            android:enabled="true"
+            android:exported="true"
             />
         <meta-data
             android:name="preloaded_fonts"
