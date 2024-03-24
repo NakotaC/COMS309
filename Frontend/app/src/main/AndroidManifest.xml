@@ -30,6 +30,9 @@
             android:name=".HomeActivity"
             android:exported="false"/>
         <activity
+            android:name=".GameActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainAuth.MainActivity"
             android:exported="true">
             <intent-filter>

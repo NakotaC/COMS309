@@ -75,6 +75,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 turnText.setText(s + "\n" + message);
             });
             turnmgr.takeTurn();
+            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
+                turnBtn.setVisibility(View.VISIBLE);
+            }
         }
     }
 
