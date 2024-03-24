@@ -89,7 +89,7 @@ private TextView shopHeader;
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
                 "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop",
-               // URL,
+                //URL,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -157,7 +157,7 @@ private TextView shopHeader;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop/buy",
-                //URL,
+               // URL,
                 postBody,
                 new Response.Listener<JSONObject>() {
                     @Override

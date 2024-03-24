@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidApp</string>
     <string name="mainTitle">Sorry! Plus</string>
+    <string name="statsButton">Stats</string>
 </resources>

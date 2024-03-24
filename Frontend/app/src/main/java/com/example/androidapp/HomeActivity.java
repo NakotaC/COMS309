@@ -17,7 +17,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton clanButton;
     private MaterialButton shopButton;
     private TextView text1;
-    private ImageButton imageButton1;
+    private ImageButton statsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -29,11 +29,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         button1 = findViewById(R.id.button);
         clanButton = findViewById(R.id.clanButton);
         shopButton = findViewById(R.id.shopButton);
+        statsButton = findViewById(R.id.statsButton);
 
 
         button1.setOnClickListener(this);
         clanButton.setOnClickListener(this);
         shopButton.setOnClickListener(this);
+        statsButton.setOnClickListener(this);
 
 
     }
@@ -43,12 +45,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
+            startActivity(new Intent(HomeActivity.this, ClanActivity.class));
+        } else if (id1 == R.id.statsButton) {
             startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
-        } // else if (id1 == R.id.button) {
-            //startActivity(new Intent(HomeActivity.this, FindingAGameActivity.class));
-      //  }
-        else if (id1 == R.id.shopButton) {
-          startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+        }
+       else if (id1 == R.id.shopButton) {
+            startActivity(new Intent(HomeActivity.this, ShopActivity.class));
         }
     }
 }
