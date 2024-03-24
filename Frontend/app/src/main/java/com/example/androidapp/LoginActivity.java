@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
 
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 "http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                //URL_STRING_REQ,
+               // URL_STRING_REQ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Volley Response", response);
                         String responseStr = response.replaceAll("\"", "");
 
-                        if(responseStr.equals("success")){
+                        if(responseStr.equals("Success")){
                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                            User user = new User(username, 1000, null);
                             Gson gson = new Gson();

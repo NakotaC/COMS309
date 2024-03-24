@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View v) {
-    int id = v.getId();
-    if(id == R.id.Login_btn){
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-    } else if (id == R.id.Signup_btn) {
-        startActivity(new Intent(MainActivity.this, SignupActivity.class));
-    }
+        int id = v.getId();
+        if(id == R.id.Login_btn){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        } else if (id == R.id.Signup_btn) {
+            startActivity(new Intent(MainActivity.this, SignupActivity.class));
+        }
     }
 }
