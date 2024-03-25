@@ -58,11 +58,11 @@
             android:name=".ChatActivity2"
             android:exported="false"
             />
-        <activity
+        <service
             android:name=".WebSocketService"
             android:enabled="true"
-            android:exported="true"
-            />
+            android:exported="true">
+            </service>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
