@@ -15,13 +15,13 @@ import java.util.List;
 /**
  * Class to handle the List Adatper for the Shop elements
  */
-public class ListAdapterShop extends ArrayAdapter<ListItemObjectShop> {
+public class ListAdapterInventory extends ArrayAdapter<ListItemObjectInventory> {
     /**
      * Creates a List Adapter for the Shop given context and a List
      * @param context this is the context used for the List Adapter
      * @param items a list of items to placce in the List Adapter
      */
-    public ListAdapterShop(Context context, List<ListItemObjectShop> items) {
+    public ListAdapterInventory(Context context, List<ListItemObjectInventory> items) {
         super(context, 0, items);
 
     }
@@ -42,7 +42,7 @@ public class ListAdapterShop extends ArrayAdapter<ListItemObjectShop> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        ListItemObjectShop item = getItem(position);
+        ListItemObjectInventory item = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

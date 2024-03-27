@@ -3,7 +3,7 @@ package com.example.androidapp.ShopInventory;
 /**
  * Class for the items to be placed into the list adapter
  */
-public class ListItemObjectShop {
+public class ListItemObjectInventory {
     private final String name;
     private final String description;
 
@@ -12,7 +12,7 @@ public class ListItemObjectShop {
      * @param name The name of the item
      * @param description The description of the object
      */
-    public ListItemObjectShop(String name, String description) {
+    public ListItemObjectInventory(String name, String description) {
         this.name = name;
         this.description = String.valueOf(description);
     }
