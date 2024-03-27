@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.Game;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androidapp.GameObjs.TurnManager;
-import com.example.androidapp.GameObjs.User;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
+import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
 public class GameActivity extends AppCompatActivity implements WebSocketListener {

@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.Leaderboard;
 
 
 import android.content.Context;
@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.androidapp.Leaderboard.LeaderboardItemObject;
+import com.example.androidapp.R;
 
 import java.util.List;
 
-public class ListAdapter1 extends ArrayAdapter<LeaderboardItemObject> {
+public class ListAdapterLeaderboard extends ArrayAdapter<LeaderboardItemObject> {
 
-    public ListAdapter1(Context context, List<LeaderboardItemObject> items) {
+    public ListAdapterLeaderboard(Context context, List<LeaderboardItemObject> items) {
         super(context, 0, items);
     }
 

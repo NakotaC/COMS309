@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.R;
-import com.example.androidapp.GameObjs.User;
+import com.example.androidapp.Game.User;
 import com.example.androidapp.Connectivity.VolleySingleton;
 
 import org.json.JSONException;

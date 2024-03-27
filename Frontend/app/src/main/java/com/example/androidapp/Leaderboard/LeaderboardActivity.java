@@ -13,12 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.androidapp.HomeActivity;
-import com.example.androidapp.ListAdapter1;
-import com.example.androidapp.R;
 import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.MainAuth.HomeActivity;
+import com.example.androidapp.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,12 +31,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.google.android.material.button.MaterialButton;
 
 public class LeaderboardActivity extends AppCompatActivity implements View.OnClickListener {
     public Button button1;
@@ -43,7 +41,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
     private MaterialButton addWins;
     private EditText textInput1;
     private EditText textInput2;
-    private ListAdapter1 adapter1;
+    private ListAdapterLeaderboard adapter1;
     private ListView list1;
     private LinkedList clanListRandom;
     private static final String URL_LEADERBOARD_JSON_ARRAY =
@@ -69,7 +67,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
         addWins.setOnClickListener(this);
 
 
-        adapter1 = new ListAdapter1(this, new LinkedList<>());
+        adapter1 = new ListAdapterLeaderboard(this, new LinkedList<>());
         list1.setAdapter(adapter1);
 
         makeLeaderboardJsonArrayReq();

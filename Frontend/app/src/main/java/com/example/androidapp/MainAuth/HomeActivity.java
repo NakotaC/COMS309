@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.MainAuth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.Clan.ClanActivity;
-import com.example.androidapp.GameObjs.User;
+import com.example.androidapp.Game.GameActivity;
+import com.example.androidapp.Game.User;
+import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.google.android.material.button.MaterialButton;

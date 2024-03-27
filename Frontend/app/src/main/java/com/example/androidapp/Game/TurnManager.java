@@ -1,4 +1,4 @@
-package com.example.androidapp.GameObjs;
+package com.example.androidapp.Game;
 
 /**
  * Class used to represent and handle players taking turns

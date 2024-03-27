@@ -27,10 +27,10 @@
             android:name=".ShopInventory.ShopActivity"
             android:exported="false"/>
         <activity
-            android:name=".HomeActivity"
+            android:name=".MainAuth.HomeActivity"
             android:exported="false"/>
         <activity
-            android:name=".GameActivity"
+            android:name=".Game.GameActivity"
             android:exported="false"/>
         <activity
             android:name=".Leaderboard.LeaderboardActivity"

@@ -24,7 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.androidapp.HomeActivity;
+import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.RecyclerViewAdapter;
 import com.example.androidapp.Connectivity.VolleySingleton;
