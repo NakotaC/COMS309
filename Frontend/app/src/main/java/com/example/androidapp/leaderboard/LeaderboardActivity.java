@@ -47,11 +47,11 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
     private ListView list1;
     private LinkedList clanListRandom;
     private static final String URL_LEADERBOARD_JSON_ARRAY =
-            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/users";
+            "http://coms-309-033.class.las.iastate.edu:8080/users";
     private static final String URL_WINS_JSON_ARRAY =
-            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/wins";
+            "http://coms-309-033.class.las.iastate.edu:8080/wins";
     private static String URL_POST_REQUEST =
-            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/wins/";
+            "http://coms-309-033.class.las.iastate.edu:8080/wins/";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                names.add(i, jsonObject.getString("name"));
+                                names.add(i, jsonObject.getString("username"));
 
 
                             } catch (JSONException e) {
@@ -186,8 +186,8 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
             // etRequest should contain a JSON object string as your POST body
             // similar to what you would have in POSTMAN-body field
             // and the fields should match with the object structure of @RequestBody on sb
-            finalUrlPostRequest = URL_POST_REQUEST + textInput1.getText().toString();
-            postBody = new JSONObject(textInput2.getText().toString());
+            finalUrlPostRequest = URL_POST_REQUEST + textInput1.getText().toString() + "/";
+            finalUrlPostRequest = finalUrlPostRequest + textInput2.getText().toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

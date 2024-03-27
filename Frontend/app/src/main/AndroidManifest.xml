@@ -33,6 +33,14 @@
             android:name=".GameActivity"
             android:exported="false"/>
         <activity
+            android:name=".leaderboard.LeaderboardActivity"
+            android:exported="false"
+            />
+        <activity
+            android:name=".ClanActivity"
+            android:exported="false"
+            />
+        <activity
             android:name=".MainAuth.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -41,10 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".leaderboard.LeaderboardActivity"
-            android:exported="false"
-            />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

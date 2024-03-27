@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void makeStringReq() {
-
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
                 //"http://coms-309-033.class.las.iastate.edu:8080/users/login",

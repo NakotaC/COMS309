@@ -2,32 +2,72 @@ package com.example.androidapp;
 
 public class ClanItemObject
 {
-    private String clanID;
-    private String clan_name;
 
-    public ClanItemObject(String clanID, String clan_name)
-    {
-    this.clanID = clanID;
-    this.clan_name = clan_name;
+    private String clanName;
+    private String clanLevel;
+    private String clanAvailability;
+
+
+
+
+
+    public ClanItemObject(String clanName, String clanLevel) {
+        this.clanName = clanName;
+        this.clanLevel = clanLevel;
+
     }
 
-    public String getClanID()
-    {
-    return this.clanID;
+
+
+
+
+    public String getClanName() {
+
+        return clanName;
+
     }
 
-    public String getClan_name()
-    {
-    return this.clan_name;
+
+
+    public void setCourseName(String random) {
+
+        this.clanName = random;
+
     }
 
-    public void setClan_ID(String random)
-    {
-    this.clanID = random;
+
+
+
+
+
+    public String getClanLevel() {
+
+        return clanLevel;
+
     }
 
-    public void setClan_name(String random)
-    {
-    this.clan_name = random;
+
+
+    public void setClanLevel(String random) {
+
+        this.clanLevel = random;
+
     }
+
+
+
+    public String getClanAvailability() {
+
+        return clanAvailability;
+
+    }
+
+
+
+    public void setClanAvailability(String random) {
+
+        this.clanLevel = random;
+
+    }
+
 }

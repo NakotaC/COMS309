@@ -166,7 +166,7 @@ private TextView shopHeader;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop/buy",
-                //URL,
+               // URL,
                 postBody,
                 new Response.Listener<JSONObject>() {
                     @Override
