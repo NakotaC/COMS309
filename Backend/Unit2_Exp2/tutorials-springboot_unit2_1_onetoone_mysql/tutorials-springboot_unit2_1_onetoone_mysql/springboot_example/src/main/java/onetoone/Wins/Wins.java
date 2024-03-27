@@ -21,6 +21,9 @@ public class Wins {
     @Column(name="wins")
     private Integer wins;
 
+    @Column(name="left_to_complete_quest")
+    private Integer quest;
+
     public Wins(Integer wins) {
         this.wins = wins;
     }
@@ -38,6 +41,12 @@ public class Wins {
     public Integer getWins() {
         return wins;
     }
+
+    public void setQuest(int remaining) {this.quest = remaining;}
+
+    public Integer getQuest() {return quest;}
+
+
 
     public void setWins(Integer wins) {
         this.wins = wins;
