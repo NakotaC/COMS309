@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.androidapp.Clan.ClanItemObject;
+
 import java.util.LinkedList;
 
 
