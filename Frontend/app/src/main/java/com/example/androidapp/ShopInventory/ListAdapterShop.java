@@ -13,9 +13,12 @@ import com.example.androidapp.R;
 
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<ListItemObject> {
+/**
+ * Class to handle the List Adatper for the Shop elements
+ */
+public class ListAdapterShop extends ArrayAdapter<ListItemObject> {
 
-    public ListAdapter(Context context, List<ListItemObject> items) {
+    public ListAdapterShop(Context context, List<ListItemObject> items) {
         super(context, 0, items);
 
     }

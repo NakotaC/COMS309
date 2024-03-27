@@ -14,17 +14,11 @@ import com.example.androidapp.R;
  * Main class for the App. Acts as the first page user see
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    /**
-     * variable for the the login button
-     */
+
     private Button loginBtn;
-    /**
-     * variable for the the sign-up button
-     */
+
     private Button signupBtn;
-    /**
-     * variable for the the header text
-     */
+
     private TextView mainTxt;
 
 

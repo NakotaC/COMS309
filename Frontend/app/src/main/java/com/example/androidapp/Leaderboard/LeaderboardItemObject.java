@@ -1,8 +1,8 @@
-package com.example.androidapp.leaderboard;
+package com.example.androidapp.Leaderboard;
 
 public class LeaderboardItemObject {
-    private String name;
-    private String score;
+    private final String name;
+    private final String score;
 
     public LeaderboardItemObject(String name, String score) {
         this.name = name;

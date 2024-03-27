@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String username;
-    private SerializableJSONArray ownedItems;
-    private int bank;
+    private final String username;
+    private final SerializableJSONArray ownedItems;
+    private final int bank;
 
     /**
      * Gets the player Number(Keeps track of their place in the rotation)

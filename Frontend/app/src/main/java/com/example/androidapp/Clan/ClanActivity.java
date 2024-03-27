@@ -27,7 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.androidapp.HomeActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.RecyclerViewAdapter;
-import com.example.androidapp.connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.VolleySingleton;
 import com.google.android.material.appbar.MaterialToolbar;
 
 
@@ -69,7 +69,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
-    private String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
+    private final String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
     private ProgressBar progressBar;
 
 

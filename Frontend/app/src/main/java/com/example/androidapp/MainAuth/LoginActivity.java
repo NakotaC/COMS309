@@ -17,7 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.androidapp.HomeActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.GameObjs.User;
-import com.example.androidapp.connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,22 +25,55 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Class to handle the Login screen
+ */
 public class LoginActivity extends AppCompatActivity {
+    /**
+     * var for the login button
+     */
     private Button loginBtn;
+    /**
+     * var for the back button
+     */
     private Button backBtn;
+    /**
+     * var for the header text
+     */
     private TextView header;
+    /**
+     * var for the username entry field
+     */
     private EditText usernameEntry;
+    /**
+     * var for the wrong password text
+     */
     private TextView wrongPassTxt;
+    /**
+     * var for the username string
+     */
     private String username;
-
+    /**
+     * var for the password string
+     */
     private String password;
-
+    /**
+     * var for the password entry field
+     */
     private EditText passwordEntry;
-
+    /**
+     * var for the URL string
+     */
     private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login5";
    // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
+    /**
+     * initializes the screen and the elements to make it operate
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEntry = findViewById(R.id.password_entry);
         usernameEntry = findViewById(R.id.username_entry);
         wrongPassTxt = findViewById(R.id.wrongPass);
-
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private void makeStringReq() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,

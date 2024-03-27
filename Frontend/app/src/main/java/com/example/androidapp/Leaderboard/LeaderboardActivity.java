@@ -1,4 +1,4 @@
-package com.example.androidapp.leaderboard;
+package com.example.androidapp.Leaderboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.HomeActivity;
 import com.example.androidapp.ListAdapter1;
 import com.example.androidapp.R;
-import com.example.androidapp.connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.VolleySingleton;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import org.json.JSONArray;
@@ -50,7 +50,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
             "http://coms-309-033.class.las.iastate.edu:8080/users";
     private static final String URL_WINS_JSON_ARRAY =
             "http://coms-309-033.class.las.iastate.edu:8080/wins";
-    private static String URL_POST_REQUEST =
+    private static final String URL_POST_REQUEST =
             "http://coms-309-033.class.las.iastate.edu:8080/wins/";
 
     @Override
@@ -100,7 +100,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
-                        System.out.println(response.toString());
+                        System.out.println(response);
 
                         // Parse the JSON array and add data to the adapter
                         for (int i = 0; i < response.length(); i++) {
@@ -146,7 +146,7 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
-                        System.out.println(response.toString());
+                        System.out.println(response);
 
                         // Parse the JSON array and add data to the adapter
                         for (int i = 0; i < response.length(); i++) {

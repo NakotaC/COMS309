@@ -33,7 +33,7 @@
             android:name=".GameActivity"
             android:exported="false"/>
         <activity
-            android:name=".leaderboard.LeaderboardActivity"
+            android:name=".Leaderboard.LeaderboardActivity"
             android:exported="false"
             />
         <activity

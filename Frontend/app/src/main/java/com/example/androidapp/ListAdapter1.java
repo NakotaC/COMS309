@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.androidapp.leaderboard.LeaderboardItemObject;
+import com.example.androidapp.Leaderboard.LeaderboardItemObject;
 
 import java.util.List;
 

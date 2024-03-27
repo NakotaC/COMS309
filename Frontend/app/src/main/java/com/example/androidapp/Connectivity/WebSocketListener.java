@@ -1,4 +1,4 @@
-package com.example.androidapp.connectivity;
+package com.example.androidapp.Connectivity;
 
 import org.java_websocket.handshake.ServerHandshake;
 

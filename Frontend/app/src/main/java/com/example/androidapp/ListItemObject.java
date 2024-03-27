@@ -1,8 +1,8 @@
 package com.example.androidapp;
 
 public class ListItemObject {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     public ListItemObject(String name, String description) {
         this.name = name;

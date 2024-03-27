@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.GameObjs.TurnManager;
 import com.example.androidapp.GameObjs.User;
-import com.example.androidapp.connectivity.WebSocketListener;
-import com.example.androidapp.connectivity.WebSocketManager;
+import com.example.androidapp.Connectivity.WebSocketListener;
+import com.example.androidapp.Connectivity.WebSocketManager;
 
 import org.java_websocket.handshake.ServerHandshake;
 public class GameActivity extends AppCompatActivity implements WebSocketListener {
@@ -20,9 +20,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
     private TextView turnText, playerText, headerText;
 
-    private TurnManager turnmgr = new TurnManager();
+    private final TurnManager turnmgr = new TurnManager();
     private User user;
-    private String serverUrl = "";
+    private final String serverUrl = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 // send message
                 WebSocketManager.getInstance().sendMessage(String.valueOf(user.getPlayerNum()));
             } catch (Exception e) {
-                Log.d("ExceptionSendMessage:", e.getMessage().toString());
+                Log.d("ExceptionSendMessage:", e.getMessage());
             }
         });
     }

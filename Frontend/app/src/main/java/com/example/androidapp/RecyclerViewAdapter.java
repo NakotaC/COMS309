@@ -24,8 +24,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-    private LinkedList<ClanItemObject> clanItemList;
-    private Context context;
+    private final LinkedList<ClanItemObject> clanItemList;
+    private final Context context;
 
 
 
@@ -79,8 +79,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-        private TextView clanNameLabel, clanAvailability, clanLevel;
-        private Button joinButton;
+        private final TextView clanNameLabel;
+        private final TextView clanAvailability;
+        private final TextView clanLevel;
+        private final Button joinButton;
 
 
 

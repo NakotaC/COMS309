@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.GameObjs.User;
 import com.example.androidapp.ShopInventory.ShopActivity;
-import com.example.androidapp.leaderboard.LeaderboardActivity;
+import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.google.android.material.button.MaterialButton;
 
 

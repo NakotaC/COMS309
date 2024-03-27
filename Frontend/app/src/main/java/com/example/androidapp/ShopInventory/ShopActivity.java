@@ -21,7 +21,7 @@ import com.example.androidapp.GameObjs.User;
 import com.example.androidapp.HomeActivity;
 import com.example.androidapp.ListItemObject;
 import com.example.androidapp.R;
-import com.example.androidapp.connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,11 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class to handle the Shop screen
+ */
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener{
 private TextView shopHeader;
        private TextView respondText;
     private Button btnJsonArrReq;
-    private ListAdapter adapter;
+    private ListAdapterShop adapter;
     private ListView listView;
     int buyNum;
     Button back;
@@ -60,7 +63,7 @@ private TextView shopHeader;
         back = findViewById(R.id.shopBackBtn);
 
         // Initialize the adapter with an empty list (data will be added later)
-        adapter = new ListAdapter(this, new ArrayList<>());
+        adapter = new ListAdapterShop(this, new ArrayList<>());
         listView.setAdapter(adapter);
 
 
@@ -114,7 +117,7 @@ private TextView shopHeader;
 
                                 // Create a ListItemObject and add it to the adapter
                                 ListItemObject item = new ListItemObject(name, description);
-                               ListAdapter tmp = adapter;
+                               ListAdapterShop tmp = adapter;
                                 adapter.add(item);
 
                             } catch (JSONException e) {

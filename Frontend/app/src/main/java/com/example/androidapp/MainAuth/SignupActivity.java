@@ -16,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.R;
 import com.example.androidapp.GameObjs.User;
-import com.example.androidapp.connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +24,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Class to handle the signup screen
+ */
 public class SignupActivity extends AppCompatActivity {
     private Button signupBtn;
     private Button backBtn;

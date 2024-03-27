@@ -1,4 +1,4 @@
-package com.example.androidapp.connectivity;
+package com.example.androidapp.Connectivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,7 +13,7 @@ public class VolleySingleton {
 
     private static VolleySingleton instance;
     private RequestQueue requestQueue;
-    private ImageLoader imageLoader;
+    private final ImageLoader imageLoader;
     private static Context ctx;
 
     private VolleySingleton(Context context) {
