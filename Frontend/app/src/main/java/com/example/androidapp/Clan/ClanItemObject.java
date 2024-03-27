@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.Clan;
 
 public class ClanItemObject
 {

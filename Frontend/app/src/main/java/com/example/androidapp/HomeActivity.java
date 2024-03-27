@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.GameObjs.User;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.example.androidapp.leaderboard.LeaderboardActivity;
