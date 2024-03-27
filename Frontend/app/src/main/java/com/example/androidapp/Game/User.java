@@ -24,7 +24,7 @@ public class User implements Serializable {
     /**
      * Creates a User object with all fields blank
      */
-    User(){
+    public User(){
         username = null;
         ownedItems = null;
         bank = 0;

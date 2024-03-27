@@ -19,7 +19,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.MainAuth.HomeActivity;
-import com.example.androidapp.ListItemObject;
 import com.example.androidapp.R;
 import com.example.androidapp.Connectivity.VolleySingleton;
 
@@ -48,6 +47,13 @@ private TextView shopHeader;
     //inverntory/shop
     //inventory/shop/buy
 
+    /**
+     * Handles the creation and functionality of the elements when the screen is initialized
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +91,10 @@ private TextView shopHeader;
         });
     }
 
+    /**
+     * Handles the logic for the buttons on screen
+     * @param v The view that was clicked.
+     */
         @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -116,7 +126,7 @@ private TextView shopHeader;
                                 String description = jsonObject.getString("description");
 
                                 // Create a ListItemObject and add it to the adapter
-                                ListItemObject item = new ListItemObject(name, description);
+                                ListItemObjectShop item = new ListItemObjectShop(name, description);
                                ListAdapterShop tmp = adapter;
                                 adapter.add(item);
 

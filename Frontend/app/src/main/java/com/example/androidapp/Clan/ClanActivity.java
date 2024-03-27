@@ -26,7 +26,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
-import com.example.androidapp.RecyclerViewAdapter;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -55,7 +54,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    private RecyclerViewAdapter adapter;
+    private ClanRecyclerViewAdapter adapter;
     private LinkedList<ClanItemObject> clanItemList;
     private MaterialToolbar materialToolbar;
     private Button newClanButton;
@@ -226,7 +225,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
     private void constructRecyclerView()
     {
-        adapter = new RecyclerViewAdapter(clanItemList, ClanActivity.this);
+        adapter = new ClanRecyclerViewAdapter(clanItemList, ClanActivity.this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(manager);

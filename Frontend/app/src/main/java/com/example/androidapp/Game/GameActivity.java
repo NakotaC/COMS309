@@ -13,6 +13,10 @@ import com.example.androidapp.Connectivity.WebSocketManager;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
+
+/**
+ * Class to handle and represent the Game screen
+ */
 public class GameActivity extends AppCompatActivity implements WebSocketListener {
 
     private Button turnBtn;
@@ -22,6 +26,14 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private final TurnManager turnmgr = new TurnManager();
     private User user;
     private final String serverUrl = "";
+
+    /**
+     * Handles the creation and functionality of screen elements when the screen is created
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +66,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         });
     }
 
-
+    /**
+     * Handles what to do when a websocket message is received
+     * @param message The received WebSocket message.
+     */
     @Override
     public void onWebSocketMessage(String message) {
         /**
@@ -80,6 +95,12 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         }
     }
 
+    /**
+     * Handles what to do when a websocket connection is closed
+     * @param code   The status code indicating the reason for closure.
+     * @param reason A human-readable explanation for the closure.
+     * @param remote Indicates whether the closure was initiated by the remote endpoint.
+     */
     @Override
     public void onWebSocketClose(int code, String reason, boolean remote) {
         String closedBy = remote ? "server" : "local";
@@ -89,9 +110,17 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         });
     }
 
+    /**
+     * Handles what to do when a Websocket is opened
+     * @param handshakedata Information about the server handshake.
+     */
     @Override
     public void onWebSocketOpen(ServerHandshake handshakedata) {}
 
+    /**
+     * Handles what to do when an error is received
+     * @param ex The exception that describes the error.
+     */
     @Override
     public void onWebSocketError(Exception ex) {}
 }

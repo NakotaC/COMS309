@@ -9,12 +9,27 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * Class that handles Volley Requests
+ */
 public class VolleySingleton {
-
+    /**
+     * var for the current instance of the VolleySingleton
+     */
     private static VolleySingleton instance;
+    /**
+     * var for the request queue
+     */
     private RequestQueue requestQueue;
+    /**
+     * var for the Imageloader
+     */
     private final ImageLoader imageLoader;
+    /**
+     * var to hold the Context of the request
+     */
     private static Context ctx;
+
 
     private VolleySingleton(Context context) {
         ctx = context;
@@ -37,6 +52,11 @@ public class VolleySingleton {
                 });
     }
 
+    /**
+     * Gets the current instance of the Singleton
+     * @param context the context of the volley request
+     * @return returns the instance of the VolleySingleton
+     */
     public static synchronized VolleySingleton getInstance(Context context) {
         if (instance == null) {
             instance = new VolleySingleton(context);
@@ -44,6 +64,10 @@ public class VolleySingleton {
         return instance;
     }
 
+    /**
+     * Gets the current request queue
+     * @return returns the current request queue
+     */
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
@@ -53,10 +77,19 @@ public class VolleySingleton {
         return requestQueue;
     }
 
+    /**
+     * Adds a request to the request queue
+     * @param req this is the request that you'd like to add
+     * @param <T> this is the request type you're using
+     */
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
 
+    /**
+     * gets the Image Loader
+     * @return returns the Image Loader
+     */
     public ImageLoader getImageLoader() {
         return imageLoader;
     }

@@ -43,7 +43,13 @@ private User user;
     private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signuptest";
     // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
-
+    /**
+     * Handles the elements and functionality of the screen when the screen is created
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

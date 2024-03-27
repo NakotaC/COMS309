@@ -24,12 +24,21 @@ public class TurnManager {
   public TurnManager(int playerNum){
         currTurn = playerNum;
     }
+
+    /**
+     * gets the current turn
+     * @return returns an int corresponding to whose turn it is
+     */
     public int getCurrTurn(){
         return currTurn;
     }
+
+    /**
+     * Tells the Turn Manager to move to the next players turn. Counts from 1 to number of players, then back to 1
+     */
    public void takeTurn(){
         if(this.currTurn == numPlayers){
-            this.currTurn = 0;
+            this.currTurn = 1;
         }else{
             this.currTurn++;
         }

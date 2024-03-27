@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.Clan;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.androidapp.Clan.ClanItemObject;
+import com.example.androidapp.R;
 
 import java.util.LinkedList;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class ClanRecyclerViewAdapter extends RecyclerView.Adapter<ClanRecyclerViewAdapter.ViewHolder> {
 
 
 
@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-    public RecyclerViewAdapter(LinkedList<ClanItemObject> clanItemList, Context context) {
+    public ClanRecyclerViewAdapter(LinkedList<ClanItemObject> clanItemList, Context context) {
         this.clanItemList = clanItemList;
         this.context = context;
 
@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ClanRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
 
@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
 
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ClanRecyclerViewAdapter.ViewHolder holder, int position) {
 
 
 
