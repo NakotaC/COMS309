@@ -5,6 +5,7 @@ import onetoone.Users.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Calendar;
 
 @Entity
 public class Wins {
@@ -23,6 +24,9 @@ public class Wins {
 
     @Column(name="left_to_complete_quest")
     private Integer quest;
+
+    @Column(name="day_set")
+    private Calendar qdate;
 
     public Wins(Integer wins) {
         this.wins = wins;
@@ -46,7 +50,9 @@ public class Wins {
 
     public Integer getQuest() {return quest;}
 
+    public void setQDate(Calendar qdate) {this.qdate = qdate;}
 
+    public Calendar getQDate() {return qdate;}
 
     public void setWins(Integer wins) {
         this.wins = wins;
