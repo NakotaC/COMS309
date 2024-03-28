@@ -57,7 +57,7 @@ private TextView shopHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopactivity);
+        setContentView(R.layout.activity_shop);
 
         Bundle extras = getIntent().getExtras();
         assert extras != null;

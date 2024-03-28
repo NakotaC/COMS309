@@ -53,7 +53,7 @@ private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signupactivity);
+        setContentView(R.layout.activity_signup);
         signupBtn = findViewById(R.id.signup_button);
         backBtn = findViewById(R.id.back_button);
         header = findViewById(R.id.header);

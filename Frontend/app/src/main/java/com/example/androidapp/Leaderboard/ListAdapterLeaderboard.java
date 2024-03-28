@@ -25,7 +25,7 @@ public class ListAdapterLeaderboard extends ArrayAdapter<LeaderboardItemObject> 
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item1, parent,
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_leaderboard, parent,
                     false);
         }
 

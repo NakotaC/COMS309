@@ -6,10 +6,14 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * Class to represent the user and hold data that could be useful
+ */
 public class User implements Serializable {
     private final String username;
-    private final SerializableJSONArray ownedItems;
-    private final int bank;
+    private  SerializableJSONArray inventory;
+    private SerializableJSONArray equippedItems;
+    private final int bank, id;
 
     /**
      * Gets the player Number(Keeps track of their place in the rotation)
@@ -26,8 +30,10 @@ public class User implements Serializable {
      */
     public User(){
         username = null;
-        ownedItems = null;
+        inventory = null;
+        equippedItems = null;
         bank = 0;
+        id = 0;
         playerNum = 0;
     }
 
@@ -39,7 +45,9 @@ public class User implements Serializable {
     public User(JSONObject object) throws JSONException {
         this.username = object.getString("username");
         this.bank = object.getInt("bank");
-        this.ownedItems = new SerializableJSONArray(object.getJSONArray("ownedItems"));
+        this.id = object.getInt("id");
+        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
+        this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
         playerNum = 0;
     }
 
@@ -51,12 +59,20 @@ public class User implements Serializable {
         return bank;
     }
 
+    public int getId() {
+        return id;
+    }
+
     /**
      * Gets the items that the User owns
      * @return Array of items in the user's inventory
      */
-    public SerializableJSONArray getOwnedItems() {
-        return ownedItems;
+    public JSONArray getInventory() {
+        return inventory.getJSONArray();
+    }
+
+    public JSONArray getEquippedItems() {
+        return equippedItems.getJSONArray();
     }
 
     /**
@@ -81,13 +97,24 @@ public class User implements Serializable {
      * @return Returns a new array with the item added to it
      * @throws JSONException if an un-initialized element is accessed an exception will be thrown
      */
-    public JSONArray addItem(String item) throws JSONException {
-        int length = this.ownedItems.getJSONArray().length() + 1;
+    public JSONArray addOwnedItem(String item) throws JSONException {
+        int length = this.inventory.getJSONArray().length() + 1;
         JSONArray temp = new JSONArray();
         for (int i = 0; i < length - 1; i++){
-            temp.put(this.ownedItems.getJSONArray().get(i));
+            temp.put(this.inventory.getJSONArray().get(i));
         }
         temp.put(item);
+        this.inventory = new SerializableJSONArray(temp);
+        return temp;
+    }
+    public JSONArray addEquippedItem(String item) throws JSONException {
+        int length = this.equippedItems.getJSONArray().length() + 1;
+        JSONArray temp = new JSONArray();
+        for (int i = 0; i < length - 1; i++){
+            temp.put(this.equippedItems.getJSONArray().get(i));
+        }
+        temp.put(item);
+        this.equippedItems = new SerializableJSONArray(temp);
         return temp;
     }
 }
