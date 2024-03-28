@@ -5,7 +5,7 @@ import onetoone.Users.User;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Entity
 public class Wins {
@@ -26,7 +26,7 @@ public class Wins {
     private Integer quest;
 
     @Column(name="day_set")
-    private Calendar qdate;
+    private GregorianCalendar qdate;
 
     public Wins(Integer wins) {
         this.wins = wins;
@@ -50,9 +50,9 @@ public class Wins {
 
     public Integer getQuest() {return quest;}
 
-    public void setQDate(Calendar qdate) {this.qdate = qdate;}
+    public void setQDate(GregorianCalendar qdate) {this.qdate = qdate;}
 
-    public Calendar getQDate() {return qdate;}
+    public int getQDate() {return qdate.getTime().getDate();}
 
     public void setWins(Integer wins) {
         this.wins = wins;
