@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.example.androidapp.Clan"},{"l":"com.example.androidapp.Connectivity"},{"l":"com.example.androidapp.Game"},{"l":"com.example.androidapp.Leaderboard"},{"l":"com.example.androidapp.MainAuth"},{"l":"com.example.androidapp.ShopInventory"}];updateSearchResults();
