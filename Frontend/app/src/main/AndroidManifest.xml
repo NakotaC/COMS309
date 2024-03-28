@@ -41,6 +41,10 @@
             android:exported="false"
             />
         <activity
+            android:name=".Clan.CreateClanActivity"
+            android:exported="false"
+            />
+        <activity
             android:name=".MainAuth.MainActivity"
             android:exported="true">
             <intent-filter>

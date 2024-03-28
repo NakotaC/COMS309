@@ -40,20 +40,17 @@ import java.util.LinkedList;
 import java.util.Map;
 
 
+/**
+ * The following method is the main method. It is invoked whenever the clans screen starts up.
+ */
 public class ClanActivity extends AppCompatActivity implements View.OnClickListener {
 
 
 
 
-
+    // variable declaration
 
     private RecyclerView courseRV;
-
-
-
-
-
-
     private ClanRecyclerViewAdapter adapter;
     private LinkedList<ClanItemObject> clanItemList;
     private MaterialToolbar materialToolbar;
@@ -72,14 +69,20 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar progressBar;
 
 
-
-
+    /**
+     * The following method initializes the screen when the screen is booted up
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clan);
 
 
+        // initialization of different screen elements
         courseRV = findViewById(R.id.idRVCourses);
         materialToolbar = findViewById(R.id.materialToolbar);
         newClanButton = findViewById(R.id.newClanButton);
@@ -95,6 +98,12 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         constructRecyclerView();
 
     }
+
+    /**
+     * The following method is initialized whenever the user clicks the back button or the create a
+     * clan button
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v)
     {
@@ -103,13 +112,17 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(ClanActivity.this, HomeActivity.class));
         } else if (id1 == R.id.newClanButton)
         {
-            postRequest();
-            Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ClanActivity.this, CreateClanActivity.class));
+      //      postRequest();
+      //      Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-
+    /**
+     * The following method is used to parse a JSON Array using Volley. It is invoked whenever the
+     * screen starts up to collect clans information from backend.
+     */
     private void parseJsonArray() {
         RequestQueue queue = Volley.newRequestQueue(ClanActivity.this);
 
@@ -153,6 +166,10 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * The following method is used whenever a user tries to create a new clan. It sends a post
+     * request to backend.
+     */
     private void postRequest() {
 
         // Convert input to JSONObject
@@ -222,7 +239,10 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
+    /**
+     * The following method is used to construct the clan list. It initializes many different
+     * elements.
+     */
     private void constructRecyclerView()
     {
         adapter = new ClanRecyclerViewAdapter(clanItemList, ClanActivity.this);
