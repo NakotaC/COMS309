@@ -12,8 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import onetoone.Laptops.LaptopRepository;
 import onetoone.Users.User;
 import onetoone.Users.UserRepository;
 import onetoone.Clans.Clan;
