@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class WinsController {
@@ -45,28 +43,6 @@ public class WinsController {
         for (int i = 0; i < standard.size(); i++) {
             System.out.println(standard.get(i).getWins());
         }
-
-
-
-//            public static void main(String[] args) {
-//                // Example usage
-//                List<Win> wins = new ArrayList<>();
-//                // Populate your wins list here...
-//
-//                // Define your comparator for sorting Wins objects
-//                Comparator<Win> winComparator = Comparator.comparingInt(Win::getWins).reversed();
-//
-//                // Perform merge sort
-//                MergeSort<Win> mergeSort = new MergeSort<>();
-//                List<Win> sortedWins = mergeSort.mergeSort(wins, winComparator);
-//
-//                // Display sorted wins
-//                for (Win win : sortedWins) {
-//                    System.out.println(win);
-//                }
-//
-
-        //System.out.println(standard.get(0));
         return standard;
     }
 
@@ -104,21 +80,37 @@ public class WinsController {
         return result;
     }
 
-//    private List<Wins> sortInt(List<Wins> a) {
-//        List<Wins> sortA = null;
-//
-//        return sortA;
-//    }
-
-//    private Sort sortByWinsDesc() {
-//        return new Sort(Sort.Direction.DESC, "wins");
-//    }
 
 
         @PostMapping(path = "/wins/{user_id}/{amount_to_add}")
         void postWins ( @PathVariable int user_id, @PathVariable int amount_to_add){
             Wins winner = winsRepository.findById(user_id);
             winner.setWins(winner.getWins() + amount_to_add);
+            winsRepository.save(winner);
+        }
+
+        @PostMapping(path = "/quest/{user_id}")
+        void postQuest(@PathVariable int user_id) {
+            Wins winner = winsRepository.findById(user_id);
+            if(winner.getQDate() != -1) {
+                if (new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")).getTime().getDate() != winner.getQDate()) {
+                    Random rand = new Random();
+                    int a = rand.nextInt();
+                    if (a % 2 == 0) {
+                        winner.setQuest(3);
+                        winner.setScalar(5);
+                    } else if (a % 2 == 1) {
+                        winner.setQuest(5);
+                        winner.setScalar(8);
+                    }
+                    winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")).getTime().getDate());
+                }
+            }
+            else {
+                winner.setQuest(1);
+                winner.setScalar(10);
+                winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")).getTime().getDate());
+            }
             winsRepository.save(winner);
         }
     }

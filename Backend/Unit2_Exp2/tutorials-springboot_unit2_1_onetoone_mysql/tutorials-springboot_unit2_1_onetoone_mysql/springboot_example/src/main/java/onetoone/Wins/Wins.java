@@ -22,11 +22,14 @@ public class Wins {
     @Column(name="wins")
     private Integer wins;
 
-    @Column(name="left_to_complete_quest")
+    @Column(name="wins_left_to_complete_quest")
     private Integer quest;
 
-    @Column(name="day_set")
-    private GregorianCalendar qdate;
+    @Column(name="day_created")
+    private int qdate;
+
+    @Column(name="reward_scalar")
+    private int scalar;
 
     public Wins(Integer wins) {
         this.wins = wins;
@@ -50,9 +53,13 @@ public class Wins {
 
     public Integer getQuest() {return quest;}
 
-    public void setQDate(GregorianCalendar qdate) {this.qdate = qdate;}
+    public void setQDate(int qdate) {this.qdate = qdate;}
 
-    public int getQDate() {return qdate.getTime().getDate();}
+    public int getQDate() {return qdate;}
+
+    public void setScalar(int num) {this.scalar = num;}
+
+    public int getScalar() {return scalar;}
 
     public void setWins(Integer wins) {
         this.wins = wins;

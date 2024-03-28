@@ -58,6 +58,7 @@ public class User {
         }
         this.password = password;
         this.setWins(0);
+
     }
 
     public User() {
@@ -131,9 +132,12 @@ public class User {
     public void setWins(int wins){
         if (this.wins == null) {
             this.wins = new Wins(0);
+            this.wins.setQDate(-1);
             this.wins.setUser(this);
+
         }
         this.wins.setWins(wins);
     }
+
 
 }
