@@ -36,7 +36,7 @@ public class UserController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/users")
+    @GetMapping("/users")
     List<User> getAllUsers(){
         return userRepository.findAll();
     }
