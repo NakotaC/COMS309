@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
+import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
-import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.google.android.material.button.MaterialButton;
 
 
@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
-            Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ClanActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
         }  else if (id1 == R.id.button) {
@@ -66,12 +66,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
-            startActivity(new Intent(HomeActivity.this, ClanActivity.class));
         } else if (id1 == R.id.statsButton) {
-            startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
-        }
-       else if (id1 == R.id.shopButton) {
-            startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+            Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
         }
     }
 }

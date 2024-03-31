@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.example.androidapp.R;
-import com.example.androidapp.Game.User;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Game.User;
+import com.example.androidapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * var for the URL string
      */
-    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login5";
+    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login8";
    // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
     /**
@@ -103,27 +103,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void makeStringReq() {
-        StringRequest stringRequest = new StringRequest(
+        JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                URL_STRING_REQ,
-                new Response.Listener<String>() {
+                URL_STRING_REQ,null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         // Handle the successful response here
-                        Log.d("Volley Response", response);
-                        String responseStr = response.replaceAll("\"", "");
-                        JSONObject responseObj = null;
-                        try {
-                          responseObj = new JSONObject(response);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if(responseObj.has("username")){
+                        Log.d("Volley Response", response.toString());
+
+
+                        if(response.has("username")){
                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             User user = null;
                             try {
-                                user = new User(responseObj);
+                                user = new User(response);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -161,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // Adding request to request queue
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
     }
 }
 

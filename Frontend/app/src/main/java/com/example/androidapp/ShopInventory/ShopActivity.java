@@ -40,7 +40,7 @@ private TextView shopHeader;
     private ListAdapterShop adapter;
     private ListView listView;
     int buyNum;
-    Button back;
+    Button back, inventory;
     User user;
     private static final String URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
 
@@ -67,6 +67,7 @@ private TextView shopHeader;
         respondText = findViewById(R.id.respondText);
         listView = findViewById(R.id.shopList);
         back = findViewById(R.id.shopBackBtn);
+        inventory = findViewById(R.id.shopInventoryBtn);
 
         // Initialize the adapter with an empty list (data will be added later)
         adapter = new ListAdapterShop(this, new ArrayList<>());
@@ -74,6 +75,7 @@ private TextView shopHeader;
 
 
         back.setOnClickListener(this);
+        inventory.setOnClickListener(this);
 
 
         makeJsonArrayReq();
@@ -100,6 +102,10 @@ private TextView shopHeader;
         int id = v.getId();
         if(id == R.id.shopBackBtn){
             Intent intent = new Intent(ShopActivity.this, HomeActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
+        } else if(id == R.id.shopInventoryBtn) {
+            Intent intent = new Intent(ShopActivity.this, InventoryActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
         }

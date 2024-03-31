@@ -15,11 +15,10 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
-import com.example.androidapp.Connectivity.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +33,7 @@ import java.util.Map;
  */
 public class InventoryActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView inventoryHeader;
-    private ListAdapterInventory adapter;
+    private ListAdapterEquippedInventory adapter;
     private ListView listView;
     private int equipNum, id;
     Button back;
@@ -64,20 +63,24 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         assert user != null;
         equippedItems = user.getEquippedItems();
         id = user.getId();
+        ownedItems = user.getInventory();
 
-       // URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
-        URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + id;
+        URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
+        //URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + id;
 
         inventoryHeader = findViewById(R.id.InventoryHeader);
         listView = findViewById(R.id.inventory_listView);
         back = findViewById(R.id.inventoryBtn);
 
         // Initialize the adapter with an empty list (data will be added later)
-        adapter = new ListAdapterInventory(this, new ArrayList<>());
+        adapter = new ListAdapterEquippedInventory(this, new ArrayList<>());
         listView.setAdapter(adapter);
 
 
+
         back.setOnClickListener(this);
+
+
 
 
 
@@ -93,6 +96,22 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
             }
 
         });
+
+        for (int i = 0; i < equippedItems.length(); i++) {
+            try {
+                JSONObject jsonObject = equippedItems.getJSONObject(i);
+                String name = jsonObject.getString("itemName");
+                String description = jsonObject.getString("description");
+
+                // Create a ListItemObject and add it to the adapter
+                EquippedItemInventory item = new EquippedItemInventory(name, description);
+                //   ListAdapterInventory tmp = adapter;
+                adapter.add(item);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -102,68 +121,13 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.shopBackBtn){
+        if(id == R.id.inventoryBtn){
             Intent intent = new Intent(InventoryActivity.this, ShopActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
         }
     }
-    /**
-     * Making json array request
-     * */
-    private void makeJsonArrayReq() {
-        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
-                Request.Method.GET,
-                URL,
-                null, // Pass null as the request body since it's a GET request
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("Volley Response", response.toString());
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                String name = jsonObject.getString("itemName");
-                                String description = jsonObject.getString("description");
 
-                                // Create a ListItemObject and add it to the adapter
-                                ListItemObjectInventory item = new ListItemObjectInventory(name, description);
-                                ListAdapterInventory tmp = adapter;
-                                adapter.add(item);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley Error", error.toString());
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-//                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-//                params.put("param1", "value1");
-//                params.put("param2", "value2");
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
-    }
 
     private void postRequest() throws JSONException {
 

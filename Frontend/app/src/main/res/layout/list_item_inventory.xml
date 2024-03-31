@@ -18,12 +18,12 @@
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:translationX="360dp"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/checkbox_on_background" />
+        android:id="@+id/checkMark"
+        android:layout_width="42dp"
+        android:layout_height="36dp"
+        android:translationX="340dp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/checked" />
 
     <TextView
         android:id="@+id/itemDescription"
