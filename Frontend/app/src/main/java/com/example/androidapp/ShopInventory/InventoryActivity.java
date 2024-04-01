@@ -80,27 +80,10 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         listViewEquipped.setAdapter(adapterEquipped);
 
 
-
         back.setOnClickListener(this);
 
 
-
-
-
-
-        listViewEquipped.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
-                equipNum = (int)id;
-                try {
-                    postRequest();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-        });
-
-        for (int i = 0; i < equippedItems.length(); i++) {
+        for (int i = 0; i < equippedItems.length() - 1; i++) {
             try {
                 JSONObject jsonObject = equippedItems.getJSONObject(i);
                 String name = jsonObject.getString("itemName");
@@ -115,8 +98,20 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                 e.printStackTrace();
             }
         }
-    }
 
+
+        listViewEquipped.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                equipNum = (int) id;
+                try {
+                    postRequest();
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
+    }
     /**
      * Handles the logic for the buttons on screen
      * @param v The view that was clicked.
