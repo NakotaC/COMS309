@@ -10,7 +10,7 @@ import onetoone.Wins.WinsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import onetoone.Laptops.LaptopRepository;
+
 
 /**
  * 
@@ -24,8 +24,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    LaptopRepository laptopRepository;
 
     @Autowired
     InventoryRepository inventoryRepository;
@@ -36,7 +34,7 @@ public class UserController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/users")
+    @GetMapping("/users")
     List<User> getAllUsers(){
         return userRepository.findAll();
     }

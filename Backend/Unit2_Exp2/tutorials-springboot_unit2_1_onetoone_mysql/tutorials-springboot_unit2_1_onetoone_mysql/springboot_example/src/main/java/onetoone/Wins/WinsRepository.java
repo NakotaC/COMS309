@@ -7,7 +7,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import onetoone.Users.User;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WinsRepository extends JpaRepository<Wins, Long> {
     Wins findById(int id);
 
