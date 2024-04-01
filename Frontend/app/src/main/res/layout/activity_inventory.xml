@@ -18,11 +18,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/inventory_listView"
-        android:layout_width="357dp"
-        android:layout_height="588dp"
+        android:id="@+id/listview_equipped"
+        android:layout_width="348dp"
+        android:layout_height="209dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InventoryHeader" />
 
@@ -31,9 +31,40 @@
         android:layout_width="205dp"
         android:layout_height="70dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="52dp"
         android:text="Back"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_listView" />
+        app:layout_constraintTop_toBottomOf="@+id/listView_inventory" />
+
+    <ListView
+        android:id="@+id/listView_inventory"
+        android:layout_width="342dp"
+        android:layout_height="288dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listview_equipped" />
+
+    <TextView
+        android:id="@+id/equippedTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="Equipped Items:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/listview_equipped"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/inventoryItemTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="4dp"
+        android:text="Inventory Items:"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/listView_inventory"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.example.androidapp.ShopInventory;
 
-public class EquippedItemInventory extends ListItemObjectInventory{
+public class EquippedItemInventory{
     private final String name;
     private final String description;
 
@@ -12,7 +12,6 @@ public class EquippedItemInventory extends ListItemObjectInventory{
      * @param description The description of the object
      */
     public EquippedItemInventory(String name, String description) {
-        super(name, description);
         this.name = name;
         this.description = description;
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,16 +12,15 @@ import com.example.androidapp.R;
 
 import java.util.List;
 
-public class ListAdapterEquippedInventory extends ListAdapterInventory {
+public class ListAdapterEquippedInventory extends ArrayAdapter<EquippedItemInventory> {
     /**
-     * Creates a List Adapter for the Shop given context and a List
+     * Creates a List Adapter for the Shop given context and a List1
      *
      * @param context this is the context used for the List Adapter
      * @param items   a list of items to placce in the List Adapter
      */
-    public ListAdapterEquippedInventory(Context context, List<ListItemObjectInventory> items) {
-        super(context, items);
-
+    public ListAdapterEquippedInventory(Context context, List<EquippedItemInventory> items) {
+        super(context, 0, items);
     }
 
     /**
@@ -40,7 +40,7 @@ public class ListAdapterEquippedInventory extends ListAdapterInventory {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        ListItemObjectInventory item = getItem(position);
+        EquippedItemInventory item = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

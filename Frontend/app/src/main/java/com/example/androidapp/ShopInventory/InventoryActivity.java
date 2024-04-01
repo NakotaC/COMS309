@@ -32,9 +32,10 @@ import java.util.Map;
  * Class to handle the Shop screen
  */
 public class InventoryActivity extends AppCompatActivity implements View.OnClickListener{
-    private TextView inventoryHeader;
-    private ListAdapterEquippedInventory adapter;
-    private ListView listView;
+    private TextView inventoryHeader, inventoryItemText, equippedText;
+    private ListAdapterEquippedInventory adapterInventory;
+    private ListAdapterEquippedInventory adapterEquipped;
+    private ListView listViewEquipped, listViewInventory;
     private int equipNum, id;
     Button back;
     User user;
@@ -69,12 +70,14 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         //URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + id;
 
         inventoryHeader = findViewById(R.id.InventoryHeader);
-        listView = findViewById(R.id.inventory_listView);
+        inventoryItemText = findViewById(R.id.inventoryItemTxt);
+        equippedText = findViewById(R.id.equippedTxt);
+        listViewEquipped = findViewById(R.id.listview_equipped);
         back = findViewById(R.id.inventoryBtn);
 
         // Initialize the adapter with an empty list (data will be added later)
-        adapter = new ListAdapterEquippedInventory(this, new ArrayList<>());
-        listView.setAdapter(adapter);
+        adapterEquipped = new ListAdapterEquippedInventory(this, new ArrayList<>());
+        listViewEquipped.setAdapter(adapterEquipped);
 
 
 
@@ -85,7 +88,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewEquipped.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
                 equipNum = (int)id;
                 try {
@@ -106,7 +109,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                 // Create a ListItemObject and add it to the adapter
                 EquippedItemInventory item = new EquippedItemInventory(name, description);
                 //   ListAdapterInventory tmp = adapter;
-                adapter.add(item);
+                adapterEquipped.add(item);
 
             } catch (JSONException e) {
                 e.printStackTrace();
