@@ -4,6 +4,7 @@ import java.net.http.HttpHeaders;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+import io.swagger.annotations.Api;
 import onetoone.Clans.ClanRepository;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.Wins.WinsRepository;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
  * 
  * @author Vivek Bengre
  * 
- */ 
-
+ */
+@Api(value = "UserController", description = "REST APIs related to the User Entity")
 @RestController
 public class UserController {
 

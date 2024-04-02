@@ -1,5 +1,6 @@
 package onetoone.Inventory;
 
+import io.swagger.annotations.Api;
 import onetoone.ShopItems.ShopItem;
 import onetoone.ShopItems.ShopItemsRepository;
 import onetoone.Users.User;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(value = "InventoryController", description = "REST APIs related to the Inventory Entity")
 @RestController
 public class InventoryController {
     @Autowired

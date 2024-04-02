@@ -1,6 +1,7 @@
 package onetoone.Game;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.annotations.Api;
 import onetoone.Inventory.Inventory;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.ShopItems.ShopItem;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(value = "GameController", description = "REST APIs related to the Game Entity")
 @RestController
 public class GameController {
     @Autowired
@@ -29,15 +30,17 @@ public class GameController {
     private String failure = "{\"message\":\"failure\"}";
 
     //return all cosmetics in the game (in the DB)
-    @GetMapping(path = "/deck")
-    List<Inventory> getInventory() { return inventoryRepository.findAll(); }
+//    @GetMapping(path = "/deck")
+//    List<Inventory> getInventory() { return inventoryRepository.findAll(); }
 
     //@GetMapping(path = "/inventory/shop")
 
     @GetMapping(path = "/draw")
     int draw(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
         int gid = Integer.parseInt(gameid);
-        return gameRepository.findById(gid).Draw();
+        int card = gameRepository.findById(gid).Draw();
+        gameRepository.save(gameRepository.findById(gid));
+        return card;
     }
 
 

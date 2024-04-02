@@ -1,5 +1,7 @@
 package onetoone.Clans;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +13,7 @@ import onetoone.Users.UserRepository;
 import onetoone.Users.User;
 
 import java.util.List;
-
+@Api(value = "ClanController", description = "REST APIs related to the Clan Entity")
 @RestController
 public class ClanController {
     @Autowired
@@ -23,6 +25,7 @@ public class ClanController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
+    //@ApiOperation(value = "Get list of all clans", response = Iterable.class, tags = "getClans")
     @GetMapping(path = "/clans")
     List<Clan> getAllClans() {
         return clanRepository.findAll();

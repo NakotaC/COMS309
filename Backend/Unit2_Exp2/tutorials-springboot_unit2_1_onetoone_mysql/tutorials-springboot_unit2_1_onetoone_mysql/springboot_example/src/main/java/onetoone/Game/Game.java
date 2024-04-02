@@ -1,5 +1,6 @@
 package onetoone.Game;
 
+import antlr.GrammarAnalyzer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import onetoone.Users.User;
 
@@ -89,10 +90,15 @@ public class Game {
 
     public int Draw() throws JsonProcessingException {
         Random rand = new Random();
-        if(this.getDeck().isEmpty()){
+        ArrayList<Integer> deck = getDeck();
+        if(deck.isEmpty()){
+            System.out.println("Shuffling");
             Shuffle();
+            deck = this.getDeck();
         }
-        return this.getDeck().remove(rand.nextInt(this.getDeck().size()));
+        int card = deck.remove(rand.nextInt(deck.size()));
+        setDeck(deck);
+        return card;
     }
     public void Shuffle() throws JsonProcessingException {
         initdeck();
