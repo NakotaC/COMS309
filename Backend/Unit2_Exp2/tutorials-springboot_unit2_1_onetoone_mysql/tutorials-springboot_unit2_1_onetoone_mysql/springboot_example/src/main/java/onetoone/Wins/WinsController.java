@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+@Api(value = "WinsController", description = "REST APIs related to the Wins Entity")
+
 @RestController
 public class WinsController {
     @Autowired
