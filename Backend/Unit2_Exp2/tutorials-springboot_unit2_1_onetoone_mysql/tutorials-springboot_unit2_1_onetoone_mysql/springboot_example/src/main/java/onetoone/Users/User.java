@@ -132,7 +132,9 @@ public class User {
     public void setWins(int wins){
         if (this.wins == null) {
             this.wins = new Wins(0);
+            // branch 20-quest-init
             this.wins.setQDate(-1);
+            // ____________________
             this.wins.setUser(this);
 
         }

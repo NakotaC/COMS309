@@ -26,10 +26,10 @@ public class Wins {
     private Integer quest;
 
     @Column(name="day_created")
-    private int qdate;
+    private Integer qdate;
 
     @Column(name="reward_scalar")
-    private int scalar;
+    private Integer scalar;
 
     public Wins(Integer wins) {
         this.wins = wins;
@@ -49,7 +49,7 @@ public class Wins {
         return wins;
     }
 
-    public void setQuest(int remaining) {this.quest = remaining;}
+    public void setQuest(Integer remaining) {this.quest = remaining;}
 
     public Integer getQuest() {return quest;}
 
@@ -57,7 +57,7 @@ public class Wins {
 
     public int getQDate() {return qdate;}
 
-    public void setScalar(int num) {this.scalar = num;}
+    public void setScalar(Integer num) {this.scalar = num;}
 
     public int getScalar() {return scalar;}
 
