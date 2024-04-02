@@ -179,24 +179,27 @@ public class WinsController {
     //NEEDS FIXED
 
     //SIDE EFFECT DELETING WINS
-    @PutMapping(path = "quest/{user_id}/{wins_needed}")
-    void putWinQuest(@PathVariable int user_id, Integer wins_needed) {
+    @PutMapping(path = "/quest/{user_id}/{wins_needed}")
+    void putWinQuest(@PathVariable int user_id, @PathVariable Integer wins_needed) {
         Wins winner = winsRepository.findById(user_id);
         winner.setQuest(wins_needed);
         winsRepository.save(winner);
-
     }
 
 //different variation of the POST request to allow for very specific quests with rewards to be given
 
     //THESE ARE BOTH COMING IN AS NULL TOO.
-    @PostMapping(path = "/quest/{user_id}/{wins_needed}/{reward_scalar}")
-    void postUserQuest(@PathVariable int user_id, Integer wins_needed, Integer reward_scalar) {
+    @PostMapping(path = "/quest/{user_id}/{win}/{reward_scalar}")
+    String postUserQuest(@PathVariable int user_id, @PathVariable Integer win, @PathVariable Integer reward_scalar) {
         Wins winner = winsRepository.findById(user_id);
-        winner.setQuest(wins_needed);
+        if(win == null || reward_scalar == null) {
+            return failure;
+        }
+        winner.setQuest(win);
         winner.setScalar(reward_scalar);
         winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")).getTime().getDate());
         winsRepository.save(winner);
+        return success;
     }
 
     }
