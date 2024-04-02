@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameactivity);
+        setContentView(R.layout.activity_game);
 
         Bundle extras = getIntent().getExtras();
         assert extras != null;

@@ -17,11 +17,11 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/itemPrice"
+        android:id="@+id/itemDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:text="price"
+        android:text="description"
         android:textColor="#888888"
         android:textSize="18sp" />
 </LinearLayout>

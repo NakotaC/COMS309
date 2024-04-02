@@ -11,22 +11,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
+import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
-import com.example.androidapp.Leaderboard.LeaderboardActivity;
 import com.google.android.material.button.MaterialButton;
 
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * The following method is the main method. It is invoked whenever the home screen starts up.
+ */
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener
+{
 
+    //variable declaration
     private MaterialButton button1;
     private MaterialButton clanButton;
     private MaterialButton shopButton;
     private TextView text1;
     private User user;
     private ImageButton statsButton;
+
+    /**
+     * The following method is used to initialize all the elements of the screen. In this case, it
+     * initializes buttons and text fields.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Bundle extras = getIntent().getExtras();
@@ -49,12 +64,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * The following method is initialized whenever the user clicks one of the navigation buttons.
+     * The user is then redirected to the one of the screens that corresponds to the button clicked.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v)
     {
         int id1 = v.getId();
         if (id1 == R.id.clanButton) {
-            Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ClanActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
         }  else if (id1 == R.id.button) {
@@ -66,12 +86,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(HomeActivity.this, ShopActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
-            startActivity(new Intent(HomeActivity.this, ClanActivity.class));
         } else if (id1 == R.id.statsButton) {
-            startActivity(new Intent(HomeActivity.this, LeaderboardActivity.class));
-        }
-       else if (id1 == R.id.shopButton) {
-            startActivity(new Intent(HomeActivity.this, ShopActivity.class));
+            Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
         }
     }
 }

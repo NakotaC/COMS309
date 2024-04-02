@@ -46,16 +46,16 @@ public class ListAdapterShop extends ArrayAdapter<ListItemObjectShop> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_shop, parent, false);
         }
 
         // Lookup view for data population
         TextView itemName = convertView.findViewById(R.id.itemName);
-        TextView itemPrice = convertView.findViewById(R.id.itemPrice);
+        TextView itemPrice = convertView.findViewById(R.id.itemDescription);
 
         // Populate the data into the template view using the data object
         itemName.setText(item.getName());
-        itemPrice.setText(item.getPrice());
+        itemPrice.setText(item.getDescription());
 
         // Return the completed view to render on screen
         return convertView;

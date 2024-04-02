@@ -1,5 +1,6 @@
 package onetoone.Wins;
 
+import io.swagger.annotations.Api;
 import onetoone.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 @Api(value = "WinsController", description = "REST APIs related to the Wins Entity")
-
 @RestController
 public class WinsController {
     @Autowired

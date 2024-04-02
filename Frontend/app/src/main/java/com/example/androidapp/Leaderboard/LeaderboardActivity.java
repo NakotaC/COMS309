@@ -32,7 +32,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class LeaderboardActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * The following method is the main method. It is invoked whenever the leadeboard screen starts up.
+ */
+public class LeaderboardActivity extends AppCompatActivity implements View.OnClickListener
+{
+
+    //variable declaration
     public Button button1;
     public TextView text1;
     public Button button2;
@@ -51,6 +57,14 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
     private static final String URL_POST_REQUEST =
             "http://coms-309-033.class.las.iastate.edu:8080/wins/";
 
+    /**
+     * The following method is used to initialize all the elements of the screen. Also, it is used
+     * to invoke a layout on a screen.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +89,10 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    /**
+     * The following method is used whenever a user clicks the back button or the add wins button.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         int id1 = v.getId();
@@ -87,6 +105,10 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * The following method is used to parse user information from backend to fill up the
+     * stats(leaderboard) table. It uses Volley library for such purposes.
+     */
     private void makeLeaderboardJsonArrayReq() {
         LinkedList<String> names = new LinkedList();
         LinkedList<String> wins = new LinkedList();
@@ -175,6 +197,11 @@ public class LeaderboardActivity extends AppCompatActivity implements View.OnCli
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq2);
     }
 
+
+    /**
+     * The following method is used to add a user to the leaderboard screen. It sends a post request
+     * to the backend server.
+     */
     private void postRequest() {
 
         // Convert input to JSONObject

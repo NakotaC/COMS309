@@ -4,28 +4,27 @@ import java.net.http.HttpHeaders;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+import io.swagger.annotations.Api;
 import onetoone.Clans.ClanRepository;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.Wins.WinsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import onetoone.Laptops.LaptopRepository;
+
 
 /**
  * 
  * @author Vivek Bengre
  * 
- */ 
-
+ */
+@Api(value = "UserController", description = "REST APIs related to the User Entity")
 @RestController
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    LaptopRepository laptopRepository;
 
     @Autowired
     InventoryRepository inventoryRepository;
@@ -36,7 +35,7 @@ public class UserController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/users")
+    @GetMapping("/users")
     List<User> getAllUsers(){
         return userRepository.findAll();
     }

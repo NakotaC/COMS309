@@ -29,7 +29,7 @@ public class ListItemObjectShop {
      * Gets the price of the item
      * @return Returns the price of the item
      */
-    public String getPrice() {
+    public String getDescription() {
         return description;
     }
 }

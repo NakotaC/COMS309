@@ -27,6 +27,9 @@
             android:name=".ShopInventory.ShopActivity"
             android:exported="false"/>
         <activity
+            android:name=".ShopInventory.InventoryActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainAuth.HomeActivity"
             android:exported="false"/>
         <activity
@@ -38,6 +41,10 @@
             />
         <activity
             android:name=".Clan.ClanActivity"
+            android:exported="false"
+            />
+        <activity
+            android:name=".Clan.CreateClanActivity"
             android:exported="false"
             />
         <activity
