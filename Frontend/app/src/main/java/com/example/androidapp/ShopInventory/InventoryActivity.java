@@ -44,6 +44,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
     JSONArray equippedItems;
     JSONArray ownedItems,  ownedItemsSansEquipped = new JSONArray();;
     private static String URL;
+    int inventoryNum;
     //private static String URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop"
 
     /**
@@ -242,11 +243,12 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         if(Objects.equals(response, "success")){
                             try {
                                 Gson gson = new Gson();
                                 JSONObject temp = new JSONObject(gson.toJson(adapterInventory.getItem(equipNum)));
-                                int inventoryNum = user.getItemPosition(temp);
+                                inventoryNum = user.getItemPosition(temp);
                                 user.addEquippedItem(ownedItems.getJSONObject(inventoryNum));
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -275,7 +277,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 // headers.put("username", );
-                headers.put("itemNum", String.valueOf(equipNum));
+                headers.put("itemNum", String.valueOf(inventoryNum));
                 return headers;
             }
 
