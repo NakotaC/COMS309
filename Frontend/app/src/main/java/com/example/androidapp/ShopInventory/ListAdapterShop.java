@@ -51,7 +51,7 @@ public class ListAdapterShop extends ArrayAdapter<ListItemObjectShop> {
 
         // Lookup view for data population
         TextView itemName = convertView.findViewById(R.id.itemName);
-        TextView itemPrice = convertView.findViewById(R.id.itemPrice);
+        TextView itemPrice = convertView.findViewById(R.id.itemDescription);
 
         // Populate the data into the template view using the data object
         itemName.setText(item.getName());

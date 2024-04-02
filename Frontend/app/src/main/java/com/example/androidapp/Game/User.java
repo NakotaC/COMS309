@@ -107,14 +107,35 @@ public class User implements Serializable {
         this.inventory = new SerializableJSONArray(temp);
         return temp;
     }
-    public JSONArray addEquippedItem(String item) throws JSONException {
+    public JSONArray addEquippedItem(JSONObject obj) throws JSONException {
         int length = this.equippedItems.getJSONArray().length() + 1;
         JSONArray temp = new JSONArray();
         for (int i = 0; i < length - 1; i++){
-            temp.put(this.equippedItems.getJSONArray().get(i));
+            temp.put(this.equippedItems.getJSONArray().getJSONObject(i));
         }
-        temp.put(item);
+        temp.put(obj);
         this.equippedItems = new SerializableJSONArray(temp);
         return temp;
+    }
+    public JSONArray removeEquippedItem(int position) throws JSONException {
+        JSONArray result;
+        result = new JSONArray();
+
+        for(int i = 0; i < equippedItems.getJSONArray().length(); i++){
+            if(i != position){
+                result.put(equippedItems.getJSONArray().get(i));
+            }
+        }
+        this.equippedItems = new SerializableJSONArray(result);
+        return result;
+    }
+    public int getItemPosition(JSONObject obj) throws JSONException {
+        int i;
+        for (i = 0; i < inventory.getJSONArray().length(); i++) {
+            if (inventory.getJSONArray().getJSONObject(i).getString("itemName").equals(obj.getString("itemName"))) {
+                break;
+            }
+        }
+        return i;
     }
 }

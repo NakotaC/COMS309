@@ -22,7 +22,7 @@
         android:layout_width="348dp"
         android:layout_height="209dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/InventoryHeader" />
 
@@ -31,7 +31,7 @@
         android:layout_width="205dp"
         android:layout_height="70dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:text="Back"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,10 +39,10 @@
 
     <ListView
         android:id="@+id/listView_inventory"
-        android:layout_width="342dp"
-        android:layout_height="288dp"
+        android:layout_width="343dp"
+        android:layout_height="262dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listview_equipped" />
 
@@ -61,8 +61,8 @@
         android:id="@+id/inventoryItemTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
         android:text="Inventory Items:"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/listView_inventory"

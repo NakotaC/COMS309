@@ -4,7 +4,7 @@ package com.example.androidapp.ShopInventory;
  * Class for the items to be placed into the list adapter
  */
 public class ListItemObjectInventory {
-    private final String name;
+    private final String itemName;
     private final String description;
 
 
@@ -14,7 +14,7 @@ public class ListItemObjectInventory {
      * @param description The description of the object
      */
     public ListItemObjectInventory(String name, String description) {
-        this.name = name;
+        this.itemName = name;
         this.description = String.valueOf(description);
     }
 
@@ -23,7 +23,7 @@ public class ListItemObjectInventory {
      * @return Returns the item name
      */
     public String getName() {
-        return name;
+        return itemName;
     }
 
     /**

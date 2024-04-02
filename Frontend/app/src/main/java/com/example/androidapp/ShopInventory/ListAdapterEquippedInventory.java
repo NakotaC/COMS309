@@ -44,18 +44,17 @@ public class ListAdapterEquippedInventory extends ArrayAdapter<EquippedItemInven
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_inventory, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_equipped, parent, false);
         }
 
         // Lookup view for data population
-        TextView itemName = convertView.findViewById(R.id.itemName);
-        TextView itemPrice = convertView.findViewById(R.id.itemPrice);
+        TextView itemName = convertView.findViewById(R.id.itemNameEquipped);
+        TextView itemPrice = convertView.findViewById(R.id.itemDescriptionEquipped);
         ImageView check = convertView.findViewById(R.id.checkMark);
 
         // Populate the data into the template view using the data object
         itemName.setText(item.getName());
         itemPrice.setText(item.getDescription());
-        check.setVisibility(View.VISIBLE);
 
         // Return the completed view to render on screen
         return convertView;
