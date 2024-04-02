@@ -84,14 +84,41 @@
         app:srcCompat="@drawable/vector" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/matchHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="45dp"
         android:layout_marginBottom="630dp"
         android:contentDescription="Daily Quests"
+        android:src="@drawable/icon__file_history_line_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/hiddenLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/matchHistoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/irish_grover"
+            android:text="Match History"
+            android:textAppearance="?attr/textAppearanceButton"
+            android:textSize="35dp" />
+
+        <ListView
+            android:id="@+id/matchHistoryList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
