@@ -3,6 +3,7 @@ package com.example.androidapp.MainAuth;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -13,12 +14,16 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+
 import android.view.ViewGroup;
+
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -27,6 +32,7 @@ import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
+import com.example.androidapp.Leaderboard.ListAdapterLeaderboard;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
@@ -80,6 +86,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
         dailyQuests = findViewById(R.id.dailyQuests);
+
         floatingActionButton1 = findViewById(R.id.matchHistory);
         hiddenLayout = findViewById(R.id.hiddenLayout);
         text2 = findViewById(R.id.matchHistoryTitle);
@@ -104,32 +111,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(@NonNull View widget)
             {
-            dialog1.setContentView(R.layout.activity_dialogbox);
-            dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            dialog1.setCancelable(false);
+                dialog1.setContentView(R.layout.activity_dialogbox);
+                dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog1.setCancelable(false);
 
-            text3 = dialog1.findViewById(R.id.confirm);
-            text4 = dialog1.findViewById(R.id.goback);
+                text3 = dialog1.findViewById(R.id.confirm);
+                text4 = dialog1.findViewById(R.id.goback);
 
-            text3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-            dialog1.dismiss();
-            }
-            });
+                text3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog1.dismiss();
+                    }
+                });
 
-            text4.setOnClickListener(new View.OnClickListener()
-            {
-            @Override
-            public void onClick(View v)
-            {
-            dialog1.dismiss();
-            }
-            });
+                text4.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog1.dismiss();
+                    }
+                });
 
-            dialog1.show();
+                dialog1.show();
             }
         };
         spannableString1.setSpan(clickableSpan1, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -165,7 +172,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (id1 == R.id.matchHistory)
         {
-        revealHiddenLayout();
+            revealHiddenLayout();
         }
     }
 
