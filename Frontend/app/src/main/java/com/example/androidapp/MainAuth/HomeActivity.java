@@ -20,6 +20,7 @@ import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
+import com.example.androidapp.Leaderboard.ListAdapterLeaderboard;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
@@ -31,8 +32,7 @@ import java.util.LinkedList;
 /**
  * The following method is the main method. It is invoked whenever the home screen starts up.
  */
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     //variable declaration
     private MaterialButton button1;
@@ -52,21 +52,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * The following method is used to initialize all the elements of the screen. In this case, it
      * initializes buttons and text fields.
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Bundle extras = getIntent().getExtras();
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
-       // imageButton1 = findViewById(R.id.imageButton1);
+        // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);
         button1 = findViewById(R.id.button);
         clanButton = findViewById(R.id.clanButton);
@@ -92,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * The following method is initialized whenever the user clicks one of the navigation buttons.
      * The user is then redirected to the one of the screens that corresponds to the button clicked.
+     *
      * @param v The view that was clicked.
      */
     @Override
@@ -113,61 +113,63 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(HomeActivity.this, LeaderboardActivity.class);
             intent.putExtra("USEROBJ", user);
             startActivity(intent);
-        } else if (id1 == R.id.matchHistory) {
-            revealHiddenLayout();
+        }
+        else if (id1 == R.id.matchHistory)
+        {
+        revealHiddenLayout();
         }
     }
-        
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @SuppressLint("ResourceAsColor")
-        private void revealHiddenLayout()
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint("ResourceAsColor")
+    private void revealHiddenLayout()
+    {
+        if (!random1)
         {
-            if (!random1)
-            {
 
-                int x = hiddenLayout.getRight() / 2;
-                int y = hiddenLayout.getBottom() / 2;
+            int x = hiddenLayout.getRight() / 2;
+            int y = hiddenLayout.getBottom() / 2;
 
-                int startRadius = 0;
+            int startRadius = 0;
 
-                int endRadius = (int) Math.hypot(
-                        (double) hiddenLayout.getWidth(),
-                        (double) hiddenLayout.getHeight()
-                );
+            int endRadius = (int) Math.hypot(
+                    (double) hiddenLayout.getWidth(),
+                    (double) hiddenLayout.getHeight()
+            );
 
-                floatingActionButton1.setBackgroundTintList(ColorStateList.valueOf(
-                        ResourcesCompat.getColor(
-                                getResources(),
-                                R.color.white,
-                                null
-                        )
-                ));
+            floatingActionButton1.setBackgroundTintList(ColorStateList.valueOf(
+                    ResourcesCompat.getColor(
+                            getResources(),
+                            R.color.white,
+                            null
+                    )
+            ));
 
-                floatingActionButton1.setImageResource(R.drawable.baseline_clear_24);
+            floatingActionButton1.setImageResource(R.drawable.baseline_clear_24);
 
-                Animator anim = ViewAnimationUtils.createCircularReveal(
-                        hiddenLayout,
-                        x,
-                        y,
-                        (float) startRadius,
-                        (float) endRadius
-                );
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    hiddenLayout,
+                    x,
+                    y,
+                    (float) startRadius,
+                    (float) endRadius
+            );
 
-                hiddenLayout.setVisibility(View.VISIBLE);
+            hiddenLayout.setVisibility(View.VISIBLE);
 
-                anim.start();
+            anim.start();
 
-                random1 = true;
+            random1 = true;
 
-            }
-            else
-            {
-                int x = hiddenLayout.getRight() / 2;
-                int y = hiddenLayout.getBottom() / 2;
+        }
+        else
+        {
+            int x = hiddenLayout.getRight() / 2;
+            int y = hiddenLayout.getBottom() / 2;
 
-                int startRadius = Math.max(hiddenLayout.getWidth(), hiddenLayout.getHeight());
+            int startRadius = Math.max(hiddenLayout.getWidth(), hiddenLayout.getHeight());
 
-                int endRadius = 0;
+            int endRadius = 0;
 
      /*       floatingActionButton1.setBackgroundTintList(ColorStateList.valueOf(
                     ResourcesCompat.getColor(
@@ -177,43 +179,44 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     )
             )); */
 
-                floatingActionButton1.setImageResource(R.drawable.icon__file_history_line_);
+            floatingActionButton1.setImageResource(R.drawable.icon__file_history_line_);
 
-                Animator anim = ViewAnimationUtils.createCircularReveal(
-                        hiddenLayout,
-                        x,
-                        y,
-                        (float) startRadius,
-                        (float) endRadius
-                );
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    hiddenLayout,
+                    x,
+                    y,
+                    (float) startRadius,
+                    (float) endRadius
+            );
 
-                anim.addListener(new Animator.AnimatorListener()
+            anim.addListener(new Animator.AnimatorListener()
+            {
+                @Override
+                public void onAnimationStart(Animator animator)
                 {
-                    @Override
-                    public void onAnimationStart(Animator animator)
-                    {
-                    }
+                }
 
-                    @Override
-                    public void onAnimationEnd(Animator animator)
-                    {
-                        hiddenLayout.setVisibility(View.GONE);
-                    }
+                @Override
+                public void onAnimationEnd(Animator animator)
+                {
+                    hiddenLayout.setVisibility(View.GONE);
+                }
 
-                    @Override
-                    public void onAnimationCancel(Animator animator)
-                    {
-                    }
+                @Override
+                public void onAnimationCancel(Animator animator)
+                {
+                }
 
-                    @Override
-                    public void onAnimationRepeat(Animator animator)
-                    {
-                    }
-                });
+                @Override
+                public void onAnimationRepeat(Animator animator)
+                {
+                }
+            });
 
-                anim.start();
+            anim.start();
 
-                random1 = false;
-            }
+            random1 = false;
         }
     }
+}
+
