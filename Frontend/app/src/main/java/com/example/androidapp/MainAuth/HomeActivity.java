@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageButton;
@@ -16,17 +17,29 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.androidapp.Clan.ClanActivity;
+import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
+import com.example.androidapp.Leaderboard.LeaderboardItemObject;
 import com.example.androidapp.Leaderboard.ListAdapterLeaderboard;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 
 /**
@@ -48,6 +61,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ListView matchHistoryList;
     private MatchHistoryListAdapter adapter1;
 
+    private static final String URL1 =
+            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/matches";
     /**
      * The following method is used to initialize all the elements of the screen. In this case, it
      * initializes buttons and text fields.
@@ -114,6 +129,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         else if (id1 == R.id.matchHistory)
         {
         revealHiddenLayout();
+        parseJsonArrayReq();
         }
     }
 
@@ -214,6 +230,62 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             random1 = false;
         }
+    }
+
+    private void parseJsonArrayReq() {
+        LinkedList<String> names = new LinkedList();
+        LinkedList<String> matches = new LinkedList();
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+                URL1,
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+                        System.out.println(response);
+
+                        // Parse the JSON array and add data to the adapter
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                names.add(i, jsonObject.getString("username"));
+                                matches.add(i, jsonObject.getString("match"));
+
+                                MatchItemObject item = new MatchItemObject(names.get(i),
+                                        matches.get(i));
+                                adapter1.add(item);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
 }
 
