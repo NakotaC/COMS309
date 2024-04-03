@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
 import onetoone.ShopItems.ShopItem;
+import onetoone.UserMatch.UM;
 import onetoone.Wins.Wins;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonBackReference
     private Inventory inventory;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonBackReference
+    private UM user_match;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -93,6 +98,13 @@ public class User {
 
     public void setClan(Clan clan){
         this.clan = clan;
+    }
+    public int getUM(){
+        return user_match.getId();
+    }
+
+    public void setUM(UM um){
+        this.user_match = um;
     }
     public Inventory getInventory(){
         return inventory;
