@@ -8,7 +8,7 @@ import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
 import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
-import onetoone.UserMatch.UM;
+//import onetoone.UserMatch.UM;
 import onetoone.Wins.Wins;
 import java.util.List;
 
@@ -40,9 +40,9 @@ public class User {
     @JsonBackReference
     private Inventory inventory;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonBackReference
-    private UM user_match;
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+//    @JsonBackReference
+//    private UM user_match;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -100,13 +100,13 @@ public class User {
     public void setClan(Clan clan){
         this.clan = clan;
     }
-    public int getUM(){
-        return user_match.getId();
-    }
-
-    public void setUM(UM um){
-        this.user_match = um;
-    }
+//    public int getUM(){
+//        return user_match.getId();
+//    }
+//
+//    public void setUM(UM um){
+//        this.user_match = um;
+//    }
     public Inventory getInventory(){
         return inventory;
     }
@@ -132,12 +132,12 @@ public class User {
         this.inventory.setShopItems(shopItem);
     }
 
-    public void setHistory(List<History> history){
-        if (this.user_match == null) {
-            this.user_match = new UM();
-        }
-        this.user_match.setUM(history);
-    }
+//    public void setHistory(List<History> history){
+//        if (this.user_match == null) {
+//            this.user_match = new UM();
+//        }
+//        this.user_match.setUM(history);
+//    }
 
     public void setItems(ShopItem shopItem){
         if (this.inventory == null) {
