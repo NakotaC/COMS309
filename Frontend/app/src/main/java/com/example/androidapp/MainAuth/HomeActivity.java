@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton shopButton;
     private TextView text1;
     private TextView text2;
-    private TextView welcomeSplash;
+    private TextView dailyQuests;
     private User user;
     private ImageButton statsButton;
     private View hiddenLayout;
@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         clanButton = findViewById(R.id.clanButton);
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
-        welcomeSplash = findViewById(R.id.welcomeSplashTxt);
+        dailyQuests = findViewById(R.id.dailyQuests);
         floatingActionButton1 = findViewById(R.id.matchHistory);
         hiddenLayout = findViewById(R.id.hiddenLayout);
         text2 = findViewById(R.id.matchHistoryTitle);
@@ -82,7 +82,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         shopButton.setOnClickListener(this);
         statsButton.setOnClickListener(this);
         floatingActionButton1.setOnClickListener(this);
-        welcomeSplash.setText("Welcome " + user.getUsername() + "!");
 
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
