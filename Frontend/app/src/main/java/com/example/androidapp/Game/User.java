@@ -14,6 +14,17 @@ public class User implements Serializable {
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
     private final int bank, id;
+    private int playerNum;
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    private int gameId;
 
     /**
      * Gets the player Number(Keeps track of their place in the rotation)
@@ -23,7 +34,7 @@ public class User implements Serializable {
         return playerNum;
     }
 
-    private int playerNum;
+
 
     /**
      * Creates a User object with all fields blank
