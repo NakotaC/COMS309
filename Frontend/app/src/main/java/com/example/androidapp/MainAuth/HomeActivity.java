@@ -2,16 +2,23 @@ package com.example.androidapp.MainAuth;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -20,7 +27,6 @@ import com.example.androidapp.Clan.ClanActivity;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
-import com.example.androidapp.Leaderboard.ListAdapterLeaderboard;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
@@ -41,6 +47,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView text1;
     private TextView text2;
     private TextView dailyQuests;
+    private TextView text3;
+    private TextView text4;
     private User user;
     private ImageButton statsButton;
     private View hiddenLayout;
@@ -85,6 +93,48 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
+
+        Dialog dialog1 = new Dialog(HomeActivity.this);
+
+        String random1 = "Daily Quests?";
+        SpannableString spannableString1 = new SpannableString(random1);
+
+        ClickableSpan clickableSpan1 = new ClickableSpan()
+        {
+            @Override
+            public void onClick(@NonNull View widget)
+            {
+            dialog1.setContentView(R.layout.activity_dialogbox);
+            dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog1.setCancelable(false);
+
+            text3 = dialog1.findViewById(R.id.confirm);
+            text4 = dialog1.findViewById(R.id.goback);
+
+            text3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+            dialog1.dismiss();
+            }
+            });
+
+            text4.setOnClickListener(new View.OnClickListener()
+            {
+            @Override
+            public void onClick(View v)
+            {
+            dialog1.dismiss();
+            }
+            });
+
+            dialog1.show();
+            }
+        };
+        spannableString1.setSpan(clickableSpan1, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        dailyQuests.setText(spannableString1);
+        dailyQuests.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     /**

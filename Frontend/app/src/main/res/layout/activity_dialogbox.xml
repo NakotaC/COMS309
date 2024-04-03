@@ -35,7 +35,7 @@
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:id="@+id/okay_text"
+            android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="100dp"
@@ -45,12 +45,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/cancel_text"
+            android:id="@+id/goback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="100dp"
-            android:layout_toRightOf="@id/okay_text"
+            android:layout_toRightOf="@id/confirm"
             android:text="Go back"
             android:textColor="#FF0000"
             android:textSize="30sp"

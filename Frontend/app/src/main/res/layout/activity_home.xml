@@ -96,6 +96,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/dailyQuests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Daily Quests?"
+        android:textAppearance="?attr/textAppearanceButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shopButton" />
+
     <LinearLayout
         android:id="@+id/hiddenLayout"
         android:layout_width="match_parent"
@@ -109,7 +121,6 @@
             android:id="@+id/matchHistoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/irish_grover"
             android:text="Match History"
             android:textAppearance="?attr/textAppearanceButton"
             android:textSize="35dp" />
@@ -120,17 +131,5 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/dailyQuests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Daily Quests?"
-        android:textAppearance="?attr/textAppearanceButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shopButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
