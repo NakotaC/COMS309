@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
 import onetoone.Inventory.Inventory;
+import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
 import onetoone.UserMatch.UM;
 import onetoone.Wins.Wins;
@@ -129,6 +130,13 @@ public class User {
             this.inventory = new Inventory();
         }
         this.inventory.setShopItems(shopItem);
+    }
+
+    public void setHistory(List<History> history){
+        if (this.user_match == null) {
+            this.user_match = new UM();
+        }
+        this.user_match.setUM(history);
     }
 
     public void setItems(ShopItem shopItem){

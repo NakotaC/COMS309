@@ -17,8 +17,12 @@ import onetoone.Users.User;
 import onetoone.Users.UserRepository;
 import onetoone.Clans.Clan;
 import onetoone.Clans.ClanRepository;
+
 import onetoone.Game.Game;
 import onetoone.Game.GameRepository;
+
+import onetoone.MatchHistory.History;
+import onetoone.MatchHistory.HistoryRepository;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -49,7 +53,7 @@ class Main {
      * As mentioned in User.java just associating the Laptop object with the User will save it into the database because of the CascadeType
      */
     @Bean
-    CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository) {
+    CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, HistoryRepository historyRepository) {
         return args -> {
             User user1 = new User("John", "JohnPassword");
             User user2 = new User("Tom", "TomPassword");
@@ -107,6 +111,8 @@ class Main {
             userRepository.save(user3);
             Game g = new Game();
             gameRepository.save(g);
+//            History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), user1,  user1);
+//            historyRepository.save(h);
         };
     }
 
