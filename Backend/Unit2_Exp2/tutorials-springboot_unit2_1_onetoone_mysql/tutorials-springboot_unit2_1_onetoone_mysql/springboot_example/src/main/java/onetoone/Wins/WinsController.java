@@ -156,34 +156,6 @@ public class WinsController {
         // Put method to run after every game
         // Basically will need to be used like the following:
         // if(game won) { put user_id.wins_needed PUT(user) if (wins_needed == 0, make currency requests}
-
-
-
-
-
-    //NEEDS FIXED
-
-
-
-//NEEDS FIXED
-
-
-
-    //NEEDS FIXED
-
-
-
-
-
-
-        //NEEDS FIXED
-
-
-
-
-    //NEEDS FIXED
-
-    //SIDE EFFECT DELETING WINS
     @PutMapping(path = "/quest/{user_id}/{wins_needed}")
     void putWinQuest(@PathVariable int user_id, @PathVariable Integer wins_needed) {
         Wins winner = winsRepository.findById(user_id);

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
 import onetoone.EquippedItems.EquippedItems;
 import onetoone.Inventory.Inventory;
+import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
 import java.util.List;
@@ -99,6 +100,13 @@ public class User {
     public void setClan(Clan clan){
         this.clan = clan;
     }
+//    public int getUM(){
+//        return user_match.getId();
+//    }
+//
+//    public void setUM(UM um){
+//        this.user_match = um;
+//    }
     public Inventory getInventory(){
         return inventory;
     }
@@ -135,6 +143,13 @@ public class User {
         }
         this.inventory.setShopItems(shopItem);
     }
+
+//    public void setHistory(List<History> history){
+//        if (this.user_match == null) {
+//            this.user_match = new UM();
+//        }
+//        this.user_match.setUM(history);
+//    }
 
     public void setItems(ShopItem shopItem){
         if (this.inventory == null) {
