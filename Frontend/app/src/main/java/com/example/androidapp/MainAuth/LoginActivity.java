@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * var for the URL string
      */
-    private static final String URL_STRING_REQ = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/login8";
-   // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
+    //private static final String URL_STRING_REQ = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/login8";
+    private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
     /**
      * initializes the screen and the elements to make it operate
@@ -211,7 +211,7 @@ public class LoginActivity extends AppCompatActivity {
     private void equippedItemRequest() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/inventory/equippeditems/" + userId,
+                "http://coms-309-033.class.las.iastate.edu:8080/equippedItems/" + userId,
                 //URL,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {

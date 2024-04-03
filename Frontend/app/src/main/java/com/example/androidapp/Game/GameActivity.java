@@ -18,7 +18,6 @@ import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
 import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
-import com.example.androidapp.ShopInventory.ShopActivity;
 
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
@@ -107,7 +106,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             try {
                 obj = new JSONObject(message);
                 user.setPlayerNum(obj.getInt("playerNum"));
-                user.setGameId(obj.getInt("gameId"));
+                user.setGameId(1);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

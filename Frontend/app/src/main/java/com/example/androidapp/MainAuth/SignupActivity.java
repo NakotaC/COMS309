@@ -40,7 +40,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText passwordEntry;
 
 private User user;
-    private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signuptest";
+   // private static final String url = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/signuptest";
     // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
 
     /**
