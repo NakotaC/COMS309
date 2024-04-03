@@ -20,7 +20,6 @@ import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -38,7 +37,8 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private final TurnManager turnmgr = new TurnManager();
     private User user;
     int cardNum;
-    private final String serverUrl = "";
+    private String serverUrl;
+
 
     /**
      * Handles the creation and functionality of screen elements when the screen is created
@@ -56,6 +56,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
+       serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/John";
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         turnText = (TextView) findViewById(R.id.TurnText);
@@ -103,13 +104,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
          */
         if(user.getPlayerNum() == 0){
             JSONObject obj;
-            try {
-                obj = new JSONObject(message);
-                user.setPlayerNum(obj.getInt("playerNum"));
+
+                user.setPlayerNum(Integer.parseInt(message));
                 user.setGameId(1);
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+
 
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
                 turnBtn.setVisibility(View.VISIBLE);

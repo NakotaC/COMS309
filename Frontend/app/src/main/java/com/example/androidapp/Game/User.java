@@ -61,6 +61,14 @@ public class User implements Serializable {
         this.inventory = new SerializableJSONArray(inventory);
         playerNum = 0;
     }
+    public User(JSONObject object) throws JSONException {
+        this.username = object.getString("username");
+        this.bank = object.getInt("bank");
+        this.id = object.getInt("id");
+        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
+        this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
+        playerNum = 0;
+    }
 
     /**
      * Gets the value of the bank of the User

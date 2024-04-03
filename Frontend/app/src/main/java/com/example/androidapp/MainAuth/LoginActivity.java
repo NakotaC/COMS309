@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * var for the URL string
      */
-    //private static final String URL_STRING_REQ = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/login8";
-    private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
+    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login11";
+    //private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/login";
 
     /**
      * initializes the screen and the elements to make it operate
@@ -110,7 +110,8 @@ public class LoginActivity extends AppCompatActivity {
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                URL_STRING_REQ,null,
+                URL_STRING_REQ,
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -124,9 +125,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             try {
                                 userId = response.getInt("id");
-                                inventoryRequest();
-                                equippedItemRequest();
-                                user = new User(response, inventory, equippedItems);
+//                                inventoryRequest();
+//                                equippedItemRequest();
+                                user = new User(response);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -170,8 +171,8 @@ public class LoginActivity extends AppCompatActivity {
     private void inventoryRequest() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + userId,
-                //URL,
+               // "http://coms-309-033.class.las.iastate.edu:8080/inventory/4",
+                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/inventory/4",
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -211,8 +212,8 @@ public class LoginActivity extends AppCompatActivity {
     private void equippedItemRequest() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/equippedItems/" + userId,
-                //URL,
+               // "http://coms-309-033.class.las.iastate.edu:8080/equippedItems/4",
+                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/4",
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
