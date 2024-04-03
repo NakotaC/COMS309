@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Clans.Clan;
+import onetoone.EquippedItems.EquippedItems;
 import onetoone.Inventory.Inventory;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
@@ -37,6 +38,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonBackReference
     private Inventory inventory;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonBackReference
+    private EquippedItems equippedItems;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -106,6 +111,18 @@ public class User {
         inventory.setUser(this);
     }
 
+    public EquippedItems getEquipped(){
+        return equippedItems;
+    }
+
+    public void setEquipped(EquippedItems equippedItems){
+        if (this.equippedItems == null) {
+            this.equippedItems = new EquippedItems();
+        }
+        this.equippedItems = equippedItems;
+        equippedItems.setUser(this);
+    }
+
 //    public void setInventory(List<ShopItem> shopItem){
 //        if (this.inventory == null) {
 //            this.inventory = new Inventory();
@@ -125,6 +142,22 @@ public class User {
         }
         this.inventory.setShopItems(shopItem);
     }
+
+    public void setequippedItems(List<ShopItem> shopItem){
+        if (this.equippedItems == null) {
+            this.equippedItems = new EquippedItems();
+        }
+        this.equippedItems.setShopItems(shopItem);
+    }
+
+    public void setequippedItems(ShopItem shopItem){
+        if (this.equippedItems == null) {
+            this.equippedItems = new EquippedItems();
+        }
+        this.equippedItems.setShopItems(shopItem);
+    }
+
+
     public Wins getWins(){
         return wins;
     }
