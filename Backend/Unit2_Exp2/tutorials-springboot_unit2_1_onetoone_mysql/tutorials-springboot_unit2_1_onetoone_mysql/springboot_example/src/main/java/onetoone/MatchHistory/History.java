@@ -45,14 +45,14 @@ public class History {
     }
 
     public void setTime(GregorianCalendar time) {
-        this.time = new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00"));
+        this.time = time;
     }
 
-    public User getWinner() {
+    public User getUser() {
         return winner;
     }
 
-    public void setWinner(User winner) {
+    public void setUser(User winner) {
         this.winner = winner;
     }
 
