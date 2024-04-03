@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,10 +58,12 @@ public class LoginActivity extends AppCompatActivity {
      * var for the password string
      */
     private String password;
+    int userId;
     /**
      * var for the password entry field
      */
     private EditText passwordEntry;
+    JSONArray inventory, equippedItems;
     /**
      * var for the URL string
      */
@@ -89,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                password = passwordEntry.getText().toString();
                username = usernameEntry.getText().toString();
-               makeStringReq();
+               makeUserReq();
             }
         });
 
@@ -102,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void makeStringReq() {
+    private void makeUserReq() {
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
@@ -117,8 +121,12 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.has("username")){
                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             User user = null;
+
                             try {
-                                user = new User(response);
+                                userId = response.getInt("id");
+                                inventoryRequest();
+                                equippedItemRequest();
+                                user = new User(response, inventory, equippedItems);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -157,6 +165,89 @@ public class LoginActivity extends AppCompatActivity {
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
+    }
+
+    private void inventoryRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+                "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + userId,
+                //URL,
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        inventory = response;
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+    private void equippedItemRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+                "http://coms-309-033.class.las.iastate.edu:8080/inventory/equippeditems/" + userId,
+                //URL,
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        equippedItems = response;
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
 }
 

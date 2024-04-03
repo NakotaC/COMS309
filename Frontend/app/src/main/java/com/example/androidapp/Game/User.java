@@ -42,12 +42,12 @@ public class User implements Serializable {
      * @param object is the JSONObject that has the user data
      * @throws JSONException if object is missing params. Exception will be thrown
      */
-    public User(JSONObject object) throws JSONException {
+    public User(JSONObject object, JSONArray inventory, JSONArray equippedItems) throws JSONException {
         this.username = object.getString("username");
         this.bank = object.getInt("bank");
         this.id = object.getInt("id");
-        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
-        this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
+        this.equippedItems = new SerializableJSONArray(equippedItems);
+        this.inventory = new SerializableJSONArray(inventory);
         playerNum = 0;
     }
 
