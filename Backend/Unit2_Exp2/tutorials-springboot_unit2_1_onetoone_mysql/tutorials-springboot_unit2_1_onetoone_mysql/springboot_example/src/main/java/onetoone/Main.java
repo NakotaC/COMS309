@@ -21,6 +21,8 @@ import onetoone.Game.Game;
 import onetoone.Game.GameRepository;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * 
@@ -34,6 +36,9 @@ class Main {
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
+
+
+
     }
 
     // Create 3 users with their machines
