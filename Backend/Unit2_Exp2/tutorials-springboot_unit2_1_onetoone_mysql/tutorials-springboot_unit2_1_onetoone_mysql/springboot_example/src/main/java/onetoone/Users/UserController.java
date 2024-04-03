@@ -61,14 +61,14 @@ public class UserController {
     }
 
     @GetMapping(path = "/users/login")
-    String loginUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
+    User loginUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
-                return "success";
+                return users.get(i);
             }
         }
-        return "failure";
+        return users.get(1);
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")

@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener{
 private TextView shopHeader;
-       private TextView respondText;
+       private TextView respondText, bankText;
     private Button btnJsonArrReq;
     private ListAdapterShop adapter;
     private ListView listView;
@@ -68,12 +68,13 @@ private TextView shopHeader;
         listView = findViewById(R.id.shopList);
         back = findViewById(R.id.shopBackBtn);
         inventory = findViewById(R.id.shopInventoryBtn);
+        bankText = findViewById(R.id.bankValTxt);
 
         // Initialize the adapter with an empty list (data will be added later)
         adapter = new ListAdapterShop(this, new ArrayList<>());
         listView.setAdapter(adapter);
 
-
+        bankText.setText("Bank: " + user.getBank());
         back.setOnClickListener(this);
         inventory.setOnClickListener(this);
 

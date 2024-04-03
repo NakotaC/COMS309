@@ -1,6 +1,8 @@
 package onetoone;
 
 import onetoone.Clans.ClanRepository;
+import onetoone.EquippedItems.EquippedItems;
+import onetoone.EquippedItems.EquippedItemsRepository;
 import onetoone.Game.Game;
 import onetoone.Inventory.Inventory;
 import onetoone.Inventory.InventoryRepository;
@@ -53,7 +55,7 @@ class Main {
      * As mentioned in User.java just associating the Laptop object with the User will save it into the database because of the CascadeType
      */
     @Bean
-    CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, HistoryRepository historyRepository) {
+    CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, EquippedItemsRepository equippedItemsRepository) {
         return args -> {
             User user1 = new User("John", "JohnPassword");
             User user2 = new User("Tom", "TomPassword");
@@ -61,9 +63,15 @@ class Main {
             Inventory inventory1 = new Inventory();
             Inventory inventory2 = new Inventory();
             Inventory inventory3 = new Inventory();
+            EquippedItems EI1 = new EquippedItems();
+            EquippedItems EI2 = new EquippedItems();
+            EquippedItems EI3 = new EquippedItems();
             ArrayList<ShopItem> inv1items = new ArrayList<>();
             ArrayList<ShopItem> inv2items = new ArrayList<>();
             ArrayList<ShopItem> inv3items = new ArrayList<>();
+            ArrayList<ShopItem> Einv1items = new ArrayList<>();
+            ArrayList<ShopItem> Einv2items = new ArrayList<>();
+            ArrayList<ShopItem> Einv3items = new ArrayList<>();
             ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
             ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
             ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
@@ -80,10 +88,16 @@ class Main {
             inv2items.add(SI6);
             inv3items.add(SI7);
             inv3items.add(SI8);
+            Einv1items.add(SI1);
+            Einv2items.add(SI4);
+            Einv3items.add(SI8);
             user2.setWins(14000);
             inventory1.setShopItems(inv1items);
             inventory2.setShopItems(inv2items);
             inventory3.setShopItems(inv3items);
+            EI1.setShopItems(Einv1items);
+            EI2.setShopItems(Einv2items);
+            EI3.setShopItems(Einv3items);
             shopItemsRepository.save(SI1);
             shopItemsRepository.save(SI2);
             shopItemsRepository.save(SI3);
@@ -95,9 +109,15 @@ class Main {
             inventoryRepository.save(inventory1);
             inventoryRepository.save(inventory2);
             inventoryRepository.save(inventory3);
+            equippedItemsRepository.save(EI1);
+            equippedItemsRepository.save(EI2);
+            equippedItemsRepository.save(EI3);
             user1.setInventory(inventory1);
             user2.setInventory(inventory2);
             user3.setInventory(inventory3);
+            user1.setEquipped(EI1);
+            user2.setEquipped(EI2);
+            user3.setEquipped(EI3);
             userRepository.save(user1);
             userRepository.save(user2);
             userRepository.save(user3);

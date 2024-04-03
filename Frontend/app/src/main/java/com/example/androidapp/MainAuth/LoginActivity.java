@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,15 +58,17 @@ public class LoginActivity extends AppCompatActivity {
      * var for the password string
      */
     private String password;
+    int userId;
     /**
      * var for the password entry field
      */
     private EditText passwordEntry;
+    JSONArray inventory, equippedItems;
     /**
      * var for the URL string
      */
-    private static final String URL_STRING_REQ = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/login8";
-   // private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/login";
+    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login11";
+    //private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/login";
 
     /**
      * initializes the screen and the elements to make it operate
@@ -89,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                password = passwordEntry.getText().toString();
                username = usernameEntry.getText().toString();
-               makeStringReq();
+               makeUserReq();
             }
         });
 
@@ -102,11 +106,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void makeStringReq() {
+    private void makeUserReq() {
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                URL_STRING_REQ,null,
+                URL_STRING_REQ,
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -117,7 +122,11 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.has("username")){
                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             User user = null;
+
                             try {
+                                userId = response.getInt("id");
+//                                inventoryRequest();
+//                                equippedItemRequest();
                                 user = new User(response);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -157,6 +166,89 @@ public class LoginActivity extends AppCompatActivity {
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
+    }
+
+    private void inventoryRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+               // "http://coms-309-033.class.las.iastate.edu:8080/inventory/4",
+                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/inventory/4",
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        inventory = response;
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+    private void equippedItemRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+               // "http://coms-309-033.class.las.iastate.edu:8080/equippedItems/4",
+                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/4",
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        equippedItems = response;
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
 }
 

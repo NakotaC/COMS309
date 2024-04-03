@@ -14,6 +14,17 @@ public class User implements Serializable {
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
     private final int bank, id;
+    private int playerNum;
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    private int gameId;
 
     /**
      * Gets the player Number(Keeps track of their place in the rotation)
@@ -23,7 +34,7 @@ public class User implements Serializable {
         return playerNum;
     }
 
-    private int playerNum;
+
 
     /**
      * Creates a User object with all fields blank
@@ -42,6 +53,14 @@ public class User implements Serializable {
      * @param object is the JSONObject that has the user data
      * @throws JSONException if object is missing params. Exception will be thrown
      */
+    public User(JSONObject object, JSONArray inventory, JSONArray equippedItems) throws JSONException {
+        this.username = object.getString("username");
+        this.bank = object.getInt("bank");
+        this.id = object.getInt("id");
+        this.equippedItems = new SerializableJSONArray(equippedItems);
+        this.inventory = new SerializableJSONArray(inventory);
+        playerNum = 0;
+    }
     public User(JSONObject object) throws JSONException {
         this.username = object.getString("username");
         this.bank = object.getInt("bank");

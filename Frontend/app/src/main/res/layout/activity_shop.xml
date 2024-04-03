@@ -63,4 +63,15 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/shopBackBtn"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/bankValTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="Bank: {bal}"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton button1;
     private MaterialButton clanButton;
     private MaterialButton shopButton;
-    private TextView text1;
+    private TextView text1, welcomeSplash;
     private User user;
     private ImageButton statsButton;
 
@@ -48,19 +48,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
+
        // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);
         button1 = findViewById(R.id.button);
         clanButton = findViewById(R.id.clanButton);
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
-
+        welcomeSplash = findViewById(R.id.welcomeSplashTxt);
 
         button1.setOnClickListener(this);
         clanButton.setOnClickListener(this);
         shopButton.setOnClickListener(this);
         statsButton.setOnClickListener(this);
-
+        welcomeSplash.setText("Welcome " + user.getUsername() + "!");
 
     }
 

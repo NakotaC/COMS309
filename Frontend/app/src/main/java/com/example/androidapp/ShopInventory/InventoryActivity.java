@@ -69,7 +69,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         id = user.getId();
         ownedItems = user.getInventory();
 
-        URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
+        //URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
         //URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + id;
 
         inventoryHeader = findViewById(R.id.InventoryHeader);
@@ -183,8 +183,8 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
         StringRequest request = new StringRequest(
                 Request.Method.DELETE,
-                //"http://coms-309-033.class.las.iastate.edu:8080/users/signup",
-                "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/unequip/fail",
+                "http://coms-309-033.class.las.iastate.edu:8080/unequip" + id,
+                //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/unequip/fail",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -238,8 +238,8 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
         StringRequest request = new StringRequest(
                 Request.Method.PUT,
-                //"http://coms-309-033.class.las.iastate.edu:8080/users/signup",
-                "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
+                "http://coms-309-033.class.las.iastate.edu:8080/equip" + id,
+                //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
