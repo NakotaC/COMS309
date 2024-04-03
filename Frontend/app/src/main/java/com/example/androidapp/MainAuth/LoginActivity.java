@@ -67,7 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * var for the URL string
      */
-    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login11";
+    private static final String URL_STRING_REQ =
+            "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/login8";
     //private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/login";
 
     /**
