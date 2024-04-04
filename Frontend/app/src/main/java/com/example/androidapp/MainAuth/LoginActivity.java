@@ -112,8 +112,8 @@ public class LoginActivity extends AppCompatActivity {
     private void makeUserReq() {
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                //"http://coms-309-033.class.las.iastate.edu:8080/users/login",
-                URL_STRING_REQ,
+                "http://coms-309-033.class.las.iastate.edu:8080/users/login",
+               // URL_STRING_REQ,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -260,7 +260,7 @@ public class LoginActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
                 // "http://coms-309-033.class.las.iastate.edu:8080/inventory/4",
-                "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/quest/" + userId + "/",
+                "http://coms-309-033.class.las.iastate.edu:8080/quest/" + userId + "/",
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override

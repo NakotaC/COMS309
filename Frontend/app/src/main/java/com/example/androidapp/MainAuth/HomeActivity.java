@@ -104,8 +104,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
-        assert user != null;
-        quests = user.getQuests();
+       // assert user != null;
+       // quests = user.getQuests();
 
         // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);
@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog1.setCancelable(false);
 
-            dailyQuestTask = findViewById(R.id.dailyQuestTask);
+            dailyQuestTask = dialog1.findViewById(R.id.dailyQuestTask);
             text3 = dialog1.findViewById(R.id.confirm);
             text4 = dialog1.findViewById(R.id.goback);
 

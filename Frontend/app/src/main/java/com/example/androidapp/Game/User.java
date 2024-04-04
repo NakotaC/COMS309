@@ -14,7 +14,8 @@ public class User implements Serializable {
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
     private SerializableJSONArray quests;
-    private final int bank, id;
+   // private final int bank;
+            private final int id;
     private int playerNum;
 
     public int getGameId() {
@@ -44,7 +45,7 @@ public class User implements Serializable {
         username = null;
         inventory = null;
         equippedItems = null;
-        bank = 0;
+     //   bank = 0;
         id = 0;
         playerNum = 0;
     }
@@ -56,7 +57,7 @@ public class User implements Serializable {
      */
     public User(JSONObject object, JSONArray inventory, JSONArray equippedItems, JSONArray quests) throws JSONException {
         this.username = object.getString("username");
-        this.bank = object.getInt("bank");
+      //  this.bank = object.getInt("bank");
         this.id = object.getInt("id");
         this.equippedItems = new SerializableJSONArray(equippedItems);
         this.inventory = new SerializableJSONArray(inventory);
@@ -65,11 +66,11 @@ public class User implements Serializable {
     }
     public User(JSONObject object) throws JSONException {
         this.username = object.getString("username");
-        this.bank = object.getInt("bank");
+      //  this.bank = object.getInt("bank");
         this.id = object.getInt("id");
-        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
-        this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
-        this.quests = new SerializableJSONArray(object.getJSONArray("quest"));
+        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equipped"));
+       this.inventory = new SerializableJSONArray(object.getJSONArray("shopItems"));
+     // this.quests = new SerializableJSONArray(object.getJSONArray("quest"));
         playerNum = 0;
     }
 
@@ -77,9 +78,9 @@ public class User implements Serializable {
      * Gets the value of the bank of the User
      * @return The value in the user's bank
      */
-    public int getBank() {
+   /* public int getBank() {
         return bank;
-    }
+    } */
 
     public int getId() {
         return id;
