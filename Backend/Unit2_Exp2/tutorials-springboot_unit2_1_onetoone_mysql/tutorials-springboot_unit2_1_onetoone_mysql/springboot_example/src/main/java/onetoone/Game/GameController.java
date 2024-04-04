@@ -43,5 +43,17 @@ public class GameController {
         return card;
     }
 
+    @GetMapping(path = "/draw/str")
+    String drawString(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
+        int gid = Integer.parseInt(gameid);
+        int card = gameRepository.findById(gid).Draw();
+        String cards = Integer.toString(card);
+        gameRepository.save(gameRepository.findById(gid));
+        String tmp = "{\"Card\":\"";
+        tmp = tmp.concat(cards);
+        tmp = tmp.concat("\"}");
+        return tmp;
+    }
+
 
 }

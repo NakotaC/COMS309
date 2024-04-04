@@ -74,8 +74,8 @@ public class GameSocket {
 
         // broadcast that new user joined
         String message = "User:" + username + " has Joined the game";
-        broadcast(number);
-        //session.getBasicRemote().sendText(number);
+        //broadcast(number);
+        session.getBasicRemote().sendText(number);
     }
 
 
