@@ -35,10 +35,10 @@ public class GlobalChatActivity extends AppCompatActivity implements WebSocketLi
      user = (User) extras.getSerializable("USEROBJ");
 
      textView1 = findViewById(R.id.textView);
-     msgContent.findViewById(R.id.msgContent);
-     sendButton.findViewById(R.id.sendButton);
-     chatHistory.findViewById(R.id.chatHistory);
-     exitButton.findViewById(R.id.exitButton);
+     msgContent = findViewById(R.id.msgContent1);
+     sendButton = findViewById(R.id.sendButton);
+     chatHistory = findViewById(R.id.chatHistory);
+     exitButton = findViewById(R.id.exitButton);
 
 
 

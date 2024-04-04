@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/msgContent"
+                android:id="@+id/msgContent1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
