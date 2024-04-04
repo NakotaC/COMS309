@@ -13,6 +13,7 @@ public class User implements Serializable {
     private final String username;
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
+    private SerializableJSONArray quests;
     private final int bank, id;
     private int playerNum;
 
@@ -53,12 +54,13 @@ public class User implements Serializable {
      * @param object is the JSONObject that has the user data
      * @throws JSONException if object is missing params. Exception will be thrown
      */
-    public User(JSONObject object, JSONArray inventory, JSONArray equippedItems) throws JSONException {
+    public User(JSONObject object, JSONArray inventory, JSONArray equippedItems, JSONArray quests) throws JSONException {
         this.username = object.getString("username");
         this.bank = 1000;
         this.id = object.getInt("id");
         this.equippedItems = new SerializableJSONArray(equippedItems);
         this.inventory = new SerializableJSONArray(inventory);
+        this.quests = new SerializableJSONArray(quests);
         playerNum = 0;
     }
     public User(JSONObject object) throws JSONException {
@@ -67,6 +69,7 @@ public class User implements Serializable {
         this.id = object.getInt("id");
         this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
         this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
+        this.quests = new SerializableJSONArray(object.getJSONArray("quest"));
         playerNum = 0;
     }
 
