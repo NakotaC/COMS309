@@ -96,6 +96,10 @@ public class User implements Serializable {
     public JSONArray getEquippedItems() {
         return equippedItems.getJSONArray();
     }
+    public JSONArray getQuests()
+    {
+    return quests.getJSONArray();
+    }
 
     /**
      * Gets the username of the User

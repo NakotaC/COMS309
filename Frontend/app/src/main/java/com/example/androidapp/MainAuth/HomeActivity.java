@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView dailyQuests;
     private TextView text3;
     private TextView text4;
-
+    private TextView dailyQuestTask;
 
     private User user;
     private ImageButton statsButton;
@@ -84,6 +84,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private boolean random1 = false;
     private ListView matchHistoryList;
     private MatchHistoryListAdapter adapter1;
+    private JSONArray quests;
 
     private static final String URL1 =
             "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/matches";
@@ -102,6 +103,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = getIntent().getExtras();
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
+
+        assert user != null;
+        quests = user.getQuests();
 
         // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);
@@ -139,9 +143,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog1.setCancelable(false);
 
+            dailyQuestTask = findViewById(R.id.dailyQuestTask);
             text3 = dialog1.findViewById(R.id.confirm);
             text4 = dialog1.findViewById(R.id.goback);
 
+            String dailyQuestTaskText = "Daily Quest: win " + "{x} games. {y}/{x} completed";
+            dailyQuestTask.setText(dailyQuestTaskText);
             text3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -165,6 +172,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         spannableString1.setSpan(clickableSpan1, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         dailyQuests.setText(spannableString1);
         dailyQuests.setMovementMethod(LinkMovementMethod.getInstance());
+
+
     }
 
     /**
