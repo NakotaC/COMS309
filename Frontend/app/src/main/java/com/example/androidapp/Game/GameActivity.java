@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,6 +19,8 @@ import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
 import com.example.androidapp.MainAuth.HomeActivity;
+import com.example.androidapp.MainAuth.LoginActivity;
+import com.example.androidapp.MainAuth.SignupActivity;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
@@ -32,7 +36,7 @@ import java.util.Map;
 public class GameActivity extends AppCompatActivity implements WebSocketListener {
 
     private Button turnBtn, backBtn;
-
+    private Button addMatchButton;
     private TextView turnText, playerText, headerText;
 
     private final TurnManager turnmgr = new TurnManager();
@@ -64,6 +68,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         playerText = (TextView) findViewById(R.id.playerNumTxt);
         headerText = findViewById(R.id.inGameHeader);
         backBtn = findViewById(R.id.gameBackBtn);
+        addMatchButton = findViewById(R.id.addMatchButton);
 
         turnBtn.setVisibility(View.INVISIBLE);
 
@@ -71,6 +76,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         WebSocketManager.getInstance().connectWebSocket(serverUrl);
         WebSocketManager.getInstance().setWebSocketListener(GameActivity.this);
 
+        addMatchButton.setOnClickListener(v -> {
+        postRequest();
+        });
         backBtn.setOnClickListener(v -> {
             user.setGameId(0);
             user.setPlayerNum(0);
@@ -200,6 +208,62 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
+    }
+    private void postRequest() {
+        int winner = user.getId() + 1;
+        // Convert input to JSONObject
+        JSONObject postBody = null;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://coms-309-033.class.las.iastate.edu:8080/history/" + user.getId() + "/" +
+                        winner + "/",
+                //url,
+                postBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String responseString;
+
+                        try {
+                            Log.d("Volley Response", response.toString());
+                            responseString = response.getString("message").replaceAll("\"", "");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                            Toast.makeText(GameActivity.this, "Match added",
+                                    Toast.LENGTH_SHORT).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                      //  usernameTakenTxt.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+            //    headers.put("username", username);
+            //    headers.put("password", password);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
     private int Card() {
         drawCard();

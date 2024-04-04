@@ -33,6 +33,9 @@
             android:name=".MainAuth.HomeActivity"
             android:exported="false"/>
         <activity
+            android:name=".MainAuth.GlobalChatActivity"
+            android:exported="false"/>
+        <activity
             android:name=".Game.GameActivity"
             android:exported="false"/>
         <activity

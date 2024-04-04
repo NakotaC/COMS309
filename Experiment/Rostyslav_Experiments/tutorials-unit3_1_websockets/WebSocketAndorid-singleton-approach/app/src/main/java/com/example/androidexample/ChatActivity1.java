@@ -74,7 +74,9 @@ public class ChatActivity1 extends AppCompatActivity implements WebSocketListene
     }
 
     @Override
-    public void onWebSocketOpen(ServerHandshake handshakedata) {}
+    public void onWebSocketOpen(ServerHandshake handshakedata) {
+
+    }
 
     @Override
     public void onWebSocketError(Exception ex) {}

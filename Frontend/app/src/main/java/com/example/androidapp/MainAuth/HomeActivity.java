@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView text3;
     private TextView text4;
     private TextView dailyQuestTask;
+    private TextView globalChat;
 
     private User user;
     private ImageButton statsButton;
@@ -114,6 +115,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
         dailyQuests = findViewById(R.id.dailyQuests);
+        globalChat = findViewById(R.id.globalChat);
         floatingActionButton1 = findViewById(R.id.matchHistory);
         hiddenLayout = findViewById(R.id.hiddenLayout);
         text2 = findViewById(R.id.matchHistoryTitle);
@@ -147,7 +149,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             text3 = dialog1.findViewById(R.id.confirm);
             text4 = dialog1.findViewById(R.id.goback);
 
-            String dailyQuestTaskText = "Daily Quest: win " + "{x} games. {y}/{x} completed";
+            String dailyQuestTaskText = "Daily Quest: win " + LoginActivity.questNumber + " games.";
             dailyQuestTask.setText(dailyQuestTaskText);
             text3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +175,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         dailyQuests.setText(spannableString1);
         dailyQuests.setMovementMethod(LinkMovementMethod.getInstance());
 
+        String random2 = "or Chat?";
+        SpannableString spannableString2 = new SpannableString(random2);
 
+        ClickableSpan clickableSpan2 = new ClickableSpan()
+        {
+            @Override
+            public void onClick(@NonNull View widget)
+            {
+                Intent intent = new Intent(HomeActivity.this,
+                        GlobalChatActivity.class);
+                intent.putExtra("USEROBJ", user);
+                startActivity(intent);
+            }
+        };
+        spannableString2.setSpan(clickableSpan2, 3, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        globalChat.setText(spannableString2);
+        globalChat.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     /**
@@ -310,11 +328,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void parseJsonArrayReq()
     {
-        LinkedList<String> names = new LinkedList();
-        LinkedList<String> matches = new LinkedList();
+        LinkedList<String> winner = new LinkedList();
+        LinkedList<String> time = new LinkedList();
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                URL1,
+                "http://coms-309-033.class.las.iastate.edu:8080/history/" + user.getId() + "/",
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -326,11 +344,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                names.add(i, jsonObject.getString("username"));
-                                matches.add(i, jsonObject.getString("match"));
 
-                                MatchItemObject item = new MatchItemObject(names.get(i),
-                                        matches.get(i));
+
+                                winner.add(i, jsonObject.getString("winnerId"));
+                                time.add(i, jsonObject.getString("itemName"));
+
+                                MatchItemObject item = new MatchItemObject(winner.get(i),
+                                        time.get(i));
                                 adapter1.add(item);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -364,5 +384,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
+
+
 }
 

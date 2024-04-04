@@ -63,8 +63,9 @@ public class LoginActivity extends AppCompatActivity {
      * var for the password entry field
      */
     private EditText passwordEntry;
-    JSONArray inventory, equippedItems;
+    JSONArray inventory, equippedItems, quests;
     JSONObject userObj;
+    public static int questNumber;
     /**
      * var for the URL string
      */
@@ -222,7 +223,99 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Volley Response", response.toString());
 
                         equippedItems = response;
+                        questRequest();
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+    private void questRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+                "http://coms-309-033.class.las.iastate.edu:8080/quest/" + userId + "/",
+                //"https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/1",
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        quests = response;
+                        try
+                        {
+                            questNumber = quests.getInt(0);
+                        }
+                        catch (JSONException e)
+                        {
+                            throw new RuntimeException(e);
+                        }
+                        questPutRequest();
                         login();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+    private void questPutRequest() {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.PUT,
+                "http://coms-309-033.class.las.iastate.edu:8080/quest/" + userId + "/",
+                //"https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/1",
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
 
                     }
                 },
@@ -256,7 +349,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = new User();
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         try{
-        user = new User(userObj, inventory, equippedItems);
+        user = new User(userObj, inventory, equippedItems, quests);
     } catch (JSONException e) {
         throw new RuntimeException(e);
     }
