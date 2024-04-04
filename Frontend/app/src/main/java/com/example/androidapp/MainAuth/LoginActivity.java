@@ -130,13 +130,13 @@ public class LoginActivity extends AppCompatActivity {
                                 userId = response.getInt("id");
 //                                inventoryRequest();
 //                                equippedItemRequest();
-                                  questsRequest();
+                                //  questsRequest();
                                 user = new User(response);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
                            intent.putExtra("USEROBJ", user);
-                           sendQuestRequest(userId);
+                        //   sendQuestRequest(userId);
 
                             startActivity(intent);
                         }else{
