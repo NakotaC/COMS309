@@ -7,8 +7,8 @@
 
     <ListView
         android:id="@+id/shopList"
-        android:layout_width="379dp"
-        android:layout_height="435dp"
+        android:layout_width="382dp"
+        android:layout_height="394dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintBottom_toTopOf="@+id/shopBackBtn"
@@ -58,7 +58,7 @@
         android:layout_width="213dp"
         android:layout_height="77dp"
         android:layout_marginStart="96dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="12dp"
         android:text="Inventory"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/shopBackBtn"

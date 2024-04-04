@@ -82,13 +82,6 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         turnBtn.setOnClickListener(v -> {
 
         Card();
-            try {
-                String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\""+ String.valueOf(cardNum) + "\"}";
-                // send message
-                WebSocketManager.getInstance().sendMessage(msg);
-            } catch (Exception e) {
-                Log.d("ExceptionSendMessage:", e.getMessage());
-            }
         });
     }
 
@@ -166,8 +159,8 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                //"http://coms-309-033.class.las.iastate.edu:8080/draw",
-                 "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
+                "http://coms-309-033.class.las.iastate.edu:8080/draw/str",
+                 //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -175,11 +168,11 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                         Log.d("Volley Response", response.toString());
 
                         try {
-                            cardNum = response.getInt("card");
+                            cardNum = response.getInt("Card");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        return;
+                        sendMessage();
                     }
                 },
                 new Response.ErrorListener() {
@@ -211,5 +204,14 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private int Card() {
         drawCard();
         return 1;
+    }
+    private void sendMessage() {
+        try {
+            String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\"" + String.valueOf(cardNum) + "\"}";
+            // send message
+            WebSocketManager.getInstance().sendMessage(msg);
+        } catch (Exception e) {
+            Log.d("ExceptionSendMessage:", e.getMessage());
+        }
     }
 }

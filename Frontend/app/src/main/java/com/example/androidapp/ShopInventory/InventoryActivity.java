@@ -89,27 +89,32 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         back.setOnClickListener(this);
         JSONObject tmpOwned = null;
         int numRemoved = 0;
-        for(int i = 0; i < ownedItems.length(); i++){
-            boolean inEquipped = false;
-            for(int k = 0; k < equippedItems.length(); k++){
-                try {
-                    tmpOwned = ownedItems.getJSONObject(i);
-                    JSONObject tmpEquipped = equippedItems.getJSONObject(k);
-                    if (tmpOwned.getString("itemName").equals(tmpEquipped.getString("itemName"))){
-                        inEquipped = true;
-                        break;
-                    }else{
-                        continue;
+
+        if(!equippedItems.isNull(0)) {
+            for (int i = 0; i < ownedItems.length(); i++) {
+                boolean inEquipped = false;
+                for (int k = 0; k < equippedItems.length(); k++) {
+                    try {
+                        tmpOwned = ownedItems.getJSONObject(i);
+                        JSONObject tmpEquipped = equippedItems.getJSONObject(k);
+                        if (tmpOwned.getString("itemName").equals(tmpEquipped.getString("itemName"))) {
+                            inEquipped = true;
+                            break;
+                        } else {
+                            continue;
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
                 }
-            }
-            if (!inEquipped){
+                if (!inEquipped) {
 
                     ownedItemsSansEquipped = ownedItemsSansEquipped.put(tmpOwned);
                     numRemoved++;
+                }
             }
+        }else{
+            ownedItemsSansEquipped = ownedItems;
         }
 
 
@@ -127,6 +132,18 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         listViewInventory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <? > arg0, View view, int position, long id) {
                 equipNum = (int)id;
+                Gson gson = new Gson();
+                JSONObject temp = null;
+                try {
+                    temp = new JSONObject(gson.toJson(adapterInventory.getItem(equipNum)));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    inventoryNum = user.getItemPosition(temp);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 equipRequest();
             }
 
@@ -183,7 +200,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.DELETE,
-                "http://coms-309-033.class.las.iastate.edu:8080/unequip/1",
+                "http://coms-309-033.class.las.iastate.edu:8080/unequip/" + user.getId(),
                 //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
                 null,
                 new Response.Listener<JSONObject>() {
@@ -245,7 +262,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.PUT,
-                "http://coms-309-033.class.las.iastate.edu:8080/equip/1",
+                "http://coms-309-033.class.las.iastate.edu:8080/equip/" + user.getId(),
                 //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
                 null,
                 new Response.Listener<JSONObject>() {
@@ -259,9 +276,6 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                         }
                         if(Objects.equals(responseStr, "success")){
                             try {
-                                Gson gson = new Gson();
-                                JSONObject temp = new JSONObject(gson.toJson(adapterInventory.getItem(equipNum)));
-                                inventoryNum = user.getItemPosition(temp);
                                 user.addEquippedItem(ownedItems.getJSONObject(inventoryNum));
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);

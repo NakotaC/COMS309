@@ -15,7 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
@@ -65,11 +64,12 @@ public class LoginActivity extends AppCompatActivity {
      */
     private EditText passwordEntry;
     JSONArray inventory, equippedItems;
+    JSONObject userObj;
     /**
      * var for the URL string
      */
-    private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login11";
-    //private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/login";
+    //private static final String URL_STRING_REQ = "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/login11";
+    private static final String URL_STRING_REQ = "coms-309-033.class.las.iastate.edu:8080/users/login";
 
     /**
      * initializes the screen and the elements to make it operate
@@ -121,46 +121,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         if(response.has("username")){
-                           Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             User user = null;
-
                             try {
                                 userId = response.getInt("id");
-                              //  inventoryRequest();
-                             //   equippedItemRequest();
-                                String inv = "[\n" +
-                                        "    {\n" +
-                                        "        \"id\": 1,\n" +
-                                        "        \"description\": \"Description of Item1\",\n" +
-                                        "        \"itemName\": \"Item1\"\n" +
-                                        "    },\n" +
-                                        "    {\n" +
-                                        "        \"id\": 2,\n" +
-                                        "        \"description\": \"Description of Item2\",\n" +
-                                        "        \"itemName\": \"Item2\"\n" +
-                                        "    },\n" +
-                                        "    {\n" +
-                                        "        \"id\": 3,\n" +
-                                        "        \"description\": \"Description of Item3\",\n" +
-                                        "        \"itemName\": \"Item3\"\n" +
-                                        "    }\n" +
-                                        "]";
-                                String equip = "[\n" +
-                                        "    {\n" +
-                                        "        \"id\": 1,\n" +
-                                        "        \"description\": \"Description of Item1\",\n" +
-                                        "        \"itemName\": \"Item1\"\n" +
-                                        "    }\n" +
-                                        "]";
-                                inventory = new JSONArray(inv);
-                                equippedItems = new JSONArray(equip);
-                                user = new User(response, inventory, equippedItems);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
-                           intent.putExtra("USEROBJ", user);
+                            userObj = response;
+                              inventoryRequest();
 
-                            startActivity(intent);
+
                         }else{
                             wrongPassTxt.setVisibility(View.VISIBLE);
                         }
@@ -196,21 +166,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void inventoryRequest() {
-        StringRequest jsonArrReq = new StringRequest(
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                //"http://coms-309-033.class.las.iastate.edu:8080/inventory/1",
-                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/inventory/1",
+                "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + userId,
+                //"https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/inventory/1",
+                 null,
                  // Pass null as the request body since it's a GET request
-                new Response.Listener<String>() {
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.d("Volley Response", response);
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
 
-                        try {
-                            inventory = new JSONArray(response);
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+
+                            inventory = response;
+                          equippedItemRequest();
+
 
                     }
                 },
@@ -243,8 +213,8 @@ public class LoginActivity extends AppCompatActivity {
     private void equippedItemRequest() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
                 Request.Method.GET,
-                //"http://coms-309-033.class.las.iastate.edu:8080/equippedItems/1",
-                "https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/1",
+                "http://coms-309-033.class.las.iastate.edu:8080/equippedItems/" + userId,
+                //"https://ed481f0d-bd99-4a49-8fe0-e84d74d506f6.mock.pstmn.io/equippedItems/1",
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -252,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Volley Response", response.toString());
 
                         equippedItems = response;
+                        login();
 
                     }
                 },
@@ -281,5 +252,18 @@ public class LoginActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
+    private void login(){
+        User user = new User();
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        try{
+        user = new User(userObj, inventory, equippedItems);
+    } catch (JSONException e) {
+        throw new RuntimeException(e);
+    }
+        intent.putExtra("USEROBJ", user);
+
+    startActivity(intent);
+    }
+
 }
 
