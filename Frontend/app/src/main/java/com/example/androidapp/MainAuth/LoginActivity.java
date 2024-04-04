@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -133,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                            intent.putExtra("USEROBJ", user);
+                           sendQuestRequest(userId);
 
                             startActivity(intent);
                         }else{
@@ -250,6 +252,67 @@ public class LoginActivity extends AppCompatActivity {
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
+
+    private void sendQuestRequest(int userID1)
+    {
+        // Convert input to JSONObject
+        JSONObject postBody = null;
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://coms-309-033.class.las.iastate.edu:8080/quest/" + userID1 + "/",
+                //url,
+                postBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String responseString;
+
+                        try {
+                            responseString = response.getString("message").replaceAll("\"", "");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        if(responseString.equals("success")){
+
+                        //    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                        }
+                      //  else{
+                         //   usernameTakenTxt.setVisibility(View.VISIBLE);
+                      //  }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                     //   usernameTakenTxt.setText(error.getMessage());
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+            //    headers.put("username", username);
+            //    headers.put("password", password);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 }
 

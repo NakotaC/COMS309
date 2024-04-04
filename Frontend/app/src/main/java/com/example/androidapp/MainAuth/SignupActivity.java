@@ -36,6 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     private String username;
 
     private String password;
+    private String userID;
 
     private EditText passwordEntry;
 
@@ -78,6 +79,7 @@ private User user;
         });
 
     }
+
     private void postRequest() {
 
         // Convert input to JSONObject
@@ -103,6 +105,7 @@ private User user;
                          if(responseString.equals("success")){
 
                             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+
                         }else{
                             usernameTakenTxt.setVisibility(View.VISIBLE);
                         }
@@ -136,5 +139,6 @@ private User user;
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
+    
 }
 
