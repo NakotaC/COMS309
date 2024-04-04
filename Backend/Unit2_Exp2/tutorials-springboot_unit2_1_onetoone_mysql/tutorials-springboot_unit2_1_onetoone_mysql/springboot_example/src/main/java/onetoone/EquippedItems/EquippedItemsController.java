@@ -43,27 +43,33 @@ public class EquippedItemsController {
         List<ShopItem> tmp = i.getShopItems();
         return tmp;
     }
-    @GetMapping(path = "/inventory2/shop")
-    List<ShopItem> getAllItems(){
-        return shopItemsRepository.findAll();
+    @DeleteMapping(path = "/unequip/{uid}")
+    String ue(@RequestHeader("itemNum") String iiid, @PathVariable int uid){
+        User u = userRepository.findById(uid);
+        EquippedItems i = u.getEquipped();
+        List<ShopItem> c = i.getShopItems();
+        int iiiid = Integer.parseInt(iiid);
+        c.remove(iiiid);
+        i.setShopItems(c);
+        equippedItemsRepository.save(i);
+        u.setEquipped(i);
+        userRepository.save(u);
+        return success;
     }
 
-    @PostMapping(path = "/inventory2/shop/buy")
-    String buyItem(@RequestHeader("item") String iiid, @RequestHeader("username") String username){
-        int iid = Integer.parseInt(iiid);
-        System.out.println(iid);
-        List<User> users = userRepository.findAll();
-        int uid = 1;
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equals(username)) {
-                uid = users.get(i).getId();
-                break;
-            }
-        }
-        User user = userRepository.findById(uid);
-        ShopItem item = shopItemsRepository.findById(iid);
-        user.setItems(item);
-        userRepository.save(user);
+    @PutMapping(path = "/equip/{uid}")
+    String eq(@RequestHeader("itemNum") String iiid, @PathVariable int uid){
+        User u = userRepository.findById(uid);
+        EquippedItems i = u.getEquipped();
+        List<ShopItem> c = i.getShopItems();
+        Inventory i2 = u.getInventory();
+        List<ShopItem> c2 = i2.getShopItems();
+        int iiiid = Integer.parseInt(iiid);
+        c.add(c2.get(iiiid));
+        i.setShopItems(c);
+        equippedItemsRepository.save(i);
+        u.setEquipped(i);
+        userRepository.save(u);
         return success;
     }
 }

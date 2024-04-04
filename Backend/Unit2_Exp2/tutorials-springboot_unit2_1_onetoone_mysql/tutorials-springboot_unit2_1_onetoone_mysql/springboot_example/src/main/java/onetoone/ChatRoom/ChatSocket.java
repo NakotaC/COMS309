@@ -24,7 +24,7 @@ public class ChatSocket {
 
   // cannot autowire static directly (instead we do it by the below
   // method
-	private static MessageRepository msgRepo; 
+	private static MessageRepository msgRepo;
 
 	/*
    * Grabs the MessageRepository singleton from the Spring Application
@@ -45,7 +45,7 @@ public class ChatSocket {
 	private final Logger logger = LoggerFactory.getLogger(ChatSocket.class);
 
 	@OnOpen
-	public void onOpen(Session session, @PathParam("username") String username) 
+	public void onOpen(Session session, @PathParam("username") String username)
       throws IOException {
 
 		logger.info("Entered into Open");
@@ -56,7 +56,7 @@ public class ChatSocket {
 
 		//Send chat history to the newly connected user
 		sendMessageToPArticularUser(username, getChatHistory());
-		
+
     // broadcast that new user joined
 		String message = "User:" + username + " has Joined the Chat";
 		broadcast(message);
@@ -72,13 +72,13 @@ public class ChatSocket {
 
     // Direct message to a user using the format "@username <message>"
 		if (message.startsWith("@")) {
-			String destUsername = message.split(" ")[0].substring(1); 
+			String destUsername = message.split(" ")[0].substring(1);
 
       // send the message to the sender and receiver
 			sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
 			sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
 
-		} 
+		}
     else { // broadcast
 			broadcast(username + ": " + message);
 		}
@@ -114,7 +114,7 @@ public class ChatSocket {
 	private void sendMessageToPArticularUser(String username, String message) {
 		try {
 			usernameSessionMap.get(username).getBasicRemote().sendText(message);
-		} 
+		}
     catch (IOException e) {
 			logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
@@ -126,7 +126,7 @@ public class ChatSocket {
 		sessionUsernameMap.forEach((session, username) -> {
 			try {
 				session.getBasicRemote().sendText(message);
-			} 
+			}
       catch (IOException e) {
 				logger.info("Exception: " + e.getMessage().toString());
 				e.printStackTrace();
@@ -135,12 +135,12 @@ public class ChatSocket {
 		});
 
 	}
-	
+
 
   // Gets the Chat history from the repository
 	private String getChatHistory() {
 		List<Message> messages = msgRepo.findAll();
-    
+
     // convert the list to a string
 		StringBuilder sb = new StringBuilder();
 		if(messages != null && messages.size() != 0) {

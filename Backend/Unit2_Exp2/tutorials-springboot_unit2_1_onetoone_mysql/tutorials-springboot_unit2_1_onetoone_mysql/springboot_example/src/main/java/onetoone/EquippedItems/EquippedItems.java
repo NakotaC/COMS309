@@ -2,6 +2,7 @@ package onetoone.EquippedItems;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Users.User;
@@ -20,7 +21,7 @@ public class EquippedItems {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonBackReference
     private User user;
 
 
