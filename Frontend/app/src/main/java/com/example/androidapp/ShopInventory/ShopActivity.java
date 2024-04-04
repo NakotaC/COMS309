@@ -74,7 +74,7 @@ private TextView shopHeader;
         adapter = new ListAdapterShop(this, new ArrayList<>());
         listView.setAdapter(adapter);
 
-        bankText.setText("Bank: " + user.getBank());
+     //   bankText.setText("Bank: " + user.getBank());
         back.setOnClickListener(this);
         inventory.setOnClickListener(this);
 

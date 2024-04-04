@@ -2,6 +2,7 @@ package com.example.androidapp.MainAuth;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+
 import android.app.Dialog;
 
 import android.content.Intent;
@@ -13,13 +14,13 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-
-import android.util.Log;
-
 import android.view.View;
 import android.view.ViewAnimationUtils;
-
 import android.view.ViewGroup;
+
+import android.util.Log;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -27,7 +28,6 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -47,6 +47,9 @@ import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+
+import java.util.LinkedList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,9 +71,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton shopButton;
     private TextView text1;
     private TextView text2;
+
     private TextView dailyQuests;
     private TextView text3;
     private TextView text4;
+    private TextView dailyQuestTask;
+
     private User user;
     private ImageButton statsButton;
     private View hiddenLayout;
@@ -78,6 +84,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private boolean random1 = false;
     private ListView matchHistoryList;
     private MatchHistoryListAdapter adapter1;
+    private JSONArray quests;
 
     private static final String URL1 =
             "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/matches";
@@ -97,6 +104,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
+       // assert user != null;
+       // quests = user.getQuests();
+
         // imageButton1 = findViewById(R.id.imageButton1);
         text1 = findViewById(R.id.text1);
         button1 = findViewById(R.id.button);
@@ -104,7 +114,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         shopButton = findViewById(R.id.shopButton);
         statsButton = findViewById(R.id.statsButton);
         dailyQuests = findViewById(R.id.dailyQuests);
-
         floatingActionButton1 = findViewById(R.id.matchHistory);
         hiddenLayout = findViewById(R.id.hiddenLayout);
         text2 = findViewById(R.id.matchHistoryTitle);
@@ -129,37 +138,42 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(@NonNull View widget)
             {
-                dialog1.setContentView(R.layout.activity_dialogbox);
-                dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog1.setCancelable(false);
+            dialog1.setContentView(R.layout.activity_dialogbox);
+            dialog1.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog1.setCancelable(false);
 
-                text3 = dialog1.findViewById(R.id.confirm);
-                text4 = dialog1.findViewById(R.id.goback);
+            dailyQuestTask = dialog1.findViewById(R.id.dailyQuestTask);
+            text3 = dialog1.findViewById(R.id.confirm);
+            text4 = dialog1.findViewById(R.id.goback);
 
-                text3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        dialog1.dismiss();
-                    }
-                });
+            String dailyQuestTaskText = "Daily Quest: win " + "{x} games. {y}/{x} completed";
+            dailyQuestTask.setText(dailyQuestTaskText);
+            text3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+            dialog1.dismiss();
+            }
+            });
 
-                text4.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        dialog1.dismiss();
-                    }
-                });
+            text4.setOnClickListener(new View.OnClickListener()
+            {
+            @Override
+            public void onClick(View v)
+            {
+            dialog1.dismiss();
+            }
+            });
 
-                dialog1.show();
+            dialog1.show();
             }
         };
         spannableString1.setSpan(clickableSpan1, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         dailyQuests.setText(spannableString1);
         dailyQuests.setMovementMethod(LinkMovementMethod.getInstance());
+
+
     }
 
     /**
@@ -190,9 +204,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (id1 == R.id.matchHistory)
         {
-            revealHiddenLayout();
-            revealHiddenLayout();
-            parseJsonArrayReq();
+        revealHiddenLayout();
+        parseJsonArrayReq();
         }
     }
 
@@ -295,7 +308,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void parseJsonArrayReq() {
+    private void parseJsonArrayReq()
+    {
         LinkedList<String> names = new LinkedList();
         LinkedList<String> matches = new LinkedList();
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
