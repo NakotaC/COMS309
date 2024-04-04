@@ -15,7 +15,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
@@ -181,14 +181,21 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
     private void unequipRequest() {
 
-        StringRequest request = new StringRequest(
+        JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.DELETE,
-                "http://coms-309-033.class.las.iastate.edu:8080/unequip" + id,
-                //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/unequip/fail",
-                new Response.Listener<String>() {
+                "http://coms-309-033.class.las.iastate.edu:8080/unequip/1",
+                //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
+                null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                    if(Objects.equals(response, "success")){
+                    public void onResponse(JSONObject response) {
+                        String responseStr;
+                        try {
+                            responseStr = response.getString("message");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    if(Objects.equals(responseStr, "success")){
                         try {
                             user.removeEquippedItem(equipNum);
                         } catch (JSONException e) {
@@ -236,15 +243,21 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
     }
     private void equipRequest() {
 
-        StringRequest request = new StringRequest(
+        JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.PUT,
-                "http://coms-309-033.class.las.iastate.edu:8080/equip" + id,
+                "http://coms-309-033.class.las.iastate.edu:8080/equip/1",
                 //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail",
-                new Response.Listener<String>() {
+                null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-
-                        if(Objects.equals(response, "success")){
+                    public void onResponse(JSONObject response) {
+                        String responseStr;
+                        try {
+                            responseStr = response.getString("message");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if(Objects.equals(responseStr, "success")){
                             try {
                                 Gson gson = new Gson();
                                 JSONObject temp = new JSONObject(gson.toJson(adapterInventory.getItem(equipNum)));

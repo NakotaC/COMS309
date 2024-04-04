@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
@@ -20,6 +20,7 @@ import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
-       serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/John";
+       serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         turnText = (TextView) findViewById(R.id.TurnText);
@@ -79,9 +80,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         });
         /* send button listener */
         turnBtn.setOnClickListener(v -> {
+
+        Card();
             try {
-                drawCard();
-                String msg = "{\"playerNum\":\"" + user.getPlayerNum() + "\", \"Card\":\""+ String.valueOf(cardNum) + "\"}";
+                String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\""+ String.valueOf(cardNum) + "\"}";
                 // send message
                 WebSocketManager.getInstance().sendMessage(msg);
             } catch (Exception e) {
@@ -107,20 +109,28 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
                 user.setPlayerNum(Integer.parseInt(message));
                 user.setGameId(1);
+            runOnUiThread(() -> {
+                playerText.setText("You are player " + user.getPlayerNum());
 
-
-            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-                turnBtn.setVisibility(View.VISIBLE);
-            }
+                if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
+                    turnBtn.setVisibility(View.VISIBLE);
+                }
+            });
         }else {
             runOnUiThread(() -> {
-                String s = turnText.getText().toString();
-                turnText.setText(s + "\n" + message);
+                if(message.charAt(0)=='P') {
+                    String s = turnText.getText().toString();
+                    turnText.setText(s + "\n" + message);
+                    turnmgr.takeTurn();
+                    if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
+                        turnBtn.setVisibility(View.VISIBLE);
+                    } else {
+                        turnBtn.setVisibility(View.INVISIBLE);
+                    }
+                }
             });
-            turnmgr.takeTurn();
-            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-                turnBtn.setVisibility(View.VISIBLE);
-            }
+
+
         }
     }
 
@@ -153,17 +163,23 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     @Override
     public void onWebSocketError(Exception ex) {}
     private void drawCard() {
-        StringRequest cardReq = new StringRequest(
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/draw" + user.getGameId(),
-                //URL,
-                new Response.Listener<String>() {
+                //"http://coms-309-033.class.las.iastate.edu:8080/draw",
+                 "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
+                null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.d("Volley Response", response);
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
 
-                        cardNum = Integer.parseInt(response);
-
+                        try {
+                            cardNum = response.getInt("card");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        return;
                     }
                 },
                 new Response.ErrorListener() {
@@ -175,7 +191,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+               headers.put("gameid", "1");
 //                headers.put("Content-Type", "application/json");
                 return headers;
             }
@@ -190,6 +206,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         };
 
         // Adding request to request queue
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(cardReq);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
+    }
+    private int Card() {
+        drawCard();
+        return 1;
     }
 }
