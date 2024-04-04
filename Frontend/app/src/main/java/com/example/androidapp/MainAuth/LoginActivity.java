@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private EditText passwordEntry;
     JSONArray inventory, equippedItems;
+    JSONArray quests;
     /**
      * var for the URL string
      */
@@ -129,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                 userId = response.getInt("id");
 //                                inventoryRequest();
 //                                equippedItemRequest();
+                                  questsRequest();
                                 user = new User(response);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -253,6 +255,48 @@ public class LoginActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
+    private void questsRequest()
+    {
+        JsonArrayRequest jsonArrReq = new JsonArrayRequest(
+                Request.Method.GET,
+                // "http://coms-309-033.class.las.iastate.edu:8080/inventory/4",
+                "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/quest/" + userId + "/",
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+
+                        quests = response;
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
+    }
 
     private void sendQuestRequest(int userID1)
     {
@@ -314,5 +358,6 @@ public class LoginActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
+
 }
 
