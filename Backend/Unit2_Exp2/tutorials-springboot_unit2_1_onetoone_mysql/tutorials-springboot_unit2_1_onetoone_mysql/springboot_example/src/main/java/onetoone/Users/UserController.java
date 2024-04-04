@@ -63,12 +63,12 @@ public class UserController {
     @GetMapping(path = "/users/login")
     User loginUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
         List<User> users = userRepository.findAll();
-        for (int i = 1; i < users.size(); i++){
+        for (int i = 0; i < users.size(); i++){
             if (username.equals(users.get(i).getUsername()) && password.equals(users.get(i).getPassword())){
                 return users.get(i);
             }
         }
-        return users.get(1);
+        return users.get(0);
     }
 
 //    @PostMapping(path = "/users/{id}/{score}")
