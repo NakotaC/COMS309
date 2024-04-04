@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/dailyQuestTask"
         android:layout_width="392dp"
         android:layout_height="112dp"
         android:layout_below="@id/imageView"
@@ -30,7 +30,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textview"
+        android:layout_below="@id/dailyQuestTask"
         android:layout_margin="15dp"
         android:layout_centerHorizontal="true">
 
