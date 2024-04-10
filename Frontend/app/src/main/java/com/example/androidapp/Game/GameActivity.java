@@ -88,8 +88,14 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         });
         /* send button listener */
         turnBtn.setOnClickListener(v -> {
-
-        Card();
+            try {
+            drawCard();
+            String msg = "{\"playerNum\":\"" + user.getPlayerNum() + "\", \"Card\":\""+ String.valueOf(cardNum) + "\"}";
+            // send message
+            WebSocketManager.getInstance().sendMessage(msg);
+        } catch (Exception e) {
+            Log.d("ExceptionSendMessage:", e.getMessage());
+        }
         });
     }
 
@@ -107,32 +113,28 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
          */
         if(user.getPlayerNum() == 0){
             JSONObject obj;
+            try {
+                obj = new JSONObject(message);
+                user.setPlayerNum(obj.getInt("playerNum"));
+                user.setGameId(obj.getInt("gameId"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
-                user.setPlayerNum(Integer.parseInt(message));
-                user.setGameId(1);
-            runOnUiThread(() -> {
-                playerText.setText("You are player " + user.getPlayerNum());
-
-                if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
-                    turnBtn.setVisibility(View.VISIBLE);
-                }
-            });
+            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
+                turnBtn.setVisibility(View.VISIBLE);
+            }
         }else {
             runOnUiThread(() -> {
-                if(message.charAt(0)=='P') {
-                    String s = turnText.getText().toString();
-                    turnText.setText(s + "\n" + message);
-                    turnmgr.takeTurn();
-                    if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
-                        turnBtn.setVisibility(View.VISIBLE);
-                    } else {
-                        turnBtn.setVisibility(View.INVISIBLE);
-                    }
-                }
+                String s = turnText.getText().toString();
+                turnText.setText(s + "\n" + message);
             });
-
-
+            turnmgr.takeTurn();
+            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
+                turnBtn.setVisibility(View.VISIBLE);
+            }
         }
+
     }
 
     /**
@@ -167,7 +169,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/draw/str",
+                "http://coms-309-033.class.las.iastate.edu:8080/draw" + user.getGameId(),
                  //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
                 null,
                 new Response.Listener<JSONObject>() {
