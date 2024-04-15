@@ -57,4 +57,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     }
 }
-//Comment to test CICD
