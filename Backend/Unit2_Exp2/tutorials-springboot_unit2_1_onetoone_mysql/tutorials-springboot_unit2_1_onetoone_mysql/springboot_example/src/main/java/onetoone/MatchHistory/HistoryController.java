@@ -2,10 +2,8 @@ package onetoone.MatchHistory;
 import io.swagger.annotations.Api;
 import onetoone.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -43,6 +41,15 @@ public class HistoryController {
     void postHistory(@PathVariable int user_id, @PathVariable int winner_id) {
         History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), userRepository.findById(user_id),  userRepository.findById(winner_id));
         historyRepository.save(h);
+    }
+
+    @DeleteMapping(path="/history/{match_id}")
+    String deleteHistoryId(@PathVariable int match_id){
+        if(historyRepository.findById(match_id) == null) {
+            return failure;
+        }
+        historyRepository.deleteById(match_id);
+        return success;
     }
 
 }
