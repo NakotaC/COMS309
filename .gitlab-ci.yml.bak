@@ -15,7 +15,7 @@ android-build:
     - ./gradlew build
   only:
     refs:
-      -  nakota-cicd
+      - YOURNAME_CICD
     changes:
       - Frontend/**/*
 
@@ -32,6 +32,6 @@ android-test:
     - ./gradlew test
   only:
     refs:
-      -  nakota-cicd
+      - YOURNAME_CICD
     changes:
       - Frontend/**/*
