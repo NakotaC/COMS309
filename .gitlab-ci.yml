@@ -3,7 +3,7 @@ stages:
   - androidtest 
   
 android-build:
-  image: afirefly/android-ci:latest
+  image: gjandres/android-ci:latest
   stage: androidbuild
   tags:
    - Ross_tag                   # <-- change to your runner's tag
@@ -20,7 +20,7 @@ android-build:
       - Frontend/**/*
 
 android-test:
-  image: afirefly/android-ci:latest
+  image: gjandres/android-ci:latest
   stage: androidtest
   tags:
     - Ross_tag                  # <-- change to your runner's tag
