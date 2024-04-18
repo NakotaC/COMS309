@@ -19,8 +19,6 @@ import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
 import com.example.androidapp.MainAuth.HomeActivity;
-import com.example.androidapp.MainAuth.LoginActivity;
-import com.example.androidapp.MainAuth.SignupActivity;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
@@ -64,11 +62,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
        serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
-        turnText = (TextView) findViewById(R.id.TurnText);
         playerText = (TextView) findViewById(R.id.playerNumTxt);
         headerText = findViewById(R.id.inGameHeader);
         backBtn = findViewById(R.id.gameBackBtn);
-        addMatchButton = findViewById(R.id.addMatchButton);
 
         turnBtn.setVisibility(View.INVISIBLE);
 
