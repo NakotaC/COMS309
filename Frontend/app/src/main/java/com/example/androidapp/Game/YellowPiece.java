@@ -5,8 +5,8 @@ public class YellowPiece  extends GamePieceAbstract{
    int location;
    int homeLocation = 32;
    int startLocation = 34;
-   short startX;
-   short startY;
+   int startX = 264;
+   int startY = 388;
 
    public YellowPiece(int pieceNum){
       this.pieceNum = pieceNum;
