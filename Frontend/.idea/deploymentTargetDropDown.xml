@@ -8,24 +8,14 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="inventoryTest()">
+        <State />
+      </entry>
       <entry key="loginTest()">
         <State />
       </entry>
       <entry key="shopTest()">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-22T06:11:35.087559800Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>

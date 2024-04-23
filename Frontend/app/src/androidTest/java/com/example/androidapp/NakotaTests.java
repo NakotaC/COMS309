@@ -7,21 +7,20 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.JMock1Matchers.equalTo;
-import static org.hamcrest.Matchers.hasEntry;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.androidapp.MainAuth.MainActivity;
+import com.example.androidapp.ShopInventory.EquippedItemInventory;
+import com.example.androidapp.ShopInventory.ListItemObjectInventory;
 import com.example.androidapp.ShopInventory.ListItemObjectShop;
 
 import org.junit.Rule;
@@ -80,12 +79,59 @@ public class NakotaTests {
             Thread.sleep(SIMULATED_DELAY_MS);
         } catch (InterruptedException e) {
         }
-        onData(allOf(is(instanceOf(ListItemObjectShop.class)), hasEntry(equalTo("name"), is("item1"))))
+
+        onData(instanceOf(ListItemObjectShop.class))
+                .inAdapterView(withId(R.id.shopList))
+                .atPosition(0)
+                .check(matches(hasDescendant(withText("Item1"))));
+
+        onData(instanceOf(ListItemObjectShop.class))
+                .inAdapterView(withId(R.id.shopList))
+                .atPosition(0)
                 .perform(click());
 
+
+        onView(withId(R.id.respondText)).check(matches(withText("success")));
     }
 
+    @Test
+    public void inventoryTest(){
+        loginTest();
+        onView(withId(R.id.shopButton)).perform(click());
 
+        //onView(withId(R.id.bankValTxt)).check(matches(withText(endsWith())));
+        // Put thread to sleep to allow volley to handle the request
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        onView(withId(R.id.shopInventoryBtn)).perform(click());
+
+        onData(instanceOf(ListItemObjectInventory.class))
+                .inAdapterView(withId(R.id.listView_inventory))
+                .atPosition(0)
+                .perform(click());
+
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        String str = onView(withId(R.id.equip_unequip_txt)).toString();
+        onView(withId(R.id.equip_unequip_txt)).check(matches(withText("Equipped")));
+
+        onData(instanceOf(EquippedItemInventory.class))
+                .inAdapterView(withId(R.id.listview_equipped))
+                .atPosition(0)
+                .perform(click());
+
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+
+        onView(withId(R.id.equip_unequip_txt)).check(matches(withText(endsWith("Unequipped"))));
+
+    }
 
 
 

@@ -17,6 +17,8 @@ public class User implements Serializable {
     private final int bank, id;
     private int playerNum;
 
+    public String invStr;
+
     public int getGameId() {
         return gameId;
     }
@@ -62,6 +64,7 @@ public class User implements Serializable {
         this.inventory = new SerializableJSONArray(inventory);
         this.quests = new SerializableJSONArray(quests);
         playerNum = 0;
+        invStr = null;
     }
     public User(JSONObject object) throws JSONException {
         this.username = object.getString("username");
@@ -71,6 +74,7 @@ public class User implements Serializable {
         this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
         this.quests = new SerializableJSONArray(object.getJSONArray("quest"));
         playerNum = 0;
+        invStr = null;
     }
 
     /**
