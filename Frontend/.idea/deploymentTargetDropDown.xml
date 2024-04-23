@@ -2,7 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="NakotaTests">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="inventoryTest()">
+        <State />
+      </entry>
+      <entry key="loginTest()">
+        <State />
+      </entry>
+      <entry key="shopTest()">
         <State />
       </entry>
     </value>
