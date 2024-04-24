@@ -39,6 +39,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="470dp"
         android:layout_marginTop="52dp"
@@ -50,15 +51,15 @@
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="474dp"
-            app:srcCompat="@drawable/SorryBoard" />
+            app:srcCompat="@drawable/sorryboard" />
 
         <ImageView
             android:id="@+id/yellowPiece1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:translationX="264dp"
-            android:translationY="388dp"
-            app:srcCompat="@drawable/YellowPieceImg" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="356dp"
+            android:translationY="332dp"
+            app:srcCompat="@drawable/yellowpiece" />
 
     </FrameLayout>
 
@@ -83,36 +84,39 @@
 
     <CheckBox
         android:id="@+id/checkBoxPiece1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
         android:text="Piece 1"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="663dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece2"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBoxPiece2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
         android:text="Piece 2"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece1"
-        tools:layout_editor_absoluteY="658dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece3"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece1" />
 
     <CheckBox
         android:id="@+id/checkBoxPiece3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
         android:text="Piece 3"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece2"
-        tools:layout_editor_absoluteY="647dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece4"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece2" />
 
     <CheckBox
         android:id="@+id/checkBoxPiece4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
         android:text="Piece 4"
         app:layout_constraintStart_toEndOf="@+id/checkBoxPiece3"
-        tools:layout_editor_absoluteY="647dp" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

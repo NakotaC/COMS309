@@ -36,11 +36,16 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private Button turnBtn, backBtn;
     private Button addMatchButton;
     private TextView turnText, playerText, headerText;
-
+    private int numPlayers;
     private final TurnManager turnmgr = new TurnManager();
     private User user;
     int cardNum;
     private String serverUrl;
+
+    private  YellowPiece[] yellowPieces= {new YellowPiece(1),
+            new YellowPiece(2),
+            new YellowPiece(3),
+            new YellowPiece(4)};
 
 
     /**
@@ -107,11 +112,16 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
          * is used to post a runnable to the UI thread's message queue, allowing UI updates
          * to occur safely from a background or non-UI thread.
          */
+        JSONObject obj;
+        try {
+            obj = new JSONObject(message);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         if(user.getPlayerNum() == 0){
-            JSONObject obj;
             try {
-                obj = new JSONObject(message);
                 user.setPlayerNum(obj.getInt("playerNum"));
+                numPlayers = obj.getInt("playerNum");
                 user.setGameId(obj.getInt("gameId"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -120,14 +130,18 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
                 turnBtn.setVisibility(View.VISIBLE);
             }
-        }else {
-            runOnUiThread(() -> {
-                String s = turnText.getText().toString();
-                turnText.setText(s + "\n" + message);
-            });
-            turnmgr.takeTurn();
-            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-                turnBtn.setVisibility(View.VISIBLE);
+        }else if(obj.has("gameId")){
+            try {
+                numPlayers = obj.getInt("playerNum");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+
+            try {
+                yellowPieces[0].move(obj.getInt("Card"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
 
