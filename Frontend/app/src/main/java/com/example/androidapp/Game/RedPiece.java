@@ -10,4 +10,9 @@ public class RedPiece extends GamePieceAbstract{
     public RedPiece(int pieceNum){
         this.pieceNum = pieceNum;
     }
+
+    public int move(int numToMove){
+
+        return location;
+    }
 }

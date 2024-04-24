@@ -12,4 +12,8 @@ public class GreenPiece extends GamePieceAbstract{
         this.pieceNum = pieceNum;
     }
 
+    public int move(int numToMove){
+
+        return location;
+    }
 }

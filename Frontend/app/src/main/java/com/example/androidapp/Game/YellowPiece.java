@@ -20,6 +20,12 @@ public class YellowPiece  extends GamePieceAbstract{
             currX = startX;
             currY = startY;
          }
+      }else if(location == 1){
+         //TODO
+      }else if(location == 2){
+         //TODO
+      }else if(location == 3){
+         //TODO
       }
 
 

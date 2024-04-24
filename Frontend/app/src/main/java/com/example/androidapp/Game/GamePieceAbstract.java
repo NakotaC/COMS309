@@ -14,13 +14,13 @@ abstract class GamePieceAbstract {
     int homeLocation, startLocation;
 
     int currX, currY;
-
+    int[] corners = {0, 15, 30, 45};
     /**
      * Holds current direction of movement
-     * 1 = right
-     * 2 = down
-     * 3 = left
-     * 4 = up
+     * 0 = right
+     * 1 = down
+     * 2 = left
+     * 3 = up
      */
     int direction;
 
@@ -45,6 +45,8 @@ abstract class GamePieceAbstract {
     public int getLocation(){
         return location;
     }
+
+
 
     abstract int move(int numToMove);
 

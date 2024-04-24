@@ -10,4 +10,9 @@ public class BluePiece  extends GamePieceAbstract{
     public BluePiece(int pieceNum){
         this.pieceNum = pieceNum;
     }
+
+    public int move(int numToMove){
+
+        return location;
+    }
 }
