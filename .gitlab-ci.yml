@@ -40,7 +40,8 @@ auto-deploy:
   - springboot_tag      # change to your runner's tag
   script:               # script to run the deployment service you created
     - cd Backend/Unit2_Exp2/tutorials-springboot_unit2_1_onetoone_mysql/tutorials-springboot_unit2_1_onetoone_mysql/springboot_example        # change 'Backend' to to where you have the pom.xml (do not add / in the beginning)
-    - sudo mv -f target/onetoone-1.0.0.jar target/web-demo.jar 
+    - ls /target
+    - sudo mv -f /target/onetoone-1.0.0.jar /target/web-demo.jar 
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
   only:
