@@ -96,7 +96,7 @@ public class GameSocket {
         www = www.concat(player);
         www = www.concat(" drew a ");
         www = www.concat(card);
-        broadcast(www);
+        broadcast(message);
 
         // Direct message to a user using the format "@username <message>"
 //        if (message.startsWith("@")) {
