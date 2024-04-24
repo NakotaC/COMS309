@@ -96,6 +96,7 @@ public class GameSocket {
         www = www.concat(player);
         www = www.concat(" drew a ");
         www = www.concat(card);
+        //Change message to www if you want to send "Player _ drew a _"
         broadcast(message);
 
         // Direct message to a user using the format "@username <message>"
