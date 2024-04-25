@@ -35,13 +35,13 @@ public class GameController {
 
     //@GetMapping(path = "/inventory/shop")
 
-    @GetMapping(path = "/draw")
-    int draw(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
-        int gid = Integer.parseInt(gameid);
-        int card = gameRepository.findById(gid).Draw();
-        gameRepository.save(gameRepository.findById(gid));
-        return card;
-    }
+//    @GetMapping(path = "/draw")
+//    int draw(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
+//        int gid = Integer.parseInt(gameid);
+//        int card = gameRepository.findById(gid).Draw();
+//        gameRepository.save(gameRepository.findById(gid));
+//        return card;
+//    }
 
     @GetMapping(path = "/draw/str")
     String drawString(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
