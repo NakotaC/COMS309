@@ -24,7 +24,7 @@ public class InventoryController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    //return all cosmetics in the game (in the DB) ??
+    //return all cosmetics in the game (in the DB) ???
     @GetMapping(path = "/inventory")
     List<Inventory> getInventory() { return inventoryRepository.findAll(); }
 
