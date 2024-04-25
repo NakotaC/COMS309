@@ -8,7 +8,8 @@ abstract class GamePieceAbstract {
      * 2 = home row
      * 3 = home
      */
-    int location;
+    int currArea;
+    int location, locationInHome;
     short xInc = 24;
     short yInc = 24;
     int homeLocation, startLocation;
@@ -46,7 +47,23 @@ abstract class GamePieceAbstract {
         return location;
     }
 
+    public boolean onCorner(){
+        boolean result = false;
+        for(int i = 0; i < corners.length; i++){
+            if(this.location == corners[i]){
+                result = true;
+            }
+        }
+        return result;
+    }
 
+    public void turnCorner(){
+        for(int i = 0; i < corners.length; i++){
+            if(corners[i] == location){
+                direction = i;
+            }
+        }
+    }
 
     abstract int move(int numToMove);
 
