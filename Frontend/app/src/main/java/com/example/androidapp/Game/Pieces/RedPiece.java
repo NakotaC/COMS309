@@ -1,13 +1,13 @@
-package com.example.androidapp.Game;
+package com.example.androidapp.Game.Pieces;
 
-public class BluePiece  extends GamePieceAbstract{
+public class RedPiece extends GamePieceAbstract{
     int pieceNum;
     int location;
-    int homeLocation = 17;
-    int startLocation = 19;
+    int homeLocation = 2;
+    int startLocation = 4;
     short startX;
     short startY;
-    public BluePiece(int pieceNum){
+    public RedPiece(int pieceNum){
         this.pieceNum = pieceNum;
     }
 
@@ -25,7 +25,7 @@ public class BluePiece  extends GamePieceAbstract{
                     turnCorner();
                 }
                 if(isHome()){
-                    direction = 2;
+                    direction = 1;
                     currArea = 2;
                     numLeftToMove = numToMove - i;
                     break;
@@ -54,7 +54,7 @@ public class BluePiece  extends GamePieceAbstract{
             if(numLeftToMove != 0){
                 for(int i = 0; i < numLeftToMove; i++){
                     locationInHome++;
-                    currX -= xInc;
+                    currY += yInc;
                     if(locationInHome == 5){
                         currArea = 3;
                     }

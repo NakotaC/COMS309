@@ -1,4 +1,4 @@
-package com.example.androidapp.Game;
+package com.example.androidapp.Game.Pieces;
 
 abstract class GamePieceAbstract {
     int pieceNum;

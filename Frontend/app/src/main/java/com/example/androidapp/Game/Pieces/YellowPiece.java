@@ -1,4 +1,4 @@
-package com.example.androidapp.Game;
+package com.example.androidapp.Game.Pieces;
 
 public class YellowPiece  extends GamePieceAbstract{
    int pieceNum;
