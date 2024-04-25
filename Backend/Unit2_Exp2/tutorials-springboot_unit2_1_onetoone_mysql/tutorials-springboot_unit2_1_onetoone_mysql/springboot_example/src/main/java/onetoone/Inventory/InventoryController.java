@@ -27,6 +27,7 @@ public class InventoryController {
     //return all cosmetics in the game (in the DB) ???
     // ?
     // ?
+    // ?
     @GetMapping(path = "/inventory")
     List<Inventory> getInventory() { return inventoryRepository.findAll(); }
 
