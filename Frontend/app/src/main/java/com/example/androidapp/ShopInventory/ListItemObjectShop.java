@@ -4,8 +4,8 @@ package com.example.androidapp.ShopInventory;
  * Class for the items to be placed into the list adapter
  */
 public class ListItemObjectShop {
-    private final String name;
-    private final String description;
+    public final String name;
+    public final String description;
 
     /**
      * Creates a List Item Object for Shop items

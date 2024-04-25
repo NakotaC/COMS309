@@ -42,13 +42,14 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="297dp"
+        android:layout_marginTop="256dp"
         android:fontFamily="@font/irish_grover"
         android:text="@string/mainTitle"
         android:textAppearance="?attr/textAppearanceHeadline1"
         android:textColor="@color/black"
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +58,7 @@
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="96dp"
         android:background="#D9D9D9"
         android:fontFamily="@font/im_fell_great_primer"
         android:text="Play"
@@ -66,7 +67,6 @@
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text1" />
 
@@ -144,5 +144,16 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_welcome_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="12dp"
+        android:text="Welcome USER"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

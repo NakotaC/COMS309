@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:text="In-Game"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,60 +21,102 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="4dp"
         android:text="You are player {num}"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inGameHeader" />
 
-    <ScrollView
-        android:layout_width="349dp"
-        android:layout_height="427dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerNumTxt">
-
-        <TextView
-            android:id="@+id/TurnText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Turn Info Shows Here:" />
-    </ScrollView>
-
     <Button
         android:id="@+id/turnBtn"
         android:layout_width="174dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginBottom="140dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginBottom="24dp"
         android:text="Take Turn"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/frameLayoutGame"
+        android:layout_width="0dp"
+        android:layout_height="470dp"
+        android:layout_marginTop="52dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerNumTxt">
+
+        <ImageView
+            android:id="@+id/gameBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="474dp"
+            app:srcCompat="@drawable/sorryboard" />
+
+        <ImageView
+            android:id="@+id/yellowPiece1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="356dp"
+            android:translationY="332dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+    </FrameLayout>
+
     <Button
         android:id="@+id/gameBackBtn"
-        android:layout_width="176dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginBottom="44dp"
-        android:text="Back"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="88dp"
+        android:layout_height="63dp"
+        android:text="Quit"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addMatchButton"
-        android:layout_width="116dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="642dp"
-        android:text="Add a Match"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/drawBtn"
+        android:layout_width="174dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="28dp"
+        android:text="Draw Card"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/turnBtn"
+        app:layout_constraintEnd_toStartOf="@+id/turnBtn" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+    <CheckBox
+        android:id="@+id/checkBoxPiece1"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:text="Piece 1"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBoxPiece2"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:text="Piece 2"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece3"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece1" />
+
+    <CheckBox
+        android:id="@+id/checkBoxPiece3"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:text="Piece 3"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxPiece4"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece2" />
+
+    <CheckBox
+        android:id="@+id/checkBoxPiece4"
+        android:layout_width="80dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:text="Piece 4"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxPiece3"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutGame" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

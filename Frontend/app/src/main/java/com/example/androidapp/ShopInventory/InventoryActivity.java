@@ -34,7 +34,7 @@ import java.util.Objects;
  * Class to handle the Shop screen
  */
 public class InventoryActivity extends AppCompatActivity implements View.OnClickListener{
-    private TextView inventoryHeader, inventoryItemText, equippedText;
+    private TextView inventoryHeader, inventoryItemText, equippedText, equipUnequipText;
     private ListAdapterInventory adapterInventory;
     private ListAdapterEquippedInventory adapterEquipped;
     private ListView listViewEquipped, listViewInventory;
@@ -45,6 +45,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
     JSONArray ownedItems,  ownedItemsSansEquipped = new JSONArray();;
     private static String URL;
     int inventoryNum;
+    String msg;
     //private static String URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/shop"
 
     /**
@@ -68,6 +69,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         equippedItems = user.getEquippedItems();
         id = user.getId();
         ownedItems = user.getInventory();
+        msg = user.invStr;
 
         //URL = "https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop";
         //URL = "http://coms-309-033.class.las.iastate.edu:8080/inventory/" + id;
@@ -78,7 +80,8 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         listViewEquipped = findViewById(R.id.listview_equipped);
         listViewInventory = findViewById(R.id.listView_inventory);
         back = findViewById(R.id.inventoryBtn);
-
+        equipUnequipText = findViewById(R.id.equip_unequip_txt);
+        equipUnequipText.setVisibility(View.INVISIBLE);
         // Initialize the adapter with an empty list (data will be added later)
         adapterEquipped = new ListAdapterEquippedInventory(this, new ArrayList<>());
         listViewEquipped.setAdapter(adapterEquipped);
@@ -89,6 +92,12 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
         back.setOnClickListener(this);
         JSONObject tmpOwned = null;
         int numRemoved = 0;
+
+        if(msg != null){
+            equipUnequipText.setText(msg);
+            equipUnequipText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            equipUnequipText.setVisibility(View.VISIBLE);
+        }
 
         if(!equippedItems.isNull(0)) {
             for (int i = 0; i < ownedItems.length(); i++) {
@@ -219,6 +228,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                             throw new RuntimeException(e);
                         }
                         Intent intent = new Intent(InventoryActivity.this, InventoryActivity.class);
+                        user.invStr = "Unequipped";
                         intent.putExtra("USEROBJ", user);
                         startActivity(intent);
                     }else{
@@ -281,6 +291,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
                                 throw new RuntimeException(e);
                             }
                             Intent intent = new Intent(InventoryActivity.this, InventoryActivity.class);
+                            user.invStr = "Equipped";
                             intent.putExtra("USEROBJ", user);
                             startActivity(intent);
                         }else{

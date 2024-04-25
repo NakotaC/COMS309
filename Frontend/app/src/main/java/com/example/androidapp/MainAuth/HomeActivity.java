@@ -2,30 +2,22 @@ package com.example.androidapp.MainAuth;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
-
 import android.app.Dialog;
-
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
-
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -41,15 +33,10 @@ import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Game.GameActivity;
 import com.example.androidapp.Game.User;
 import com.example.androidapp.Leaderboard.LeaderboardActivity;
-import com.example.androidapp.Leaderboard.LeaderboardItemObject;
-import com.example.androidapp.Leaderboard.ListAdapterLeaderboard;
 import com.example.androidapp.R;
 import com.example.androidapp.ShopInventory.ShopActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
-import java.util.LinkedList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton shopButton;
     private TextView text1;
     private TextView text2;
+    private TextView welcomeText;
 
     private TextView dailyQuests;
     private TextView text3;
@@ -105,10 +93,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
-       // assert user != null;
+
        // quests = user.getQuests();
 
         // imageButton1 = findViewById(R.id.imageButton1);
+        welcomeText = findViewById(R.id.home_welcome_text);
         text1 = findViewById(R.id.text1);
         button1 = findViewById(R.id.button);
         clanButton = findViewById(R.id.clanButton);
@@ -129,6 +118,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
+
+        assert user != null;
+        welcomeText.setText("Welcome " + user.getUsername());
+        welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         Dialog dialog1 = new Dialog(HomeActivity.this);
 
