@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +22,6 @@ import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
 import com.example.androidapp.MainAuth.HomeActivity;
-import com.example.androidapp.MainAuth.LoginActivity;
-import com.example.androidapp.MainAuth.SignupActivity;
 import com.example.androidapp.R;
 
 import org.java_websocket.handshake.ServerHandshake;
@@ -35,14 +36,23 @@ import java.util.Map;
  */
 public class GameActivity extends AppCompatActivity implements WebSocketListener {
 
-    private Button turnBtn, backBtn;
+    private Button turnBtn, backBtn, drawBtn;
     private Button addMatchButton;
     private TextView turnText, playerText, headerText;
-
+    private int numPlayers;
     private final TurnManager turnmgr = new TurnManager();
+    private FrameLayout gameFrame;
+    private ImageView gameBoard, yellowPiece1;
     private User user;
+    private CheckBox piece1, piece2, piece3, piece4;
     int cardNum;
     private String serverUrl;
+    int selectedPiece;
+
+    private  YellowPiece[] yellowPieces= {new YellowPiece(1),
+            new YellowPiece(2),
+            new YellowPiece(3),
+            new YellowPiece(4)};
 
 
     /**
@@ -64,20 +74,54 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
        serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
-        turnText = (TextView) findViewById(R.id.TurnText);
+        drawBtn = findViewById(R.id.drawBtn);
         playerText = (TextView) findViewById(R.id.playerNumTxt);
         headerText = findViewById(R.id.inGameHeader);
         backBtn = findViewById(R.id.gameBackBtn);
-        addMatchButton = findViewById(R.id.addMatchButton);
+        gameFrame = findViewById(R.id.frameLayoutGame);
+        gameBoard = findViewById(R.id.gameBoard);
+        yellowPiece1 = findViewById(R.id.yellowPiece1);
+        piece1 = findViewById(R.id.checkBoxPiece1);
+        piece2 = findViewById(R.id.checkBoxPiece2);
+        piece3 = findViewById(R.id.checkBoxPiece3);
+        piece4 = findViewById(R.id.checkBoxPiece4);
 
-        turnBtn.setVisibility(View.INVISIBLE);
+        //turnBtn.setVisibility(View.INVISIBLE);
 
         /* connect this activity to the websocket instance */
         WebSocketManager.getInstance().connectWebSocket(serverUrl);
         WebSocketManager.getInstance().setWebSocketListener(GameActivity.this);
 
-        addMatchButton.setOnClickListener(v -> {
-        postRequest();
+//        addMatchButton.setOnClickListener(v -> {
+//        postRequest();
+//        });
+        piece1.setOnClickListener(v -> {
+            selectedPiece = 1;
+            piece1.setChecked(true);
+            piece2.setChecked(false);
+            piece3.setChecked(false);
+            piece4.setChecked(false);
+        });
+        piece2.setOnClickListener(v -> {
+            selectedPiece = 2;
+            piece2.setChecked(true);
+            piece1.setChecked(false);
+            piece3.setChecked(false);
+            piece4.setChecked(false);
+        });
+        piece3.setOnClickListener(v -> {
+            selectedPiece = 3;
+            piece3.setChecked(true);
+            piece1.setChecked(false);
+            piece2.setChecked(false);
+            piece4.setChecked(false);
+        });
+        piece4.setOnClickListener(v -> {
+            selectedPiece = 4;
+            piece4.setChecked(true);
+            piece1.setChecked(false);
+            piece2.setChecked(false);
+            piece3.setChecked(false);
         });
         backBtn.setOnClickListener(v -> {
             user.setGameId(0);
@@ -87,12 +131,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             startActivity(intent);
         });
         /* send button listener */
-        turnBtn.setOnClickListener(v -> {
+        drawBtn.setOnClickListener(v -> {
             try {
             drawCard();
-            String msg = "{\"playerNum\":\"" + user.getPlayerNum() + "\", \"Card\":\""+ String.valueOf(cardNum) + "\"}";
-            // send message
-            WebSocketManager.getInstance().sendMessage(msg);
         } catch (Exception e) {
             Log.d("ExceptionSendMessage:", e.getMessage());
         }
@@ -111,27 +152,45 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
          * is used to post a runnable to the UI thread's message queue, allowing UI updates
          * to occur safely from a background or non-UI thread.
          */
+        JSONObject obj;
+//        try {
+//            obj = new JSONObject(message);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
         if(user.getPlayerNum() == 0){
-            JSONObject obj;
-            try {
-                obj = new JSONObject(message);
-                user.setPlayerNum(obj.getInt("playerNum"));
-                user.setGameId(obj.getInt("gameId"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+//            try {
+//                user.setPlayerNum(obj.getInt("playerNum"));
+//                numPlayers = obj.getInt("playerNum");
+//               // user.setGameId(obj.getInt("gameId"));
+//                user.setGameId(1);
+//            } catch (JSONException e) {
+//                throw new RuntimeException(e);
+//            }
+
+            user.setPlayerNum(Integer.parseInt(message));
+            numPlayers = Integer.parseInt(message);
 
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
                 turnBtn.setVisibility(View.VISIBLE);
             }
-        }else {
-            runOnUiThread(() -> {
-                String s = turnText.getText().toString();
-                turnText.setText(s + "\n" + message);
-            });
-            turnmgr.takeTurn();
-            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-                turnBtn.setVisibility(View.VISIBLE);
+
+        }else if(message.length() < 3){
+//            try {
+//                numPlayers = obj.getInt("playerNum");
+//            } catch (JSONException e) {
+//                throw new RuntimeException(e);
+//            }
+
+           numPlayers = Integer.parseInt(message);
+
+        } else {
+
+            try {
+                obj = new JSONObject(message);
+                yellowPieces[0].move(obj.getInt("Card"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -169,7 +228,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                "http://coms-309-033.class.las.iastate.edu:8080/draw" + user.getGameId(),
+                "http://coms-309-033.class.las.iastate.edu:8080/draw/str",
                  //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
                 null,
                 new Response.Listener<JSONObject>() {
@@ -194,7 +253,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-               headers.put("gameid", "1");
+               headers.put("gameid", String.valueOf(1));
 //                headers.put("Content-Type", "application/json");
                 return headers;
             }
@@ -278,6 +337,19 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             WebSocketManager.getInstance().sendMessage(msg);
         } catch (Exception e) {
             Log.d("ExceptionSendMessage:", e.getMessage());
+        }
+    }
+    private void performTurn(int playerNum, int PieceNum, int numToMove){
+        if(playerNum == 1){
+            yellowPieces[PieceNum-1].move(numToMove);
+        }else if(playerNum == 2){
+            yellowPieces[PieceNum-1].move(numToMove);
+        }
+        else if(playerNum == 3){
+            yellowPieces[PieceNum-1].move(numToMove);
+        }
+        else if(playerNum == 4){
+            yellowPieces[PieceNum-1].move(numToMove);
         }
     }
 }
