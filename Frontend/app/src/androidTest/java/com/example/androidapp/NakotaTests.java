@@ -13,6 +13,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.startsWith;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
@@ -130,6 +131,20 @@ public class NakotaTests {
         }
 
         onView(withId(R.id.equip_unequip_txt)).check(matches(withText(endsWith("Unequipped"))));
+
+    }
+
+    @Test
+    public void playerNumTest(){
+        loginTest();
+        onView(withId(R.id.button)).perform(click());
+
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+
+        onView(withId(R.id.playerNumTxt)).check(matches(withText(startsWith("Player"))));
 
     }
 

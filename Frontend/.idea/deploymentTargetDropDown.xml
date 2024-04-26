@@ -21,10 +21,10 @@
           <timeTargetWasSelectedWithDropDown value="2024-04-26T18:12:12.807924100Z" />
         </State>
       </entry>
-      <entry key="inventoryTest()">
+      <entry key="loginTest()">
         <State />
       </entry>
-      <entry key="loginTest()">
+      <entry key="playerNumTest()">
         <State />
       </entry>
       <entry key="shopTest()">

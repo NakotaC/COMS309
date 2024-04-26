@@ -172,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             user.setPlayerNum(Integer.parseInt(message));
             numPlayers = Integer.parseInt(message);
             turnmgr = new TurnManager(numPlayers);
-
+            playerText.setText("You are player " + String.valueOf(user.getPlayerNum()));
 
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
                 turnBtn.setVisibility(View.VISIBLE);
