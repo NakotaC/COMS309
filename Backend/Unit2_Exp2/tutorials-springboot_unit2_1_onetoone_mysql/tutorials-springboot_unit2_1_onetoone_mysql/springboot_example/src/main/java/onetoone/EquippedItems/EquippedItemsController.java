@@ -30,8 +30,8 @@ public class EquippedItemsController {
     private String failure = "{\"message\":\"failure\"}";
 
     //return all cosmetics in the game (in the DB)
-    @GetMapping(path = "/equippedItems")
-    List<EquippedItems> getEquippedItems() { return equippedItemsRepository.findAll(); }
+//    @GetMapping(path = "/equippedItems")
+//    List<EquippedItems> getEquippedItems() { return equippedItemsRepository.findAll(); }
 
     //@GetMapping(path = "/inventory/shop")
 
