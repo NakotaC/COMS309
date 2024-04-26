@@ -1,15 +1,18 @@
 package com.example.androidapp.Game.Pieces;
 
 public class YellowPiece  extends GamePieceAbstract{
-   int pieceNum;
-   int location;
    int homeLocation = 32;
    int startLocation = 34;
    int startX = 260;
    int startY = 380;
 
    public YellowPiece(int pieceNum){
+      super();
       this.pieceNum = pieceNum;
+      this.location = 34;
+      currX = startX;
+      currY = startY;
+      direction = 2;
    }
 
 

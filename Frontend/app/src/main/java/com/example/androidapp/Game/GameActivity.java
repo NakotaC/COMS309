@@ -171,7 +171,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
             user.setPlayerNum(Integer.parseInt(message));
             numPlayers = Integer.parseInt(message);
-
+            turnmgr = new TurnManager(numPlayers);
 
 
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
@@ -186,12 +186,13 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 //            }
 
            numPlayers = Integer.parseInt(message);
+            turnmgr = new TurnManager(numPlayers);
 
         } else {
 
             try {
                 obj = new JSONObject(message);
-                yellowPieces[0].move(obj.getInt("Card"));
+                performTurn(obj.getInt("player"), 1, obj.getInt("Card"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -354,5 +355,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         else if(playerNum == 4){
             yellowPieces[PieceNum-1].move(numToMove);
         }
+        float transX = yellowPieces[PieceNum-1].getCurrX();
+        float transY = yellowPieces[PieceNum-1].getCurrY();
+        yellowPiece1.setX(yellowPieces[PieceNum-1].getCurrX());
+        yellowPiece1.setY(yellowPieces[PieceNum-1].getCurrY());
     }
 }

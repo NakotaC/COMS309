@@ -8,13 +8,21 @@ abstract class GamePieceAbstract {
      * 2 = home row
      * 3 = home
      */
-    int currArea;
+    int currArea = 1;
     int location, locationInHome;
     short xInc = 24;
     short yInc = 24;
     int homeLocation, startLocation;
 
-    int currX, currY;
+    public float getCurrX() {
+        return currX;
+    }
+
+    public float getCurrY() {
+        return currY;
+    }
+
+    float currX, currY;
     int[] corners = {0, 15, 30, 45};
     /**
      * Holds current direction of movement

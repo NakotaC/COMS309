@@ -57,8 +57,8 @@
             android:id="@+id/yellowPiece1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:translationX="356dp"
-            android:translationY="332dp"
+            android:translationX="260dp"
+            android:translationY="380dp"
             app:srcCompat="@drawable/yellowpiece" />
 
     </FrameLayout>
