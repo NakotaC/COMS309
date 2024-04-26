@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private Button addMatchButton;
     private TextView turnText, playerText, headerText;
     private int numPlayers;
-    private final TurnManager turnmgr = new TurnManager();
+    private TurnManager turnmgr;
     private FrameLayout gameFrame;
     private ImageView gameBoard, yellowPiece1;
     private User user;
@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private String serverUrl;
     int selectedPiece;
 
-    private  YellowPiece[] yellowPieces= {new YellowPiece(1),
+    private final YellowPiece[] yellowPieces= {new YellowPiece(1),
             new YellowPiece(2),
             new YellowPiece(3),
             new YellowPiece(4)};
@@ -171,6 +171,8 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
             user.setPlayerNum(Integer.parseInt(message));
             numPlayers = Integer.parseInt(message);
+
+
 
             if(user.getPlayerNum() == turnmgr.getCurrTurn()){
                 turnBtn.setVisibility(View.VISIBLE);
@@ -333,7 +335,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     }
     private void sendMessage() {
         try {
-            String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\"" + String.valueOf(cardNum) + "\"}";
+            String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\"" + cardNum + "\"}";
             // send message
             WebSocketManager.getInstance().sendMessage(msg);
         } catch (Exception e) {
