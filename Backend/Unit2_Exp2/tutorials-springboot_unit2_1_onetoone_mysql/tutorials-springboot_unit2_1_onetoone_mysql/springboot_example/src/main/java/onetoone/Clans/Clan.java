@@ -28,9 +28,9 @@ public class Clan {
     public Integer getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
     public Integer getLeader() {
         return clan_leader;
     }
@@ -42,9 +42,9 @@ public class Clan {
         return clan_name;
     }
 
-    public void setClanName(String name) {
-        this.clan_name = name;
-    }
+//    public void setClanName(String name) {
+//        this.clan_name = name;
+//    }
 
     public List<User> getMembers() {
         return members;
