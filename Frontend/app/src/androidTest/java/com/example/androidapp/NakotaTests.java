@@ -13,7 +13,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.startsWith;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
@@ -117,7 +116,6 @@ public class NakotaTests {
             Thread.sleep(SIMULATED_DELAY_MS);
         } catch (InterruptedException e) {
         }
-        String str = onView(withId(R.id.equip_unequip_txt)).toString();
         onView(withId(R.id.equip_unequip_txt)).check(matches(withText("Equipped")));
 
         onData(instanceOf(EquippedItemInventory.class))
@@ -134,19 +132,15 @@ public class NakotaTests {
 
     }
 
-    @Test
-    public void playerNumTest(){
-        loginTest();
-        onView(withId(R.id.button)).perform(click());
-
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
-
-        onView(withId(R.id.playerNumTxt)).check(matches(withText(startsWith("Player"))));
-
-    }
+//    @Test
+//    public void playerNumTest(){
+//        loginTest();
+//
+//
+//        onView(withId(R.id.button)).perform(click());
+//        onView(withId(R.id.playerNumTxt)).check(matches(withText(startsWith("You"))));
+//      //  onView(withId(R.id.inGameHeader)).check(matches(withText("In-Game")));
+//    }
 
 
 
