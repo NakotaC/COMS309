@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import onetoone.Users.UserRepository;
 import onetoone.Users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 @Api(value = "ClanController", description = "REST APIs related to the Clan Entity")
 @RestController
@@ -51,4 +52,26 @@ public class ClanController {
         userRepository.save(user);
         return success;
     }
+
+    @PostMapping(path = "member/{clan_name}/{user_id}")
+    String AddMemberClan(@PathVariable int user_id, @PathVariable String clan_name) {
+        System.out.print(clan_name);
+        System.out.print(clanRepository.findById(1).getClanName());
+
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clan_name.equals(clanRepository.findById(i).getClanName())) {
+                Clan clan1 = clanRepository.findById(i);
+                ArrayList<Integer> la = clan1.toIntList(clan1.getMembers());
+                la.add(user_id);
+                clan1.setMember(la);
+                clanRepository.save(clan1);
+                User user = userRepository.findById(user_id);
+                user.setClan(clan1);
+                userRepository.save(user);
+                return success;
+            }
+        }
+        return failure;
+    }
+
 }

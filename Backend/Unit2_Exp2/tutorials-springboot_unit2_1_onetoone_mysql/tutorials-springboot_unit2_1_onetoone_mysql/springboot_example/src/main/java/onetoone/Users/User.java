@@ -11,12 +11,16 @@ import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
 import java.util.List;
+import onetoone.Clans.ClanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
  * @author Vivek Bengre
  * 
- */ 
+ */
+
+
 
 @Entity
 public class User {
@@ -54,7 +58,8 @@ public class User {
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-
+//    @Autowired
+//    ClanRepository clanRepository;
     public User(String Username, String password) {
         if(Username != null) {
             this.username = Username;
@@ -64,7 +69,17 @@ public class User {
         }
         this.password = password;
         this.setWins(0);
-
+//        if (clanRepository.findById(0) != null) {
+//
+//        }
+//        else {
+//            Clan base = new Clan();
+//            base.setId(0);
+//            base.setClanName("noClan");
+//            base.setLeader(-2);
+//            base.setClanType("noClan");
+//            clanRepository.save(base);
+//        }
     }
 
     public User() {
