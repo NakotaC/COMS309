@@ -53,22 +53,22 @@ class Main {
 
         //STUFF TO TEST THAT THE APP WORKS FROM NOTHING
         //REMOVE ALL STUFF BELOW MAIN AND TRY TO USE THE APP FROM SCRATCH
-        RestTemplate restTemplate = new RestTemplate();
-
-        // Example GET request
-        String url = "http://localhost:8080/";
-        String response = restTemplate.getForObject(url + "wins", String.class);
-        System.out.print(response);
-
-        String requestBody = null;
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("username", "John2");
-        headers.set("password", "JohnPassword2");
-        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-        restTemplate.postForObject(url + "users/signup", requestEntity, String.class);
-
-        restTemplate.postForObject(url + "clans/sorryplayer/1", requestBody, String.class);
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        // Example GET request
+//        String url = "http://localhost:8080/";
+//        String response = restTemplate.getForObject(url + "wins", String.class);
+//        System.out.print(response);
+//
+//        String requestBody = null;
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.set("username", "John2");
+//        headers.set("password", "JohnPassword2");
+//        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+//        restTemplate.postForObject(url + "users/signup", requestEntity, String.class);
+//
+//        restTemplate.postForObject(url + "clans/sorryplayer/1", requestBody, String.class);
 
 
 
@@ -155,6 +155,9 @@ class Main {
             user1.setEquipped(EI1);
             user2.setEquipped(EI2);
             user3.setEquipped(EI3);
+            userRepository.save(user1);
+            userRepository.save(user2);
+            userRepository.save(user3);
             userRepository.save(user1);
             userRepository.save(user2);
             userRepository.save(user3);
