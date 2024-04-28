@@ -76,8 +76,6 @@ class Main {
         headers.set("itemNum", "0");
         restTemplate.put(url + "/equip/1", requestEntity, String.class);
 
-
-
     }
 
     // Create 3 users with their machines
@@ -127,10 +125,6 @@ class Main {
 //            Inventory inventory1 = new Inventory();
 //            Inventory inventory2 = new Inventory();
 //            Inventory inventory3 = new Inventory();
-
-
-
-
 //            EquippedItems EI1 = new EquippedItems();
 //            EquippedItems EI2 = new EquippedItems();
 //            EquippedItems EI3 = new EquippedItems();
@@ -140,7 +134,14 @@ class Main {
 //            ArrayList<ShopItem> Einv1items = new ArrayList<>();
 //            ArrayList<ShopItem> Einv2items = new ArrayList<>();
 //            ArrayList<ShopItem> Einv3items = new ArrayList<>();
-
+//            ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
+//            ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
+//            ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
+//            ShopItem SI4 = new ShopItem("Item4", "Description of Item4");
+//            ShopItem SI5 = new ShopItem("Item5", "Description of Item5");
+//            ShopItem SI6 = new ShopItem("Item6", "Description of Item6");
+//            ShopItem SI7 = new ShopItem("Item7", "Description of Item7");
+//            ShopItem SI8 = new ShopItem("Item8", "Description of Item8");
 //            inv1items.add(SI1);
 //            inv1items.add(SI2);
 //            inv1items.add(SI3);
@@ -159,7 +160,14 @@ class Main {
 //            EI1.setShopItems(Einv1items);
 //            EI2.setShopItems(Einv2items);
 //            EI3.setShopItems(Einv3items);
-
+//            shopItemsRepository.save(SI1);
+//            shopItemsRepository.save(SI2);
+//            shopItemsRepository.save(SI3);
+//            shopItemsRepository.save(SI4);
+//            shopItemsRepository.save(SI5);
+//            shopItemsRepository.save(SI6);
+//            shopItemsRepository.save(SI7);
+//            shopItemsRepository.save(SI8);
 //            inventoryRepository.save(inventory1);
 //            inventoryRepository.save(inventory2);
 //            inventoryRepository.save(inventory3);
@@ -175,19 +183,22 @@ class Main {
 //            userRepository.save(user1);
 //            userRepository.save(user2);
 //            userRepository.save(user3);
-//            Clan clan1 = new Clan("JennyClan", user2.getId(), userRepository);
-//            clanRepository.save(clan1);
-//            user2.setClan(clan1);
-//            user1.setClan(clan1);
-//            user3.setClan(clan1);
 //            userRepository.save(user1);
 //            userRepository.save(user2);
 //            userRepository.save(user3);
-            Game g = new Game();
-            gameRepository.save(g);
-//            System.out.println("hello");
-//            History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), user1,  user1);
-//            historyRepository.save(h);
+////            Clan clan1 = new Clan("JennyClan", user2.getId(), userRepository);
+////            clanRepository.save(clan1);
+////            user2.setClan(clan1);
+////            user1.setClan(clan1);
+////            user3.setClan(clan1);
+////            userRepository.save(user1);
+////            userRepository.save(user2);
+////            userRepository.save(user3);
+//            Game g = new Game();
+//            gameRepository.save(g);
+////            System.out.println("hello");
+////            History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), user1,  user1);
+////            historyRepository.save(h);
         };
     }
 
