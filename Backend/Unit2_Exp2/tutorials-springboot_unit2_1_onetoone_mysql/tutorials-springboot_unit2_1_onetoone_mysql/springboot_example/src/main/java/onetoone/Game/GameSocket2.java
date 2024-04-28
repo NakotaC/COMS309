@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller      // this is needed for this to be an endpoint to springboot
-@ServerEndpoint(value = "/game3/{username}")  // this is Websocket url
+@ServerEndpoint(value = "/game2/{username}")  // this is Websocket url
 public class GameSocket2 {
 
     // cannot autowire static directly (instead we do it by the below
