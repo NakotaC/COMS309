@@ -1,7 +1,6 @@
 package onetoone.Game;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller      // this is needed for this to be an endpoint to springboot
-@ServerEndpoint(value = "/game/{username}")  // this is Websocket url
-public class GameSocket {
+@ServerEndpoint(value = "/game2/{username}")  // this is Websocket url
+public class GameSocket2 {
 
     // cannot autowire static directly (instead we do it by the below
     // method
@@ -68,15 +67,6 @@ public class GameSocket {
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
         int idk = usernameSessionMap.size();
-        if(idk > 4) {
-            URI uri = session.getRequestURI();
-            String newEndpoint = uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + "/game2/" + username;
-            session.getUserProperties().put("redirected", true);
-            session.getUserProperties().put("newEndpoint", newEndpoint);
-            session.getBasicRemote().sendText(newEndpoint);
-            session.close();
-            return;
-        }
         String number = Integer.toString(idk);
 
         //Send chat history to the newly connected user
@@ -88,7 +78,7 @@ public class GameSocket {
         //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
         //broadcast(number);
 
-        String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 1";
+        String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 2";
         broadcast(testmessage);
 
 
