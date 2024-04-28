@@ -3,6 +3,7 @@ package onetoone;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import onetoone.Game.GameRepository;
+import onetoone.Users.User;
 import onetoone.Users.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
@@ -182,7 +185,10 @@ public class JackSystemTest {
         String rs2 = response2.getBody().asString();
         assertNotSame(rs2,rs1);
 
-        long last = userRepository.count();
+        List<User> fortniters = userRepository.findAll();
+        User lastuser = fortniters.get((int) userRepository.count() - 1);
+        int last = lastuser.getId();
+        System.out.println(last);
         String fort = "/users/" + last;
 
         Response response3 = RestAssured.given().

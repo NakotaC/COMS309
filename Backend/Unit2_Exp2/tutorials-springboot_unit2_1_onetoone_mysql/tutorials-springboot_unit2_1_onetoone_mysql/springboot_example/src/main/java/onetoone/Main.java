@@ -171,6 +171,8 @@ class Main {
 //            userRepository.save(user3);
             Game g = new Game();
             gameRepository.save(g);
+            Game g2 = new Game();
+            gameRepository.save(g2);
 //            System.out.println("hello");
 //            History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), user1,  user1);
 //            historyRepository.save(h);
