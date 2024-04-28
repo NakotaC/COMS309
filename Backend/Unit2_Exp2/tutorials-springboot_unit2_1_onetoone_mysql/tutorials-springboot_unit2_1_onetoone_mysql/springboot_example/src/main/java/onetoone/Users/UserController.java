@@ -1,10 +1,12 @@
 package onetoone.Users;
 
 import java.net.http.HttpHeaders;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import io.swagger.annotations.Api;
+import onetoone.Clans.Clan;
 import onetoone.Clans.ClanRepository;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.Wins.WinsRepository;
@@ -47,7 +49,6 @@ public class UserController {
 
 
     @PostMapping(path = "/users/signup")
-
     String createUser(@RequestHeader("username") String username, @RequestHeader("password") String password){
         List<User> users = userRepository.findAll();
         for (int i = 1; i < users.size(); i++){
@@ -55,8 +56,13 @@ public class UserController {
                 return failure;
             }
         }
-        User user = new User(username, password);
+        User user = new User(username, password, clanRepository);
         userRepository.save(user);
+        Clan noClan = clanRepository.findById(1);
+        ArrayList<Integer> mems = noClan.toIntList(noClan.getMembers());
+        mems.add(user.getId());
+        noClan.setMember(mems);
+        clanRepository.save(noClan);
         return success;
     }
 

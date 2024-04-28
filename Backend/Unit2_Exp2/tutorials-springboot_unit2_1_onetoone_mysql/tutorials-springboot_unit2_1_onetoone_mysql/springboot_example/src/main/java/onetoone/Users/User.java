@@ -10,13 +10,19 @@ import onetoone.Inventory.Inventory;
 import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
+
+import java.util.ArrayList;
 import java.util.List;
+import onetoone.Clans.ClanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
  * @author Vivek Bengre
  * 
- */ 
+ */
+
+
 
 @Entity
 public class User {
@@ -54,8 +60,9 @@ public class User {
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-
-    public User(String Username, String password) {
+//    @Autowired
+//    ClanRepository clanRepository;
+    public User(String Username, String password, ClanRepository clanRepository) {
         if(Username != null) {
             this.username = Username;
         }
@@ -64,7 +71,7 @@ public class User {
         }
         this.password = password;
         this.setWins(0);
-
+        this.clan = clanRepository.findById(1);
     }
 
     public User() {

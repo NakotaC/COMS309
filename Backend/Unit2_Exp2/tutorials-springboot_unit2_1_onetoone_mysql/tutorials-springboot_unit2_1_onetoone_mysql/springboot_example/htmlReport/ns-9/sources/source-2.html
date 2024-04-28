@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Users</a>
+</div>
+
+<h1>Coverage Summary for Class: UserController (onetoone.Users)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    15.8%
+  </span>
+  <span class="absValue">
+    (3/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Users;
+&nbsp;
+&nbsp;import java.net.http.HttpHeaders;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import onetoone.Clans.ClanRepository;
+&nbsp;import onetoone.Inventory.InventoryRepository;
+&nbsp;import onetoone.Wins.WinsRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * 
+&nbsp; * @author Vivek Bengre
+&nbsp; * 
+&nbsp; */
+&nbsp;@Api(value = &quot;UserController&quot;, description = &quot;REST APIs related to the User Entity&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class UserController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    InventoryRepository inventoryRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    ClanRepository clanRepository;
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    @GetMapping(&quot;/users&quot;)
+&nbsp;    List&lt;User&gt; getAllUsers(){
+<b class="nc">&nbsp;        return userRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/users/{id}&quot;)
+&nbsp;    User getUserById( @PathVariable int id){
+<b class="nc">&nbsp;        return userRepository.findById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/users/signup&quot;)
+&nbsp;
+&nbsp;    String createUser(@RequestHeader(&quot;username&quot;) String username, @RequestHeader(&quot;password&quot;) String password){
+<b class="nc">&nbsp;        List&lt;User&gt; users = userRepository.findAll();</b>
+<b class="nc">&nbsp;        for (int i = 1; i &lt; users.size(); i++){</b>
+<b class="nc">&nbsp;            if (username.equals(users.get(i).getUsername())){</b>
+<b class="nc">&nbsp;                return failure;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        User user = new User(username, password);</b>
+<b class="nc">&nbsp;        userRepository.save(user);</b>
+<b class="nc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/users/login&quot;)
+&nbsp;    User loginUser(@RequestHeader(&quot;username&quot;) String username, @RequestHeader(&quot;password&quot;) String password){
+<b class="nc">&nbsp;        List&lt;User&gt; users = userRepository.findAll();</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; users.size(); i++){</b>
+<b class="nc">&nbsp;            if (username.equals(users.get(i).getUsername()) &amp;&amp; password.equals(users.get(i).getPassword())){</b>
+<b class="nc">&nbsp;                return users.get(i);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return users.get(0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;//    @PostMapping(path = &quot;/users/{id}/{score}&quot;)
+&nbsp;//    String userAddToUserScore(@PathVariable int id, @PathVariable int score) {
+&nbsp;//        User user = userRepository.findById(id);
+&nbsp;//        user.setScore(user.getScore() + score);
+&nbsp;//        userRepository.save(user);
+&nbsp;//        return success;
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/users/{id}&quot;)
+&nbsp;//    User updateUser(@PathVariable int id, @RequestBody User request){
+&nbsp;//        User user = userRepository.findById(id);
+&nbsp;//        if(user == null)
+&nbsp;//            return null;
+&nbsp;//        userRepository.save(request);
+&nbsp;//        return userRepository.findById(id);
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/users/{userId}/laptops/{laptopId}&quot;)
+&nbsp;//    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
+&nbsp;//        User user = userRepository.findById(userId);
+&nbsp;//        Laptop laptop = laptopRepository.findById(laptopId);
+&nbsp;//        if(user == null || laptop == null)
+&nbsp;//            return failure;
+&nbsp;//        laptop.setUser(user);
+&nbsp;//        user.setLaptop(laptop);
+&nbsp;//        userRepository.save(user);
+&nbsp;//        return success;
+&nbsp;//    }
+&nbsp;
+&nbsp;    @DeleteMapping(path = &quot;/users/{id}&quot;)
+&nbsp;    String deleteUser(@PathVariable int id){
+<b class="nc">&nbsp;        userRepository.deleteById(id);</b>
+<b class="nc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-26 13:52</div>
+</div>
+</body>
+</html>

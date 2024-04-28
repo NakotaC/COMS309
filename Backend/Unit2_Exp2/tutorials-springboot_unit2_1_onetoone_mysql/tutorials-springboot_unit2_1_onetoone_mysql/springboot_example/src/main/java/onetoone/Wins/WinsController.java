@@ -44,8 +44,10 @@ public class WinsController {
         standard = mergeSort(standard, winComp);
         for (int i = 0; i < standard.size(); i++) {
             System.out.println(standard.get(i).getWins());
+            winsRepository.save(standard.get(i));
         }
-        return standard;
+
+        return standard = winsRepository.findAll();
     }
 
     public List<Wins> mergeSort(List<Wins> list, Comparator<Wins> comparator) {
