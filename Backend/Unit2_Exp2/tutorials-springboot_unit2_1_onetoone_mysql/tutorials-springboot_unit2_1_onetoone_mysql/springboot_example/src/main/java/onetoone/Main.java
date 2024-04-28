@@ -48,33 +48,6 @@ class Main {
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-
-
-
-        //STUFF TO TEST THAT THE APP WORKS FROM NOTHING
-        //REMOVE ALL STUFF BELOW MAIN AND TRY TO USE THE APP FROM SCRATCH
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        // Example GET request
-//        String url = "http://localhost:8080/";
-//        String response = restTemplate.getForObject(url + "wins", String.class);
-//        System.out.print(response);
-//
-//        String requestBody = null;
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.set("username", "John");
-//        headers.set("password", "JohnPassword");
-//        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-//        restTemplate.postForObject(url + "users/signup", requestEntity, String.class);
-//
-//        restTemplate.postForObject(url + "clans/sorryplayer/1", requestBody, String.class);
-//        headers.set("item", "1");
-//        headers.set("username", "John");
-//        restTemplate.postForObject(url + "/inventory/shop/buy", requestEntity, String.class);
-//
-//        headers.set("itemNum", "0");
-//        restTemplate.put(url + "/equip/1", requestEntity, String.class);
     }
 
     // Create 3 users with their machines
@@ -88,10 +61,7 @@ class Main {
     CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, EquippedItemsRepository equippedItemsRepository) {
         return args -> {
             //NEEDS TO STAY IN MAIN WHEN GAME IS "RELEASED"
-            if(clanRepository.count() <= 0) {
-                Clan noClan = new Clan("noClan", -2, userRepository);
-                noClan.setMax_members(100000);
-                clanRepository.save(noClan);
+            if(shopItemsRepository.count() <= 0) {
                 ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
                 ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
                 ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
@@ -113,15 +83,6 @@ class Main {
                 Game g2 = new Game();
                 gameRepository.save(g2);
             }
-
-
-
-
-
-            //
-            //silly init testing stuff that doesnt matter
-            //
-
 
         };
     }

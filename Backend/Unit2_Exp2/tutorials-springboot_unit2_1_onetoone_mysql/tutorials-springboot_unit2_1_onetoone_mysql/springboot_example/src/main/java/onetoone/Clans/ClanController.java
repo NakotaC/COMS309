@@ -90,6 +90,13 @@ public class ClanController {
         return failure;
     }
 
+    @PostMapping(path = "clan/Clan/cLAN/CLAM/CLam/cLAM")
+    void initNoClan() {
+        Clan noClan = new Clan("noClan", -2, userRepository);
+        noClan.setMax_members(100000);
+        clanRepository.save(noClan);
+    }
+
 
     //essentially
     @PostMapping(path = "member/{user_id}")
