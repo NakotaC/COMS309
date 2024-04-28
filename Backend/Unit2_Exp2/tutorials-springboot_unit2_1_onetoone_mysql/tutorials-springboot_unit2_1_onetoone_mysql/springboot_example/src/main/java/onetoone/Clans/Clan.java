@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import onetoone.Users.User;
 import onetoone.Users.UserRepository;
+import onetoone.Clans.ClanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.sql.Array;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 public class Clan {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +33,14 @@ public class Clan {
     @OneToMany(mappedBy = "clan", cascade = CascadeType.ALL)
     private List<User> members;
 
-    public Clan(String clan_name, int leader_id) {
-        this.clan_name = clan_name;
-        this.clan_leader = leader_id;
-        this.clan_xp = 0;
-        ArrayList<Integer> mems = new ArrayList<Integer>();
-        mems.add(leader_id);
-        setMember(mems);
-        this.clan_type = "Open";
+    public Clan(String clan_name, int leader_id, UserRepository userRepository) {
+            this.clan_name = clan_name;
+            this.clan_leader = leader_id;
+            this.clan_xp = 0;
+            ArrayList<Integer> mems = new ArrayList<Integer>();
+            mems.add(leader_id);
+            setMember(mems);
+            this.clan_type = "Open";
     }
 
     public void setMember(ArrayList<Integer> members){
@@ -51,10 +54,18 @@ public class Clan {
         while (clan_members.charAt(count) != ']') {
             String l = "";
             while (clan_members.charAt(count) != ',' && clan_members.charAt(count) != ']') {
-                l += clan_members.charAt(count);
-                count++;
+                if(clan_members.charAt(count) == ' ') {
+                    count++;
+                }
+                else {
+                    l += clan_members.charAt(count);
+                    count++;
+                }
             }
             ret_list.add(Integer.parseInt(l));
+            if(clan_members.charAt(count) != ']') {
+                count++;
+            }
             l = "";
         }
         return ret_list;
@@ -65,9 +76,9 @@ public class Clan {
     public Integer getId() {
         return id;
     }
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public Integer getLeader() {
         return clan_leader;
     }
@@ -87,9 +98,9 @@ public class Clan {
         this.clan_type = s;
     }
 
-//    public void setClanName(String name) {
-//        this.clan_name = name;
-//    }
+    public void setClanName(String name) {
+        this.clan_name = name;
+    }
 
     public void addClan_xp(int xp) {
         this.clan_xp = this.clan_xp + xp;
@@ -102,4 +113,11 @@ public class Clan {
         return clan_members;
     }
 
+    public void setMax_members(int max) {
+        this.max_members = max;
+    }
+
+    public void setClanXp(int xp) {
+        this.clan_xp = xp;
+    }
 }

@@ -10,6 +10,8 @@ import onetoone.Inventory.Inventory;
 import onetoone.MatchHistory.History;
 import onetoone.ShopItems.ShopItem;
 import onetoone.Wins.Wins;
+
+import java.util.ArrayList;
 import java.util.List;
 import onetoone.Clans.ClanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class User {
      */
 //    @Autowired
 //    ClanRepository clanRepository;
-    public User(String Username, String password) {
+    public User(String Username, String password, ClanRepository clanRepository) {
         if(Username != null) {
             this.username = Username;
         }
@@ -69,17 +71,7 @@ public class User {
         }
         this.password = password;
         this.setWins(0);
-//        if (clanRepository.findById(0) != null) {
-//
-//        }
-//        else {
-//            Clan base = new Clan();
-//            base.setId(0);
-//            base.setClanName("noClan");
-//            base.setLeader(-2);
-//            base.setClanType("noClan");
-//            clanRepository.save(base);
-//        }
+        this.clan = clanRepository.findById(1);
     }
 
     public User() {
