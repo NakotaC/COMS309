@@ -69,6 +69,7 @@ public class UserController {
         String requestBody = null;
         restTemplate.postForObject(url + "/inventory/" + Integer.toString(user.getId()), requestBody, String.class);
         restTemplate.postForObject(url + "/newEquip/" + Integer.toString(user.getId()), requestBody, String.class);
+        userRepository.save(user);
         return success;
     }
 
