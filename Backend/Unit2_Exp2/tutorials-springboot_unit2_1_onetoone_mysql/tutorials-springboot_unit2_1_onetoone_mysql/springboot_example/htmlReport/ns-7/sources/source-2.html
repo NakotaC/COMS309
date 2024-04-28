@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > HistoryController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.MatchHistory</a>
+</div>
+
+<h1>Coverage Summary for Class: HistoryController (onetoone.MatchHistory)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HistoryController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (3/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.MatchHistory;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.GregorianCalendar;
+&nbsp;import java.util.List;
+&nbsp;import java.util.TimeZone;
+&nbsp;
+&nbsp;@Api(value = &quot;HistoryController&quot;, description = &quot;REST APIs related to the History Entity&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class HistoryController {</b>
+&nbsp;    @Autowired
+&nbsp;    HistoryRepository historyRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/history/all&quot;)
+<b class="nc">&nbsp;    List&lt;History&gt; getHistory() { return historyRepository.findAll(); }</b>
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/history/{user_id}&quot;)
+&nbsp;    List&lt;History&gt; getUserHistory(@PathVariable int user_id) {
+<b class="nc">&nbsp;        List&lt;History&gt; h = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(int i = 1; i &lt;= historyRepository.count(); i++) {</b>
+<b class="nc">&nbsp;            if(historyRepository.findById(i).getId() == user_id) {</b>
+<b class="nc">&nbsp;                h.add(historyRepository.findById(i));</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return h;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/history/{user_id}/{winner_id}&quot;)
+&nbsp;    void postHistory(@PathVariable int user_id, @PathVariable int winner_id) {
+<b class="nc">&nbsp;        History h = new History(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)), userRepository.findById(user_id),  userRepository.findById(winner_id));</b>
+<b class="nc">&nbsp;        historyRepository.save(h);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //comment for CICD
+&nbsp;    @DeleteMapping(path=&quot;/history/{match_id}&quot;)
+&nbsp;    String deleteHistoryId(@PathVariable int match_id){
+<b class="nc">&nbsp;        if(historyRepository.findById(match_id) == null) {</b>
+<b class="nc">&nbsp;            return failure;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        historyRepository.deleteById(match_id);</b>
+<b class="nc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-26 13:52</div>
+</div>
+</body>
+</html>

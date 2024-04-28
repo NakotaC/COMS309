@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > SpringFoxConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone</a>
+</div>
+
+<h1>Coverage Summary for Class: SpringFoxConfig (onetoone)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SpringFoxConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$51444ad8</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$51444ad8$$FastClassBySpringCGLIB$$b066febb</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$975477f5</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$975477f5$$FastClassBySpringCGLIB$$8f06ae0a</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$ce357f6b</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$EnhancerBySpringCGLIB$$ce357f6b$$FastClassBySpringCGLIB$$17fbc15d</td>
+  </tr>
+  <tr>
+    <td class="name">SpringFoxConfig$$FastClassBySpringCGLIB$$cb2058bb</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone;
+&nbsp;
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;import org.springframework.context.annotation.Import;
+&nbsp;import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
+&nbsp;import springfox.documentation.spring.web.plugins.Docket;
+&nbsp;import springfox.documentation.builders.PathSelectors;
+&nbsp;import springfox.documentation.builders.RequestHandlerSelectors;
+&nbsp;import springfox.documentation.spi.DocumentationType;
+&nbsp;
+&nbsp;import springfox.documentation.swagger2.annotations.EnableSwagger2;
+&nbsp;
+&nbsp;import springfox.documentation.service.ApiInfo;
+&nbsp;import springfox.documentation.service.Contact;
+&nbsp;import springfox.documentation.builders.ApiInfoBuilder;
+&nbsp;
+&nbsp;
+&nbsp;@Configuration
+&nbsp;@EnableSwagger2
+&nbsp;@Import(SpringDataRestConfiguration.class)
+<b class="fc">&nbsp;public class SpringFoxConfig {</b>
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public Docket myDocket() {
+<b class="fc">&nbsp;        return new Docket(DocumentationType.SWAGGER_2)</b>
+<b class="fc">&nbsp;                .apiInfo(apiInfo())</b>
+<b class="fc">&nbsp;                .select()</b>
+<b class="fc">&nbsp;                .apis(RequestHandlerSelectors.basePackage(&quot;onetoone&quot;))</b>
+<b class="fc">&nbsp;                .paths(PathSelectors.any())</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private ApiInfo apiInfo() {
+<b class="fc">&nbsp;        return new ApiInfoBuilder()</b>
+<b class="fc">&nbsp;                .title(&quot;Sorry Plus API&quot;)</b>
+<b class="fc">&nbsp;                .description(&quot;COMS 309 Sorry Plus Backend API&quot;)</b>
+<b class="fc">&nbsp;                .termsOfServiceUrl(&quot;https://localhost:8080/terms&quot;)</b>
+<b class="fc">&nbsp;                .version(&quot;0.0.2&quot;)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-26 13:52</div>
+</div>
+</body>
+</html>

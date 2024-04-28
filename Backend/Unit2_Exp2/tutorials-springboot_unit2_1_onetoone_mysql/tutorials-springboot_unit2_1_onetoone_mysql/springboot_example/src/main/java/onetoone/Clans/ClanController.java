@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import onetoone.Users.UserRepository;
 import onetoone.Users.User;
 
+import java.util.ArrayList;
 import java.util.List;
 @Api(value = "ClanController", description = "REST APIs related to the Clan Entity")
 @RestController
@@ -38,12 +39,12 @@ public class ClanController {
     //could possibly be replaced with a findByClanName JPA method (just learned about these)
     @PostMapping(path = "clans/{clan_name}/{user_id}")
     String newClan(@PathVariable int user_id, @PathVariable String clan_name) {
-        for (int i = 1; i < clanRepository.count(); i++) {
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
             if (clan_name.equals(clanRepository.findById(i).getClanName())) {
                 return failure;
             }
         }
-        Clan clan1 = new Clan(clan_name, user_id);
+        Clan clan1 = new Clan(clan_name, user_id, userRepository);
         clanRepository.save(clan1);
         User user = userRepository.findById(user_id);
         System.out.println(user);
@@ -51,4 +52,65 @@ public class ClanController {
         userRepository.save(user);
         return success;
     }
+
+    @PostMapping(path = "member/{clan_name}/{user_id}")
+    String AddMemberClan(@PathVariable int user_id, @PathVariable String clan_name) {
+        System.out.print(clan_name);
+        System.out.print(clanRepository.findById(1).getClanName());
+        //delete user from previous clan
+        User poorSap = userRepository.findById(user_id);
+        int previous_clan = userRepository.findById(user_id).getClan();
+        Clan pc = clanRepository.findById(previous_clan);
+        ArrayList<Integer> pcarray = pc.toIntList(pc.getMembers());
+        pcarray.remove(Integer.valueOf(poorSap.getId()));
+        pc.setMember(pcarray);
+        clanRepository.save(pc);
+        //if this fails add them back to noClan
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clan_name.equals(clanRepository.findById(i).getClanName())) {
+                Clan clan1 = clanRepository.findById(i);
+                ArrayList<Integer> la = clan1.toIntList(clan1.getMembers());
+                la.add(user_id);
+                clan1.setMember(la);
+                clanRepository.save(clan1);
+                User user = userRepository.findById(user_id);
+                user.setClan(clan1);
+                userRepository.save(user);
+                return success;
+            }
+        }
+        Clan clan1 = clanRepository.findById(1);
+        ArrayList<Integer> la = clan1.toIntList(clan1.getMembers());
+        la.add(user_id);
+        clan1.setMember(la);
+        clanRepository.save(clan1);
+        User user = userRepository.findById(user_id);
+        user.setClan(clan1);
+        userRepository.save(user);
+        return failure;
+    }
+
+
+    //essentially
+    @PostMapping(path = "member/{user_id}")
+    String kickLeaveClan(@PathVariable int user_id) {
+        User poorSap = userRepository.findById(user_id);
+        int previous_clan = userRepository.findById(user_id).getClan();
+        Clan pc = clanRepository.findById(previous_clan);
+        ArrayList<Integer> pcarray = pc.toIntList(pc.getMembers());
+        pcarray.remove(Integer.valueOf(poorSap.getId()));
+        pc.setMember(pcarray);
+        clanRepository.save(pc);
+        Clan clan1 = clanRepository.findById(1);
+        ArrayList<Integer> la = clan1.toIntList(clan1.getMembers());
+        la.add(user_id);
+        clan1.setMember(la);
+        clanRepository.save(clan1);
+        User user = userRepository.findById(user_id);
+        user.setClan(clan1);
+        userRepository.save(user);
+
+        return success;
+    }
+
 }
