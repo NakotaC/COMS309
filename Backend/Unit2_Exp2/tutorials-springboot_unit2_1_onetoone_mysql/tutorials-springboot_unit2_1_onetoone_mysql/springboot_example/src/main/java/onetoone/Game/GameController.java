@@ -41,7 +41,7 @@ public class GameController {
 //        int card = gameRepository.findById(gid).Draw();
 //        gameRepository.save(gameRepository.findById(gid));
 //        return card;
-//    } fortnite
+//    } fortnite321321
 
     @GetMapping(path = "/draw/str")
     String drawString(@RequestHeader("gameid") String gameid) throws JsonProcessingException {
