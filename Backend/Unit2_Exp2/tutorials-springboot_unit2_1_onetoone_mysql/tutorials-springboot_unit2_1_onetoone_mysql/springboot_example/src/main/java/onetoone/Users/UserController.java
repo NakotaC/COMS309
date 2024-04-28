@@ -8,11 +8,12 @@ import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import io.swagger.annotations.Api;
 import onetoone.Clans.Clan;
 import onetoone.Clans.ClanRepository;
+import onetoone.Inventory.InventoryController;
 import onetoone.Inventory.InventoryRepository;
 import onetoone.Wins.WinsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
 
 
 /**
@@ -63,6 +64,12 @@ public class UserController {
         mems.add(user.getId());
         noClan.setMember(mems);
         clanRepository.save(noClan);
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8080/";
+        String requestBody = null;
+        restTemplate.postForObject(url + "/inventory/" + Integer.toString(user.getId()), requestBody, String.class);
+        restTemplate.postForObject(url + "/newEquip/" + Integer.toString(user.getId()), requestBody, String.class);
+        userRepository.save(user);
         return success;
     }
 

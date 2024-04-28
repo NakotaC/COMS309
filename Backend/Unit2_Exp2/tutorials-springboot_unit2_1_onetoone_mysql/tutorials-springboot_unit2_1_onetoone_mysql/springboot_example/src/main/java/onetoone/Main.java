@@ -63,15 +63,18 @@ class Main {
 //        String requestBody = null;
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.set("username", "John2");
-//        headers.set("password", "JohnPassword2");
+//        headers.set("username", "John");
+//        headers.set("password", "JohnPassword");
 //        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 //        restTemplate.postForObject(url + "users/signup", requestEntity, String.class);
 //
 //        restTemplate.postForObject(url + "clans/sorryplayer/1", requestBody, String.class);
-
-
-
+//        headers.set("item", "1");
+//        headers.set("username", "John");
+//        restTemplate.postForObject(url + "/inventory/shop/buy", requestEntity, String.class);
+//
+//        headers.set("itemNum", "0");
+//        restTemplate.put(url + "/equip/1", requestEntity, String.class);
     }
 
     // Create 3 users with their machines
@@ -89,93 +92,37 @@ class Main {
                 Clan noClan = new Clan("noClan", -2, userRepository);
                 noClan.setMax_members(100000);
                 clanRepository.save(noClan);
+                ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
+                ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
+                ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
+                ShopItem SI4 = new ShopItem("Item4", "Description of Item4");
+                ShopItem SI5 = new ShopItem("Item5", "Description of Item5");
+                ShopItem SI6 = new ShopItem("Item6", "Description of Item6");
+                ShopItem SI7 = new ShopItem("Item7", "Description of Item7");
+                ShopItem SI8 = new ShopItem("Item8", "Description of Item8");
+                shopItemsRepository.save(SI1);
+                shopItemsRepository.save(SI2);
+                shopItemsRepository.save(SI3);
+                shopItemsRepository.save(SI4);
+                shopItemsRepository.save(SI5);
+                shopItemsRepository.save(SI6);
+                shopItemsRepository.save(SI7);
+                shopItemsRepository.save(SI8);
+                Game g = new Game();
+                gameRepository.save(g);
+                Game g2 = new Game();
+                gameRepository.save(g2);
             }
+
+
+
+
+
             //
             //silly init testing stuff that doesnt matter
             //
 
-            User user1 = new User("John", "JohnPassword", clanRepository);
-            User user2 = new User("Tom", "TomPassword", clanRepository);
-            User user3 = new User("Robby", "RobbyPassword", clanRepository);
-            Inventory inventory1 = new Inventory();
-            Inventory inventory2 = new Inventory();
-            Inventory inventory3 = new Inventory();
-            EquippedItems EI1 = new EquippedItems();
-            EquippedItems EI2 = new EquippedItems();
-            EquippedItems EI3 = new EquippedItems();
-            ArrayList<ShopItem> inv1items = new ArrayList<>();
-            ArrayList<ShopItem> inv2items = new ArrayList<>();
-            ArrayList<ShopItem> inv3items = new ArrayList<>();
-            ArrayList<ShopItem> Einv1items = new ArrayList<>();
-            ArrayList<ShopItem> Einv2items = new ArrayList<>();
-            ArrayList<ShopItem> Einv3items = new ArrayList<>();
-            ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
-            ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
-            ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
-            ShopItem SI4 = new ShopItem("Item4", "Description of Item4");
-            ShopItem SI5 = new ShopItem("Item5", "Description of Item5");
-            ShopItem SI6 = new ShopItem("Item6", "Description of Item6");
-            ShopItem SI7 = new ShopItem("Item7", "Description of Item7");
-            ShopItem SI8 = new ShopItem("Item8", "Description of Item8");
-            inv1items.add(SI1);
-            inv1items.add(SI2);
-            inv1items.add(SI3);
-            inv2items.add(SI4);
-            inv2items.add(SI5);
-            inv2items.add(SI6);
-            inv3items.add(SI7);
-            inv3items.add(SI8);
-            Einv1items.add(SI1);
-            Einv2items.add(SI4);
-            Einv3items.add(SI8);
-            user2.setWins(14000);
-            inventory1.setShopItems(inv1items);
-            inventory2.setShopItems(inv2items);
-            inventory3.setShopItems(inv3items);
-            EI1.setShopItems(Einv1items);
-            EI2.setShopItems(Einv2items);
-            EI3.setShopItems(Einv3items);
-            shopItemsRepository.save(SI1);
-            shopItemsRepository.save(SI2);
-            shopItemsRepository.save(SI3);
-            shopItemsRepository.save(SI4);
-            shopItemsRepository.save(SI5);
-            shopItemsRepository.save(SI6);
-            shopItemsRepository.save(SI7);
-            shopItemsRepository.save(SI8);
-            inventoryRepository.save(inventory1);
-            inventoryRepository.save(inventory2);
-            inventoryRepository.save(inventory3);
-            equippedItemsRepository.save(EI1);
-            equippedItemsRepository.save(EI2);
-            equippedItemsRepository.save(EI3);
-            user1.setInventory(inventory1);
-            user2.setInventory(inventory2);
-            user3.setInventory(inventory3);
-            user1.setEquipped(EI1);
-            user2.setEquipped(EI2);
-            user3.setEquipped(EI3);
-            userRepository.save(user1);
-            userRepository.save(user2);
-            userRepository.save(user3);
-            userRepository.save(user1);
-            userRepository.save(user2);
-            userRepository.save(user3);
-//            Clan clan1 = new Clan("JennyClan", user2.getId(), userRepository);
-//            clanRepository.save(clan1);
-//            user2.setClan(clan1);
-//            user1.setClan(clan1);
-//            user3.setClan(clan1);
-//            userRepository.save(user1);
-//            userRepository.save(user2);
-//            userRepository.save(user3);
-            Game g = new Game();
-            gameRepository.save(g);
-            Game g2 = new Game();
-            gameRepository.save(g2);
-//            System.out.println("hello");
-//            History h = new History(new GregorianCalendar(TimeZone.getTimeZone("UTC+5:00")), user1,  user1);
-//            historyRepository.save(h);
+
         };
     }
 
