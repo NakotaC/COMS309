@@ -10,6 +10,7 @@ import onetoone.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Api(value = "EquippedItemsController", description = "REST APIs related to the EquippedItems Entity")
 @RestController
@@ -71,5 +72,17 @@ public class EquippedItemsController {
         u.setEquipped(i);
         userRepository.save(u);
         return success;
+    }
+
+    @PostMapping(path = "/newEquip/{uid}")
+    void newInv(@PathVariable int uid) {
+        EquippedItems i = new EquippedItems();
+        User user = userRepository.findById(uid);
+        i.setUser(user);
+        ArrayList<ShopItem> inv1items = new ArrayList<>();
+        i.setShopItems(inv1items);
+
+
+        equippedItemsRepository.save(i);
     }
 }
