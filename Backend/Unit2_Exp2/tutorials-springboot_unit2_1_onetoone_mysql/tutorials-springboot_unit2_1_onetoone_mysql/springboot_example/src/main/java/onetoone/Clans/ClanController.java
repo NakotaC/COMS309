@@ -47,9 +47,15 @@ public class ClanController {
         Clan clan1 = new Clan(clan_name, user_id, userRepository);
         clanRepository.save(clan1);
         User user = userRepository.findById(user_id);
-        System.out.println(user);
+        int userOC = user.getClan();
+        Clan pc = clanRepository.findById(userOC);
+        ArrayList<Integer> pcarray = pc.toIntList(pc.getMembers());
+        pcarray.remove(Integer.valueOf(user.getId()));
+        pc.setMember(pcarray);
+        clanRepository.save(pc);
         user.setClan(clan1);
         userRepository.save(user);
+
         return success;
     }
 
