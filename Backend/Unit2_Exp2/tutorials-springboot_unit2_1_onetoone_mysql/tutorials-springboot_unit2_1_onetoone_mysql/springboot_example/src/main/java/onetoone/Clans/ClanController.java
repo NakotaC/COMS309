@@ -59,6 +59,31 @@ public class ClanController {
         return success;
     }
 
+    @PostMapping(path = "clans/{clan_name}/{user_id}/{type}/{max_members}")
+    String newClanPlus(@PathVariable int user_id, @PathVariable String clan_name,
+                       @PathVariable String type, @PathVariable int max_members) {
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clan_name.equals(clanRepository.findById(i).getClanName())) {
+                return failure;
+            }
+        }
+        Clan clan1 = new Clan(clan_name, user_id, userRepository);
+        clan1.setMax_members(max_members);
+        clan1.setClanType(type);
+        clanRepository.save(clan1);
+        User user = userRepository.findById(user_id);
+        int userOC = user.getClan();
+        Clan pc = clanRepository.findById(userOC);
+        ArrayList<Integer> pcarray = pc.toIntList(pc.getMembers());
+        pcarray.remove(Integer.valueOf(user.getId()));
+        pc.setMember(pcarray);
+        clanRepository.save(pc);
+        user.setClan(clan1);
+        userRepository.save(user);
+
+        return success;
+    }
+
     @PostMapping(path = "member/{clan_name}/{user_id}")
     String AddMemberClan(@PathVariable int user_id, @PathVariable String clan_name) {
         System.out.print(clan_name);
