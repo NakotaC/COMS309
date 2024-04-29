@@ -64,7 +64,8 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
+  //  String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
+    String url = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
     private final String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
     private ProgressBar progressBar;
 
