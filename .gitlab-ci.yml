@@ -14,7 +14,7 @@ maven-build:
     - mvn package       # maven package
   artifacts:            # where to output the packaged jar file, change 'Backend' to to where you have the pom.xml
     paths:
-    - Backend/Unit2_Exp2/tutorials-springboot_unit2_1_onetoone_mysql/tutorials-springboot_unit2_1_onetoone_mysql/target/*.jar # change 'Backend' to where you have 'target' (do not add a / in the beginning)
+    - Backend/Unit2_Exp2/tutorials-springboot_unit2_1_onetoone_mysql/tutorials-springboot_unit2_1_onetoone_mysql/springboot_example/target/*.jar # change 'Backend' to where you have 'target' (do not add a / in the beginning)
   only:
     refs:
       - main            # only to trigger the pipeline when changes are pushed to 'main'
@@ -40,8 +40,10 @@ auto-deploy:
   - springboot_tag      # change to your runner's tag
   script:               # script to run the deployment service you created
     - cd Backend/Unit2_Exp2/tutorials-springboot_unit2_1_onetoone_mysql/tutorials-springboot_unit2_1_onetoone_mysql/springboot_example        # change 'Backend' to to where you have the pom.xml (do not add / in the beginning)
-    # - sudo mv -f target/*.jar /target/web-demo.jar
-    - sudo find /target -type f -name "*.jar" ! -name "web-demo.jar" -exec mv {} /target/web-demo.jar \;
+    - ls target
+    - sudo mv target/*.jar /target/web-demo.jar
+    - ls /target
+    #- sudo find /target -type f -name "*.jar" ! -name "web-demo.jar" -exec mv {} /target/web-demo.jar \;
     - sudo systemctl stop system-web-demo
     - sudo systemctl start system-web-demo
   only:

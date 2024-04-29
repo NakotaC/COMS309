@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GameController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Game</a>
+</div>
+
+<h1>Coverage Summary for Class: GameController (onetoone.Game)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (3/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.core.JsonProcessingException;
+&nbsp;import io.swagger.annotations.Api;
+&nbsp;import onetoone.Inventory.Inventory;
+&nbsp;import onetoone.Inventory.InventoryRepository;
+&nbsp;import onetoone.ShopItems.ShopItem;
+&nbsp;import onetoone.ShopItems.ShopItemsRepository;
+&nbsp;import onetoone.Users.User;
+&nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;@Api(value = &quot;GameController&quot;, description = &quot;REST APIs related to the Game Entity&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class GameController {</b>
+&nbsp;    @Autowired
+&nbsp;    GameRepository gameRepository;
+&nbsp;    @Autowired
+&nbsp;    InventoryRepository inventoryRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    ShopItemsRepository shopItemsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    UserRepository userRepository;
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    //return all cosmetics in the game (in the DB)
+&nbsp;//    @GetMapping(path = &quot;/deck&quot;)
+&nbsp;//    List&lt;Inventory&gt; getInventory() { return inventoryRepository.findAll(); }
+&nbsp;
+&nbsp;    //@GetMapping(path = &quot;/inventory/shop&quot;)
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/draw&quot;)
+&nbsp;    int draw(@RequestHeader(&quot;gameid&quot;) String gameid) throws JsonProcessingException {
+<b class="nc">&nbsp;        int gid = Integer.parseInt(gameid);</b>
+<b class="nc">&nbsp;        int card = gameRepository.findById(gid).Draw();</b>
+<b class="nc">&nbsp;        gameRepository.save(gameRepository.findById(gid));</b>
+<b class="nc">&nbsp;        return card;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/draw/str&quot;)
+&nbsp;    String drawString(@RequestHeader(&quot;gameid&quot;) String gameid) throws JsonProcessingException {
+<b class="nc">&nbsp;        int gid = Integer.parseInt(gameid);</b>
+<b class="nc">&nbsp;        int card = gameRepository.findById(gid).Draw();</b>
+<b class="nc">&nbsp;        String cards = Integer.toString(card);</b>
+<b class="nc">&nbsp;        gameRepository.save(gameRepository.findById(gid));</b>
+<b class="nc">&nbsp;        String tmp = &quot;{\&quot;Card\&quot;:\&quot;&quot;;</b>
+<b class="nc">&nbsp;        tmp = tmp.concat(cards);</b>
+<b class="nc">&nbsp;        tmp = tmp.concat(&quot;\&quot;}&quot;);</b>
+<b class="nc">&nbsp;        return tmp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-26 13:52</div>
+</div>
+</body>
+</html>
