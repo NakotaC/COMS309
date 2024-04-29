@@ -76,8 +76,11 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         Bundle extras = getIntent().getExtras();
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
-
-        serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
+        if(user.getGameId() != 0) {
+            serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game" + user.getGameId() +"/" + user.getUsername();
+        }else{
+            serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
+        }
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         drawBtn = findViewById(R.id.drawBtn);
@@ -172,47 +175,43 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
          * to occur safely from a background or non-UI thread.
          */
         JSONObject obj;
-//        try {
-//            obj = new JSONObject(message);
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            obj = new JSONObject(message);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
         if (user.getPlayerNum() == 0) {
-////            try {
-////                user.setPlayerNum(obj.getInt("playerNum"));
-////                numPlayers = obj.getInt("playerNum");
-////               // user.setGameId(obj.getInt("gameId"));
-////                user.setGameId(1);
-////            } catch (JSONException e) {
-////                throw new RuntimeException(e);
-////            }
-//
-//            user.setPlayerNum(Integer.parseInt(message));
-//            numPlayers = Integer.parseInt(message);
-//            turnmgr = new TurnManager(numPlayers);
-//
-//
-//            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-//                turnBtn.setVisibility(View.VISIBLE);
-//            }
-//TODO fix this
-            user.setPlayerNum(1);
-            numPlayers = 1;
-            turnmgr = new TurnManager(numPlayers);
+            try {
+                user.setPlayerNum(obj.getInt("playernum"));
+                numPlayers = obj.getInt("playernum");
+                user.setGameId(obj.getInt("gameid"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (user.getGameId() != 1) {
+                Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                intent.putExtra("USEROBJ", user);
+                startActivity(intent);
+            }
+        }
+        if (user.getPlayerNum() > 4) {
+            Intent intent = new Intent(GameActivity.this, GameActivity.class);
+            intent.putExtra("USEROBJ", user);
+            startActivity(intent);
+            try {
+                user.setPlayerNum(obj.getInt("playernum"));
+                numPlayers = obj.getInt("playernum");
+                user.setGameId(obj.getInt("gameid"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
+                turnBtn.setVisibility(View.VISIBLE);
+            }
 
             playerText.setText("You are player " + user.getPlayerNum());
-
-        } else if (message.length() < 3) {
-//            try {
-//                numPlayers = obj.getInt("playerNum");
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
-//            }
-
-            numPlayers = Integer.parseInt(message);
-            turnmgr = new TurnManager(numPlayers);
-
-        } else {
+        }else{
 
             try {
                 obj = new JSONObject(message);
@@ -220,13 +219,15 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+        turnmgr = new TurnManager(numPlayers);
         }
-        turnmgr.takeTurn();
-        if(turnmgr.getCurrTurn() == user.getPlayerNum()){
-            runOnUiThread(() -> {
-                drawBtn.setVisibility(View.VISIBLE);
-            });
-        }
+
+//        turnmgr.takeTurn();
+//        if(turnmgr.getCurrTurn() == user.getPlayerNum()){
+//            runOnUiThread(() -> {
+//                drawBtn.setVisibility(View.VISIBLE);
+//            });
+    //    }
 
     }
 
@@ -241,8 +242,8 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     public void onWebSocketClose(int code, String reason, boolean remote) {
         String closedBy = remote ? "server" : "local";
         runOnUiThread(() -> {
-            String s = turnText.getText().toString();
-            turnText.setText(s + "---\nconnection closed by " + closedBy + "\nreason: " + reason);
+           // String s = turnText.getText().toString();
+       //     turnText.setText(s + "---\nconnection closed by " + closedBy + "\nreason: " + reason);
         });
     }
 
@@ -296,7 +297,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("gameid", String.valueOf(1));
+                headers.put("gameid", String.valueOf(user.getGameId()));
 //                headers.put("Content-Type", "application/json");
                 return headers;
             }

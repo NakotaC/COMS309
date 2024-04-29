@@ -14,7 +14,7 @@ public class User implements Serializable {
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
     private SerializableJSONArray quests;
-    private final int bank, id;
+    private int bank, id, xp;
     private int playerNum;
 
     public String invStr;
@@ -58,7 +58,8 @@ public class User implements Serializable {
      */
     public User(JSONObject object, JSONArray inventory, JSONArray equippedItems, JSONArray quests) throws JSONException {
         this.username = object.getString("username");
-        this.bank = 1000;
+        this.bank = object.getInt("bank");
+        this.xp = object.getInt("xp");
         this.id = object.getInt("id");
         this.equippedItems = new SerializableJSONArray(equippedItems);
         this.inventory = new SerializableJSONArray(inventory);
