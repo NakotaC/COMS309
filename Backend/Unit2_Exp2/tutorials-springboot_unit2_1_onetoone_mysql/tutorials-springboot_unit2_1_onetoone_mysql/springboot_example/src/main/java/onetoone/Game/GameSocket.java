@@ -1,6 +1,7 @@
 package onetoone.Game;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -67,15 +68,31 @@ public class GameSocket {
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
         int idk = usernameSessionMap.size();
+        if(idk > 4) {
+            URI uri = session.getRequestURI();
+            String newEndpoint = uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + "/game2/" + username;
+            session.getUserProperties().put("redirected", true);
+            session.getUserProperties().put("newEndpoint", newEndpoint);
+            session.getBasicRemote().sendText(newEndpoint);
+            session.close();
+            return;
+        }
         String number = Integer.toString(idk);
 
         //Send chat history to the newly connected user
         //sendMessageToPArticularUser(username, getChatHistory());
 
         // broadcast that new user joined
-        String message = "User:" + username + " has Joined the game";
+        //String message = "User:" + username + " has Joined the game";
+
+        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
         //broadcast(number);
-        session.getBasicRemote().sendText(number);
+
+        String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 1";
+        broadcast(testmessage);
+
+
+        //session.getBasicRemote().sendText(number);
     }
 
 
@@ -96,7 +113,8 @@ public class GameSocket {
         www = www.concat(player);
         www = www.concat(" drew a ");
         www = www.concat(card);
-        broadcast(www);
+        //Change message to www if you want to send "Player _ drew a _" !!???????
+        broadcast(message);
 
         // Direct message to a user using the format "@username <message>"
 //        if (message.startsWith("@")) {
