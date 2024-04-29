@@ -182,35 +182,52 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         }
 
         if (user.getPlayerNum() == 0) {
+            int gameId;
             try {
-                user.setPlayerNum(obj.getInt("playernum"));
-                numPlayers = obj.getInt("playernum");
-                user.setGameId(obj.getInt("gameid"));
+                 gameId = obj.getInt("gameid");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
-            }
-            if (user.getGameId() != 1) {
-                Intent intent = new Intent(GameActivity.this, GameActivity.class);
-                intent.putExtra("USEROBJ", user);
-                startActivity(intent);
-            }
-        }
-        if (user.getPlayerNum() > 4) {
-            Intent intent = new Intent(GameActivity.this, GameActivity.class);
-            intent.putExtra("USEROBJ", user);
-            startActivity(intent);
-            try {
-                user.setPlayerNum(obj.getInt("playernum"));
-                numPlayers = obj.getInt("playernum");
-                user.setGameId(obj.getInt("gameid"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
-                turnBtn.setVisibility(View.VISIBLE);
             }
 
-            playerText.setText("You are player " + user.getPlayerNum());
+            if(gameId != 1){
+                if(user.getGameId() == 0) {
+
+                    try {
+                        user.setGameId(obj.getInt("gameid"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                    intent.putExtra("USEROBJ", user);
+                    startActivity(intent);
+
+                }else{
+                    try {
+                        user.setPlayerNum(obj.getInt("playernum"));
+                        numPlayers = obj.getInt("playernum");
+                        user.setGameId(obj.getInt("gameid"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }else{
+            try {
+                user.setPlayerNum(obj.getInt("playernum"));
+                numPlayers = obj.getInt("playernum");
+                user.setGameId(obj.getInt("gameid"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            }
+            turnmgr = new TurnManager(numPlayers);
+
+            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
+                 runOnUiThread(() -> {
+                drawBtn.setVisibility(View.VISIBLE);
+                playerText.setText("You are player " + user.getPlayerNum());
+            });
+            }
         }else{
 
             try {
@@ -219,7 +236,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-        turnmgr = new TurnManager(numPlayers);
+
         }
 
 //        turnmgr.takeTurn();
