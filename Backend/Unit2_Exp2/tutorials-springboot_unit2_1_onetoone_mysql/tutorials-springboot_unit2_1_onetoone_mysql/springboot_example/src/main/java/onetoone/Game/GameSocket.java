@@ -68,16 +68,16 @@ public class GameSocket {
         sessionUsernameMap.put(session, username);
         usernameSessionMap.put(username, session);
         int idk = usernameSessionMap.size();
+        String number = Integer.toString(idk);
         if(idk > 4) {
             URI uri = session.getRequestURI();
             String newEndpoint = uri.getScheme() + "://" + uri.getHost() + ":" + uri.getPort() + "/game2/" + username;
             session.getUserProperties().put("redirected", true);
             session.getUserProperties().put("newEndpoint", newEndpoint);
-            session.getBasicRemote().sendText(newEndpoint);
+            session.getBasicRemote().sendText("{\"playernum\":\"" + number + "\", \"gameid\":\"2\"}");
             session.close();
             return;
         }
-        String number = Integer.toString(idk);
 
         //Send chat history to the newly connected user
         //sendMessageToPArticularUser(username, getChatHistory());
@@ -89,7 +89,8 @@ public class GameSocket {
         //broadcast(number);
 
         String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 1";
-        broadcast(testmessage);
+        String test = "{\"playernum\":\"" + number + "\", \"gameid\":\"1\"}";
+        broadcast(test);
 
 
         //session.getBasicRemote().sendText(number);

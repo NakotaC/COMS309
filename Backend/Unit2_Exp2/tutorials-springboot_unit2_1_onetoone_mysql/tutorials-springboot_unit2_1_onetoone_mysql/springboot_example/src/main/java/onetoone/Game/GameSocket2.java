@@ -79,7 +79,8 @@ public class GameSocket2 {
         //broadcast(number);
 
         String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 2";
-        broadcast(testmessage);
+        String test = "{\"playernum\":\"" + number + "\", \"gameid\":\"2\"}";
+        broadcast(test);
 
 
         //session.getBasicRemote().sendText(number);
