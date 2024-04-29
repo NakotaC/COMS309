@@ -18,6 +18,8 @@ public class YellowPiece  extends GamePieceAbstract{
 
    public int move(int numToMove){
       int numLeftToMove = 0;
+      deltaXFromLastMove = 0;
+      deltaYFromLastMove = 0;
       if(currArea == 0){
          if(numToMove == 1){
             location = startLocation;
@@ -39,19 +41,23 @@ public class YellowPiece  extends GamePieceAbstract{
             if(direction == 0){
                location++;
                currX += xInc;
+               deltaXFromLastMove += xInc;
 
             }else if(direction == 1){
                location++;
                currY += yInc;
+               deltaYFromLastMove += yInc;
 
             }else if(direction == 2){
                location++;
                currX -= xInc;
+               deltaXFromLastMove -= xInc;
 
 
             }else if(direction == 3){
                location++;
                currY -= yInc;
+               deltaYFromLastMove -= yInc;
 
             }
          }

@@ -1,9 +1,11 @@
 package com.example.androidapp.Game;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -50,7 +52,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private String serverUrl;
     int selectedPiece;
 
-    private final YellowPiece[] yellowPieces= {new YellowPiece(1),
+    private final YellowPiece[] yellowPieces = {new YellowPiece(1),
             new YellowPiece(2),
             new YellowPiece(3),
             new YellowPiece(4)};
@@ -58,10 +60,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
     /**
      * Handles the creation and functionality of screen elements when the screen is created
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
-       serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
+        serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         drawBtn = findViewById(R.id.drawBtn);
@@ -134,15 +136,16 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         /* send button listener */
         drawBtn.setOnClickListener(v -> {
             try {
-            drawCard();
-        } catch (Exception e) {
-            Log.d("ExceptionSendMessage:", e.getMessage());
-        }
+                drawCard();
+            } catch (Exception e) {
+                Log.d("ExceptionSendMessage:", e.getMessage());
+            }
         });
     }
 
     /**
      * Handles what to do when a websocket message is received
+     *
      * @param message The received WebSocket message.
      */
     @Override
@@ -159,33 +162,37 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 //        } catch (JSONException e) {
 //            throw new RuntimeException(e);
 //        }
-        if(user.getPlayerNum() == 0){
-//            try {
-//                user.setPlayerNum(obj.getInt("playerNum"));
-//                numPlayers = obj.getInt("playerNum");
-//               // user.setGameId(obj.getInt("gameId"));
-//                user.setGameId(1);
-//            } catch (JSONException e) {
-//                throw new RuntimeException(e);
+        if (user.getPlayerNum() == 0) {
+////            try {
+////                user.setPlayerNum(obj.getInt("playerNum"));
+////                numPlayers = obj.getInt("playerNum");
+////               // user.setGameId(obj.getInt("gameId"));
+////                user.setGameId(1);
+////            } catch (JSONException e) {
+////                throw new RuntimeException(e);
+////            }
+//
+//            user.setPlayerNum(Integer.parseInt(message));
+//            numPlayers = Integer.parseInt(message);
+//            turnmgr = new TurnManager(numPlayers);
+//
+//
+//            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
+//                turnBtn.setVisibility(View.VISIBLE);
 //            }
-
-            user.setPlayerNum(Integer.parseInt(message));
-            numPlayers = Integer.parseInt(message);
+//TODO fix this
+            user.setPlayerNum(1);
+            numPlayers = 1;
             turnmgr = new TurnManager(numPlayers);
 
-
-            if(user.getPlayerNum() == turnmgr.getCurrTurn()){
-                turnBtn.setVisibility(View.VISIBLE);
-            }
-
-        }else if(message.length() < 3){
+        } else if (message.length() < 3) {
 //            try {
 //                numPlayers = obj.getInt("playerNum");
 //            } catch (JSONException e) {
 //                throw new RuntimeException(e);
 //            }
 
-           numPlayers = Integer.parseInt(message);
+            numPlayers = Integer.parseInt(message);
             turnmgr = new TurnManager(numPlayers);
 
         } else {
@@ -202,6 +209,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
     /**
      * Handles what to do when a websocket connection is closed
+     *
      * @param code   The status code indicating the reason for closure.
      * @param reason A human-readable explanation for the closure.
      * @param remote Indicates whether the closure was initiated by the remote endpoint.
@@ -217,23 +225,28 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
     /**
      * Handles what to do when a Websocket is opened
+     *
      * @param handshakedata Information about the server handshake.
      */
     @Override
-    public void onWebSocketOpen(ServerHandshake handshakedata) {}
+    public void onWebSocketOpen(ServerHandshake handshakedata) {
+    }
 
     /**
      * Handles what to do when an error is received
+     *
      * @param ex The exception that describes the error.
      */
     @Override
-    public void onWebSocketError(Exception ex) {}
+    public void onWebSocketError(Exception ex) {
+    }
+
     private void drawCard() {
 
         JsonObjectRequest objectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 "http://coms-309-033.class.las.iastate.edu:8080/draw/str",
-                 //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
+                //"https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -257,7 +270,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-               headers.put("gameid", String.valueOf(1));
+                headers.put("gameid", String.valueOf(1));
 //                headers.put("Content-Type", "application/json");
                 return headers;
             }
@@ -274,6 +287,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);
     }
+
     private void postRequest() {
         int winner = user.getId() + 1;
         // Convert input to JSONObject
@@ -298,23 +312,23 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                             throw new RuntimeException(e);
                         }
 
-                            Toast.makeText(GameActivity.this, "Match added",
-                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GameActivity.this, "Match added",
+                                Toast.LENGTH_SHORT).show();
 
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                      //  usernameTakenTxt.setText(error.getMessage());
+                        //  usernameTakenTxt.setText(error.getMessage());
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-            //    headers.put("username", username);
-            //    headers.put("password", password);
+                //    headers.put("username", username);
+                //    headers.put("password", password);
                 return headers;
             }
 
@@ -330,34 +344,68 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
+
     private int Card() {
         drawCard();
         return 1;
     }
+
     private void sendMessage() {
         try {
-            String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\"" + cardNum + "\"}";
+            String msg = "{\"player\":\"" + user.getPlayerNum() + "\", \"Card\":\"" + cardNum + "\", \"pieceNum\": \"" + selectedPiece +"\"}";
             // send message
             WebSocketManager.getInstance().sendMessage(msg);
         } catch (Exception e) {
             Log.d("ExceptionSendMessage:", e.getMessage());
         }
     }
-    private void performTurn(int playerNum, int PieceNum, int numToMove){
-        if(playerNum == 1){
-            yellowPieces[PieceNum-1].move(numToMove);
-        }else if(playerNum == 2){
-            yellowPieces[PieceNum-1].move(numToMove);
+
+    private void performTurn(int playerNum, int PieceNum, int numToMove) {
+        if (playerNum == 1) {
+            yellowPieces[PieceNum - 1].move(numToMove);
+            if(PieceNum == 1) {
+                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece1.setTranslationX(transX);
+                yellowPiece1.setTranslationY(transY);
+            } else if(PieceNum == 2) {
+                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece1.setTranslationX(transX);
+                yellowPiece1.setTranslationY(transY);
+            }else if(PieceNum == 3) {
+                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece1.setTranslationX(transX);
+                yellowPiece1.setTranslationY(transY);
+            }else if(PieceNum == 4) {
+                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece1.setTranslationX(transX);
+                yellowPiece1.setTranslationY(transY);
+            }
+        } else if (playerNum == 2) {
+            yellowPieces[PieceNum - 1].move(numToMove);
+        } else if (playerNum == 3) {
+            yellowPieces[PieceNum - 1].move(numToMove);
+        } else if (playerNum == 4) {
+            yellowPieces[PieceNum - 1].move(numToMove);
         }
-        else if(playerNum == 3){
-            yellowPieces[PieceNum-1].move(numToMove);
+        float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+        float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+        yellowPiece1.setTranslationX(transX);
+        yellowPiece1.setTranslationY(transY);
+        return;
+    }
+
+
+    public static int convertDpIntoPx(Context mContext, float yourdpmeasure) {
+        if (mContext == null) {
+            return 0;
         }
-        else if(playerNum == 4){
-            yellowPieces[PieceNum-1].move(numToMove);
-        }
-        float transX = yellowPieces[PieceNum-1].getCurrX();
-        float transY = yellowPieces[PieceNum-1].getCurrY();
-        yellowPiece1.setX(yellowPieces[PieceNum-1].getCurrX());
-        yellowPiece1.setY(yellowPieces[PieceNum-1].getCurrY());
+        Resources r = mContext.getResources();
+        int px = (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, yourdpmeasure, r.getDisplayMetrics());
+        return px;
     }
 }

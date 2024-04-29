@@ -119,4 +119,18 @@
         app:layout_constraintStart_toEndOf="@+id/checkBoxPiece3"
         app:layout_constraintTop_toBottomOf="@+id/frameLayoutGame" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="31dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,16 @@ abstract class GamePieceAbstract {
     short yInc = 24;
     int homeLocation, startLocation;
 
+    public float getDeltaXFromLastMove() {
+        return deltaXFromLastMove;
+    }
+
+    public float getDeltaYFromLastMove() {
+        return deltaYFromLastMove;
+    }
+
+    float deltaXFromLastMove, deltaYFromLastMove;
+
     public float getCurrX() {
         return currX;
     }
