@@ -32,6 +32,18 @@ public class ClanController {
         return clanRepository.findAll();
     }
 
+    @GetMapping(path = "/clans/open")
+    List<Clan> getAllOpenClans() {
+        ArrayList<Clan> openClans = new ArrayList<>();
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clanRepository.findById(i).getClanType().toLowerCase().equals("open")) {
+                System.out.print(clanRepository.findById(i).getClanType().toLowerCase());
+                openClans.add(clanRepository.findById(i));
+            }
+        }
+        return openClans;
+    }
+
     @GetMapping(path = "/clans/{clan_id}")
     Clan getClan(@PathVariable int clan_id) {
         return clanRepository.findById(clan_id);
@@ -45,6 +57,31 @@ public class ClanController {
             }
         }
         Clan clan1 = new Clan(clan_name, user_id, userRepository);
+        clanRepository.save(clan1);
+        User user = userRepository.findById(user_id);
+        int userOC = user.getClan();
+        Clan pc = clanRepository.findById(userOC);
+        ArrayList<Integer> pcarray = pc.toIntList(pc.getMembers());
+        pcarray.remove(Integer.valueOf(user.getId()));
+        pc.setMember(pcarray);
+        clanRepository.save(pc);
+        user.setClan(clan1);
+        userRepository.save(user);
+
+        return success;
+    }
+
+    @PostMapping(path = "clans/{clan_name}/{user_id}/{type}/{max_members}")
+    String newClanPlus(@PathVariable int user_id, @PathVariable String clan_name,
+                       @PathVariable String type, @PathVariable int max_members) {
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clan_name.equals(clanRepository.findById(i).getClanName())) {
+                return failure;
+            }
+        }
+        Clan clan1 = new Clan(clan_name, user_id, userRepository);
+        clan1.setMax_members(max_members);
+        clan1.setClanType(type);
         clanRepository.save(clan1);
         User user = userRepository.findById(user_id);
         int userOC = user.getClan();
@@ -95,6 +132,8 @@ public class ClanController {
         userRepository.save(user);
         return failure;
     }
+
+
 
     @PostMapping(path = "clan/Clan/cLAN/CLAM/CLam/cLAM")
     void initNoClan() {
