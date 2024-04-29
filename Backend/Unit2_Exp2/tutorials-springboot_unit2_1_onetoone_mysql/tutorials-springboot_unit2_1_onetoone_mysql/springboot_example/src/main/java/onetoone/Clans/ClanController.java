@@ -32,6 +32,18 @@ public class ClanController {
         return clanRepository.findAll();
     }
 
+    @GetMapping(path = "/clans/open")
+    List<Clan> getAllOpenClans() {
+        ArrayList<Clan> openClans = new ArrayList<>();
+        for (int i = 1; i < clanRepository.count() + 1; i++) {
+            if (clanRepository.findById(i).getClanType().toLowerCase().equals("open")) {
+                System.out.print(clanRepository.findById(i).getClanType().toLowerCase());
+                openClans.add(clanRepository.findById(i));
+            }
+        }
+        return openClans;
+    }
+
     @GetMapping(path = "/clans/{clan_id}")
     Clan getClan(@PathVariable int clan_id) {
         return clanRepository.findById(clan_id);
@@ -120,6 +132,8 @@ public class ClanController {
         userRepository.save(user);
         return failure;
     }
+
+
 
     @PostMapping(path = "clan/Clan/cLAN/CLAM/CLam/cLAM")
     void initNoClan() {
