@@ -58,7 +58,31 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:translationX="260dp"
-            android:translationY="380dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
             app:srcCompat="@drawable/yellowpiece" />
 
     </FrameLayout>
@@ -132,5 +156,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/drawnValText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:text="You Drew A (Num)"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

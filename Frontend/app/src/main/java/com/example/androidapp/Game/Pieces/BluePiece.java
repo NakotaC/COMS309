@@ -10,7 +10,9 @@ public class BluePiece  extends GamePieceAbstract{
     public BluePiece(int pieceNum){
         this.pieceNum = pieceNum;
     }
-
+    public boolean isHome(){
+        return location == homeLocation;
+    }
     public int move(int numToMove){
         int numLeftToMove = 0;
         if(currArea == 0){

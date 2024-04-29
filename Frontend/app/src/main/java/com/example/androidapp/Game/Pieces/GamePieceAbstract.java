@@ -8,11 +8,11 @@ abstract class GamePieceAbstract {
      * 2 = home row
      * 3 = home
      */
-    int currArea = 1;
+    int currArea;
     int location, locationInHome;
     short xInc = 24;
     short yInc = 24;
-    int homeLocation, startLocation;
+
 
     public float getDeltaXFromLastMove() {
         return deltaXFromLastMove;
@@ -43,9 +43,7 @@ abstract class GamePieceAbstract {
      */
     int direction;
 
-    public int getStartLocation() {
-        return startLocation;
-    }
+
 
     public short getxInc() {
         return xInc;
@@ -55,9 +53,7 @@ abstract class GamePieceAbstract {
         return yInc;
     }
 
-    public boolean isHome(){
-        return location == homeLocation;
-    }
+
     public int getPieceNum(){
         return pieceNum;
     }
@@ -84,5 +80,13 @@ abstract class GamePieceAbstract {
     }
 
     abstract int move(int numToMove);
+
+    public void incLocation(){
+        if(location < 59){
+            location++;
+        }else{
+            location = 0;
+        }
+    }
 
 }

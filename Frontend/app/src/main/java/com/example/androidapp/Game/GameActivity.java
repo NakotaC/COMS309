@@ -1,11 +1,14 @@
 package com.example.androidapp.Game;
 
+import static android.view.View.INVISIBLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
@@ -41,11 +44,11 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
     private Button turnBtn, backBtn, drawBtn;
     private Button addMatchButton;
-    private TextView turnText, playerText, headerText;
+    private TextView turnText, playerText, headerText, drawnText;
     private int numPlayers;
     private TurnManager turnmgr;
     private FrameLayout gameFrame;
-    private ImageView gameBoard, yellowPiece1;
+    private ImageView gameBoard, yellowPiece1, yellowPiece2, yellowPiece3, yellowPiece4;
     private User user;
     private CheckBox piece1, piece2, piece3, piece4;
     int cardNum;
@@ -82,14 +85,19 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         headerText = findViewById(R.id.inGameHeader);
         backBtn = findViewById(R.id.gameBackBtn);
         gameFrame = findViewById(R.id.frameLayoutGame);
+        drawnText = findViewById(R.id.drawnValText);
         gameBoard = findViewById(R.id.gameBoard);
         yellowPiece1 = findViewById(R.id.yellowPiece1);
+        yellowPiece2 = findViewById(R.id.yellowPiece2);
+        yellowPiece3 = findViewById(R.id.yellowPiece3);
+        yellowPiece4 = findViewById(R.id.yellowPiece4);
+
         piece1 = findViewById(R.id.checkBoxPiece1);
         piece2 = findViewById(R.id.checkBoxPiece2);
         piece3 = findViewById(R.id.checkBoxPiece3);
         piece4 = findViewById(R.id.checkBoxPiece4);
 
-        //turnBtn.setVisibility(View.INVISIBLE);
+        turnBtn.setVisibility(INVISIBLE);
 
         /* connect this activity to the websocket instance */
         WebSocketManager.getInstance().connectWebSocket(serverUrl);
@@ -141,6 +149,13 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 Log.d("ExceptionSendMessage:", e.getMessage());
             }
         });
+        turnBtn.setOnClickListener(v -> {
+            if(selectedPiece != 0){
+                sendMessage();
+                turnBtn.setVisibility(INVISIBLE);
+                drawnText.setVisibility(INVISIBLE);
+            }
+        });
     }
 
     /**
@@ -185,6 +200,8 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             numPlayers = 1;
             turnmgr = new TurnManager(numPlayers);
 
+            playerText.setText("You are player " + user.getPlayerNum());
+
         } else if (message.length() < 3) {
 //            try {
 //                numPlayers = obj.getInt("playerNum");
@@ -199,10 +216,16 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
             try {
                 obj = new JSONObject(message);
-                performTurn(obj.getInt("player"), 1, obj.getInt("Card"));
+                performTurn(obj.getInt("player"), obj.getInt("pieceNum"), obj.getInt("Card"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+        }
+        turnmgr.takeTurn();
+        if(turnmgr.getCurrTurn() == user.getPlayerNum()){
+            runOnUiThread(() -> {
+                drawBtn.setVisibility(View.VISIBLE);
+            });
         }
 
     }
@@ -258,7 +281,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        sendMessage();
+                        drawnText.setText("You Drew A " + cardNum);
+                        drawnText.setVisibility(View.VISIBLE);
+                        drawBtn.setVisibility(INVISIBLE);
+                        turnBtn.setVisibility(View.VISIBLE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -369,32 +395,29 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 yellowPiece1.setTranslationX(transX);
                 yellowPiece1.setTranslationY(transY);
             } else if(PieceNum == 2) {
-                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
-                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
-                yellowPiece1.setTranslationX(transX);
-                yellowPiece1.setTranslationY(transY);
+                float transX = yellowPiece2.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece2.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece2.setTranslationX(transX);
+                yellowPiece2.setTranslationY(transY);
             }else if(PieceNum == 3) {
-                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
-                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
-                yellowPiece1.setTranslationX(transX);
-                yellowPiece1.setTranslationY(transY);
+                float transX = yellowPiece3.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece3.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece3.setTranslationX(transX);
+                yellowPiece3.setTranslationY(transY);
             }else if(PieceNum == 4) {
-                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
-                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
-                yellowPiece1.setTranslationX(transX);
-                yellowPiece1.setTranslationY(transY);
+                float transX = yellowPiece4.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = yellowPiece4.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
+                yellowPiece3.setTranslationX(transX);
+                yellowPiece3.setTranslationY(transY);
             }
         } else if (playerNum == 2) {
-            yellowPieces[PieceNum - 1].move(numToMove);
+
         } else if (playerNum == 3) {
-            yellowPieces[PieceNum - 1].move(numToMove);
+
         } else if (playerNum == 4) {
-            yellowPieces[PieceNum - 1].move(numToMove);
+
         }
-        float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());
-        float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());
-        yellowPiece1.setTranslationX(transX);
-        yellowPiece1.setTranslationY(transY);
+
         return;
     }
 

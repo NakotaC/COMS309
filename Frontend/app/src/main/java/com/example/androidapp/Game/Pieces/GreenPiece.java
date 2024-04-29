@@ -11,7 +11,9 @@ public class GreenPiece extends GamePieceAbstract{
     public GreenPiece(int pieceNum){
         this.pieceNum = pieceNum;
     }
-
+    public boolean isHome(){
+        return location == homeLocation;
+    }
     public int move(int numToMove){
         int numLeftToMove = 0;
         if(currArea == 0){

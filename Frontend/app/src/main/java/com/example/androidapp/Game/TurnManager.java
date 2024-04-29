@@ -23,6 +23,7 @@ public class TurnManager {
      */
   public TurnManager(int playerNum){
         numPlayers = playerNum;
+        currTurn = 1;
     }
 
     /**
