@@ -33,6 +33,7 @@ public class Clan {
     @OneToMany(mappedBy = "clan", cascade = CascadeType.ALL)
     private List<User> members;
 
+
     public Clan(String clan_name, int leader_id, UserRepository userRepository) {
             this.clan_name = clan_name;
             this.clan_leader = leader_id;

@@ -54,6 +54,10 @@ public class User {
     @JsonBackReference
     private Wins wins;
 
+    private int bank = 0;
+
+    private int xp = 0;
+
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
@@ -195,6 +199,24 @@ public class User {
         }
         this.wins.setWins(wins);
     }
+
+    public void setXp(int xp){
+        this.xp = xp;
+    }
+
+    public int getXp() {
+        return this.xp;
+    }
+
+    public void setBank(int xp){
+        this.bank = xp;
+    }
+
+    public int getBank() {
+        return this.bank;
+    }
+
+
 
 
 }
