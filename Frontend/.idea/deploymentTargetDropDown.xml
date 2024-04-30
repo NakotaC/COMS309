@@ -2,20 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="app">
+      <entry key="checkClans()">
         <State>
-          <runningDeviceTargetsSelectedWithDialog>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_2_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetsSelectedWithDialog>
-          <targetsSelectedWithDialog>
+          <targetSelectedWithDropDown>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
@@ -25,34 +14,8 @@
                 </Key>
               </deviceKey>
             </Target>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_2_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_3_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetsSelectedWithDialog>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T06:02:14.963441400Z" />
         </State>
       </entry>
       <entry key="gameplayTest()">
@@ -68,18 +31,8 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-30T04:32:34.102183800Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T06:00:59.449665Z" />
         </State>
-      </entry>
-      <entry key="checkClans()">
-      <entry key="playerNumTest()">
-        <State />
-      </entry>
-      <entry key="shopTest()">
-        <State />
-      </entry>
-      <entry key="signupFailTest()">
-        <State />
       </entry>
     </value>
   </component>
