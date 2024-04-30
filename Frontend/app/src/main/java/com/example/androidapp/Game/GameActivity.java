@@ -598,7 +598,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 bluePiece4.setTranslationY(transY);
             }
         }
-        turnmgr.takeTurn();
+        if(numToMove != 2) {
+            turnmgr.takeTurn();
+        }
         int winner = checkWin();
         if(winner != 0){
             runOnUiThread(() -> {

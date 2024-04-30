@@ -42,7 +42,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
     Button back;
     User user;
     JSONArray equippedItems;
-    JSONArray ownedItems,  ownedItemsSansEquipped = new JSONArray();;
+    JSONArray ownedItems,  ownedItemsSansEquipped = new JSONArray();
     private static String URL;
     int inventoryNum;
     String msg;

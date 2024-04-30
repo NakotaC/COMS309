@@ -14,7 +14,9 @@ public class User implements Serializable {
     private  SerializableJSONArray inventory;
     private SerializableJSONArray equippedItems;
     private SerializableJSONArray quests;
-    private int bank, id, xp;
+    private int bank;
+    private final int id;
+    private int xp;
     private int playerNum;
 
     public String invStr;
@@ -67,17 +69,6 @@ public class User implements Serializable {
         playerNum = 0;
         invStr = null;
     }
-    public User(JSONObject object) throws JSONException {
-        this.username = object.getString("username");
-        this.bank = object.getInt("bank");
-        this.id = object.getInt("id");
-        this.equippedItems = new SerializableJSONArray(object.getJSONArray("equippedItems"));
-        this.inventory = new SerializableJSONArray(object.getJSONArray("inventory"));
-        this.quests = new SerializableJSONArray(object.getJSONArray("quest"));
-        playerNum = 0;
-        invStr = null;
-    }
-
     /**
      * Gets the value of the bank of the User
      * @return The value in the user's bank
@@ -122,22 +113,7 @@ public class User implements Serializable {
         this.playerNum = playerNum;
     }
 
-    /**
-     * Adds an item to the user's owned item array
-     * @param item The item that is being added
-     * @return Returns a new array with the item added to it
-     * @throws JSONException if an un-initialized element is accessed an exception will be thrown
-     */
-    public JSONArray addOwnedItem(String item) throws JSONException {
-        int length = this.inventory.getJSONArray().length() + 1;
-        JSONArray temp = new JSONArray();
-        for (int i = 0; i < length - 1; i++){
-            temp.put(this.inventory.getJSONArray().get(i));
-        }
-        temp.put(item);
-        this.inventory = new SerializableJSONArray(temp);
-        return temp;
-    }
+
     public JSONArray addEquippedItem(JSONObject obj) throws JSONException {
         int length = this.equippedItems.getJSONArray().length() + 1;
         JSONArray temp = new JSONArray();
