@@ -40,10 +40,6 @@ public class ShopItem {
         return item_name;
     }
 
-    public void setItemName(String item_name) {
-        this.item_name = item_name;
-    }
-
     public String getDescription() {
         return description;
     }
