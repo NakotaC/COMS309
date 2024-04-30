@@ -370,31 +370,31 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                             pieceNum4.setTranslationY(yellowPiece4.getY()+ 50);
                         }else if (user.getPlayerNum() == 2) {
                             pieceNum1.setTranslationX(greenPiece1.getX() + 80);
-                            pieceNum1.setTranslationY(greenPiece1.getY()+ 10);
+                            pieceNum1.setTranslationY(greenPiece1.getY()+ 50);
                             pieceNum2.setTranslationX(greenPiece2.getX() + 80);
-                            pieceNum2.setTranslationY(greenPiece2.getY()+ 10);
+                            pieceNum2.setTranslationY(greenPiece2.getY()+ 50);
                             pieceNum3.setTranslationX(greenPiece3.getX() + 80);
-                            pieceNum3.setTranslationY(greenPiece3.getY()+ 10);
+                            pieceNum3.setTranslationY(greenPiece3.getY()+ 50);
                             pieceNum4.setTranslationX(greenPiece4.getX() + 80);
-                            pieceNum4.setTranslationY(greenPiece4.getY()+ 10);
+                            pieceNum4.setTranslationY(greenPiece4.getY()+ 50);
                         }else if (user.getPlayerNum() == 3) {
                             pieceNum1.setTranslationX(redPiece1.getX() + 80);
-                            pieceNum1.setTranslationY(redPiece1.getY()+ 10);
+                            pieceNum1.setTranslationY(redPiece1.getY()+ 50);
                             pieceNum2.setTranslationX(redPiece2.getX() + 80);
-                            pieceNum2.setTranslationY(redPiece2.getY()+ 10);
+                            pieceNum2.setTranslationY(redPiece2.getY()+ 50);
                             pieceNum3.setTranslationX(redPiece3.getX() + 80);
-                            pieceNum3.setTranslationY(redPiece3.getY()+ 10);
+                            pieceNum3.setTranslationY(redPiece3.getY()+ 50);
                             pieceNum4.setTranslationX(redPiece4.getX() + 80);
-                            pieceNum4.setTranslationY(redPiece4.getY()+ 10);
+                            pieceNum4.setTranslationY(redPiece4.getY()+ 50);
                         }else if (user.getPlayerNum() == 4) {
                             pieceNum1.setTranslationX(bluePiece1.getX() + 80);
-                            pieceNum1.setTranslationY(bluePiece1.getY()+ 10);
+                            pieceNum1.setTranslationY(bluePiece1.getY()+ 50);
                             pieceNum2.setTranslationX(bluePiece2.getX() + 80);
-                            pieceNum2.setTranslationY(bluePiece2.getY()+ 10);
+                            pieceNum2.setTranslationY(bluePiece2.getY()+ 50);
                             pieceNum3.setTranslationX(bluePiece3.getX() + 80);
-                            pieceNum3.setTranslationY(bluePiece3.getY()+ 10);
+                            pieceNum3.setTranslationY(bluePiece3.getY()+ 50);
                             pieceNum4.setTranslationX(bluePiece4.getX() + 80);
-                            pieceNum4.setTranslationY(bluePiece4.getY()+ 10);
+                            pieceNum4.setTranslationY(bluePiece4.getY()+ 50);
                         }
 
 

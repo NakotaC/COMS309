@@ -5,24 +5,13 @@
       <entry key="app">
         <State>
           <multipleDevicesSelectedInDropDown value="true" />
-          <runningDeviceTargetsSelectedWithDialog>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_2_of_Pixel_7_Pro_Edited_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetsSelectedWithDialog>
           <targetsSelectedWithDialog>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_2_of_Pixel_7_Pro_Edited_API_34.avd" />
+                  <value value="C:\Users\Nakot\.android\avd\Pixel_7_Pro_Edited_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
@@ -31,7 +20,7 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Nakot\.android\avd\Copy_3_of_Pixel_7_Pro_Edited_API_34.avd" />
+                  <value value="C:\Users\Nakot\.android\avd\Copy_of_Pixel_7_Pro_Edited_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
