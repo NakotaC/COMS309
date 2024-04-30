@@ -5,4 +5,5 @@
     <string name="openClan">Open</string>
     <string name="closedClan">Closed</string>
     <string name="toast_text">Clan has been successfully added</string>
+    <string name="noClan">noClan</string>
 </resources>
