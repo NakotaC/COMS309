@@ -99,6 +99,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         }else{
             serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         }
+        //testing cicd
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         drawBtn = findViewById(R.id.drawBtn);
