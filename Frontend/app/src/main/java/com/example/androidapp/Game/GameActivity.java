@@ -604,6 +604,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 playerText.setText("The Winner is Player " + winner);
                 drawBtn.setVisibility(INVISIBLE);
             });
+            postRequest();
         }
 
     }

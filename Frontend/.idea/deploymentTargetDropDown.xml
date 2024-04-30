@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="NakotaTests">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <runningDeviceTargetsSelectedWithDialog>
@@ -58,10 +55,29 @@
           </targetsSelectedWithDialog>
         </State>
       </entry>
-      <entry key="loginTest()">
+      <entry key="gameplayTest()">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Nakot\.android\avd\Pixel_7_Pro_Edited_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T04:32:34.102183800Z" />
+        </State>
+      </entry>
+      <entry key="playerNumTest()">
         <State />
       </entry>
       <entry key="shopTest()">
+        <State />
+      </entry>
+      <entry key="signupFailTest()">
         <State />
       </entry>
     </value>
