@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView dailyQuestTask;
     private TextView globalChat;
 
-    private User user;
+    public User user;
     private ImageButton statsButton;
     private View hiddenLayout;
     private FloatingActionButton floatingActionButton1;

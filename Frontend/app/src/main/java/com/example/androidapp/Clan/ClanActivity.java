@@ -55,6 +55,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     private LinkedList<ClanItemObject> clanItemList;
     private MaterialToolbar materialToolbar;
     private Button newClanButton;
+    private Button createAClanButton;
     private TextView textView1;
     private TextView textView2;
 
@@ -89,9 +90,11 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         newClanButton = findViewById(R.id.newClanButton);
         textView1 = findViewById(R.id.clanNameInput);
         textView2 = findViewById(R.id.UserIdInput);
+        createAClanButton = findViewById(R.id.createAClanButton);
 
         materialToolbar.setOnClickListener(this);
         newClanButton.setOnClickListener(this);
+        createAClanButton.setOnClickListener(this);
 
         clanItemList = new LinkedList<>();
         parseJsonArray();
@@ -111,11 +114,15 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         int id1 = v.getId();
         if (id1 == R.id.materialToolbar) {
             startActivity(new Intent(ClanActivity.this, HomeActivity.class));
-        } else if (id1 == R.id.newClanButton)
+        }
+        else if (id1 == R.id.newClanButton)
         {
-            startActivity(new Intent(ClanActivity.this, CreateClanActivity.class));
-      //      postRequest();
+            postRequest();
       //      Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
+        }
+        else if (id1 == R.id.createAClanButton)
+        {
+       startActivity(new Intent(ClanActivity.this, CreateClanActivity.class));
         }
     }
 
@@ -196,7 +203,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("Volley Response to POST", response.toString());
                         String responseString = "";
                         try {
-                           responseString = response.getString("message");
+                           responseString = response.getString("message").replaceAll("\"", "");
                             if(responseString.equals("success"))
                             {
                                 Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();

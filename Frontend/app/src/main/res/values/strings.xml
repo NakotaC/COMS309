@@ -4,4 +4,5 @@
     <string name="statsButton">Stats</string>
     <string name="openClan">Open</string>
     <string name="closedClan">Closed</string>
+    <string name="toast_text">Clan has been successfully added</string>
 </resources>
