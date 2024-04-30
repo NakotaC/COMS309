@@ -3,8 +3,8 @@ package com.example.androidapp.Game.Pieces;
 public class BluePiece  extends GamePieceAbstract{
     int homeLocation = 17;
     int startLocation = 19;
-    short startX;
-    short startY;
+    short startX = 356;
+    short startY = 116;
 
     public BluePiece(int pieceNum){
         super();

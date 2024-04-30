@@ -2,6 +2,9 @@ package com.example.androidapp.Game.Pieces;
 
 abstract class GamePieceAbstract {
     int pieceNum;
+
+
+
     /**
      * 0 = Start
      * 1 = track
@@ -52,7 +55,9 @@ abstract class GamePieceAbstract {
     public short getyInc() {
         return yInc;
     }
-
+    public int getCurrArea() {
+        return currArea;
+    }
 
     public int getPieceNum(){
         return pieceNum;
