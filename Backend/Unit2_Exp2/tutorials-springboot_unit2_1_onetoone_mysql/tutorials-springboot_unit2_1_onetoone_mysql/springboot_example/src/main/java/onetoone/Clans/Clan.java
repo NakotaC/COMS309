@@ -99,6 +99,10 @@ public class Clan {
     public int getClan_xp() {
         return clan_xp;
     }
+
+    public void setClan_xp(int cxp) {
+        this.clan_xp = cxp;
+    }
     public String getMembers() {
         return clan_members;
     }
