@@ -53,8 +53,7 @@ public class JackSystemTest {
         int statuscode = response.getStatusCode();
         assertEquals(200, statuscode);
 
-        String compareCharizards = "{\"id\":1,\"username\":\"John\",\"password\":\"JohnPassword\",\"equipped\"" +
-                ":{\"id\":1,\"shopItems\":[{\"id\":1,\"description\":\"Description of Item1\",\"itemName\":\"Item1\"}]}}";
+        String compareCharizards = "{\"id\":1,\"username\":\"John\",\"password\":\"JohnPassword\",\"bank\":0,\"xp\":0,\"equipped\":{\"id\":1,\"shopItems\":[{\"id\":1,\"description\":\"Red game piece\",\"itemName\":\"Red\"}]}}";
 
         String rs = response.getBody().asString();
         try {
