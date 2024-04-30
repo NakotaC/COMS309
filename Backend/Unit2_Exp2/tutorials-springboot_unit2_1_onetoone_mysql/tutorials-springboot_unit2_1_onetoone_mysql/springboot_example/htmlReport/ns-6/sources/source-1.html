@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Inventory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Inventory</a>
+</div>
+
+<h1>Coverage Summary for Class: Inventory (onetoone.Inventory)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Inventory</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (4/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (6/15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Inventory$HibernateProxy$859cT9GP</td>
+  </tr>
+  <tr>
+    <td class="name">Inventory$HibernateProxy$GN8KJynZ</td>
+  </tr>
+  <tr>
+    <td class="name">Inventory$HibernateProxy$WyJzQ74I</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (4/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (6/15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Inventory;
+&nbsp;
+&nbsp;import javax.persistence.*;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonManagedReference;
+&nbsp;import onetoone.ShopItems.ShopItem;
+&nbsp;import onetoone.Users.User;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class Inventory {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @ManyToMany
+&nbsp;    private List&lt;ShopItem&gt; shopItems;
+&nbsp;
+&nbsp;    @OneToOne(cascade = CascadeType.ALL)
+&nbsp;    @JoinColumn(name = &quot;user_id&quot;)
+&nbsp;    @JsonManagedReference
+&nbsp;    private User user;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public Inventory() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getId(){
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setId(int id){
+<b class="nc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser() {
+<b class="nc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUser(User user) {
+<b class="fc">&nbsp;        this.user = user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;ShopItem&gt; getShopItems(){
+<b class="nc">&nbsp;        return this.shopItems;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setShopItems(List&lt;ShopItem&gt; shopItems){
+<b class="fc">&nbsp;        if (this.shopItems == null){</b>
+<b class="fc">&nbsp;            this.shopItems = new ArrayList&lt;&gt;();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.shopItems = shopItems;</b>
+&nbsp;    }
+&nbsp;    public void setShopItems(ShopItem shopItem){
+<b class="nc">&nbsp;        if (this.shopItems == null){</b>
+<b class="nc">&nbsp;            this.shopItems = new ArrayList&lt;&gt;();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        List&lt;ShopItem&gt; inv = this.getShopItems();</b>
+<b class="nc">&nbsp;        inv.add(shopItem);</b>
+<b class="nc">&nbsp;        this.user.setItems(inv);</b>
+<b class="nc">&nbsp;        System.out.println(shopItems);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-26 13:52</div>
+</div>
+</body>
+</html>
