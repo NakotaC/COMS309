@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BluePiece.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Game.Pieces</a> &gt; <span class="el_source">BluePiece.java</span></div><h1>BluePiece.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Game.Pieces;
+
+public class BluePiece  extends GamePieceAbstract{
+<span class="fc" id="L4">    int homeLocation = 17;</span>
+<span class="fc" id="L5">    int startLocation = 19;</span>
+<span class="fc" id="L6">    short startX = 356;</span>
+<span class="fc" id="L7">    short startY = 116;</span>
+
+    public BluePiece(int pieceNum){
+<span class="fc" id="L10">        super();</span>
+<span class="fc" id="L11">        this.pieceNum = pieceNum;</span>
+<span class="fc" id="L12">    }</span>
+
+    public boolean isHome(){
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        return location == homeLocation;</span>
+    }
+
+
+    public int move(int numToMove){
+<span class="nc" id="L20">        int numLeftToMove = 0;</span>
+<span class="nc" id="L21">        deltaXFromLastMove = 0;</span>
+<span class="nc" id="L22">        deltaYFromLastMove = 0;</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if(currArea == 0){</span>
+<span class="nc bnc" id="L24" title="All 4 branches missed.">            if(numToMove == 1 || numToMove == 2){</span>
+<span class="nc" id="L25">                location = startLocation;</span>
+<span class="nc" id="L26">                currArea = 1;</span>
+<span class="nc" id="L27">                direction = 1;</span>
+<span class="nc" id="L28">                currX = startX;</span>
+<span class="nc" id="L29">                currY = startY;</span>
+<span class="nc" id="L30">                deltaXFromLastMove += xInc;</span>
+            }
+        }
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if(currArea == 1){</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            for(int i = 0; i &lt; numToMove; i++) {</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">                if (this.onCorner()) {</span>
+<span class="nc" id="L36">                    turnCorner();</span>
+                }
+<span class="nc bnc" id="L38" title="All 2 branches missed.">                if(isHome()){</span>
+<span class="nc" id="L39">                    direction = 2;</span>
+<span class="nc" id="L40">                    currArea = 2;</span>
+<span class="nc" id="L41">                    numLeftToMove = numToMove - i;</span>
+<span class="nc" id="L42">                    break;</span>
+                }
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                if(direction == 0){</span>
+<span class="nc" id="L46">                    incLocation();</span>
+<span class="nc" id="L47">                    currX += xInc;</span>
+<span class="nc" id="L48">                    deltaXFromLastMove += xInc;</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                }else if(direction == 1){</span>
+<span class="nc" id="L51">                    incLocation();</span>
+<span class="nc" id="L52">                    currY += yInc;</span>
+<span class="nc" id="L53">                    deltaYFromLastMove += yInc;</span>
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">                }else if(direction == 2){</span>
+<span class="nc" id="L56">                    incLocation();</span>
+<span class="nc" id="L57">                    currX -= xInc;</span>
+<span class="nc" id="L58">                    deltaXFromLastMove -= xInc;</span>
+
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                }else if(direction == 3){</span>
+<span class="nc" id="L62">                    incLocation();</span>
+<span class="nc" id="L63">                    currY -= yInc;</span>
+<span class="nc" id="L64">                    deltaYFromLastMove -= yInc;</span>
+
+                }
+            }
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if(currArea == 2){</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if(numLeftToMove != 0){</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                for(int i = 0; i &lt; numLeftToMove; i++){</span>
+<span class="nc" id="L72">                    locationInHome++;</span>
+<span class="nc" id="L73">                    currX -= xInc;</span>
+<span class="nc" id="L74">                    deltaXFromLastMove -= xInc;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    if(locationInHome &gt;= 5){</span>
+<span class="nc" id="L76">                        currArea = 3;</span>
+<span class="nc" id="L77">                        break;</span>
+                    }
+                }
+            }else{
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                for(int i = 0; i &lt; numToMove; i++) {</span>
+<span class="nc" id="L82">                    locationInHome++;</span>
+<span class="nc" id="L83">                    currX -= xInc;</span>
+<span class="nc" id="L84">                    deltaXFromLastMove -= xInc;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                    if (locationInHome &gt;= 5){</span>
+<span class="nc" id="L86">                        currArea = 3;</span>
+<span class="nc" id="L87">                        break;</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        }else if(currArea == 3){</span>
+<span class="nc" id="L92">            return -1;</span>
+        }
+<span class="nc" id="L94">        return location;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

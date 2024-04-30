@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClanActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Clan</a> &gt; <span class="el_source">ClanActivity.java</span></div><h1>ClanActivity.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Clan;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.androidapp.MainAuth.HomeActivity;
+import com.example.androidapp.R;
+import com.example.androidapp.Connectivity.VolleySingleton;
+import com.google.android.material.appbar.MaterialToolbar;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+
+/**
+ * The following method is the main method. It is invoked whenever the clans screen starts up.
+ */
+<span class="nc" id="L46">public class ClanActivity extends AppCompatActivity implements View.OnClickListener {</span>
+
+
+
+
+    // variable declaration
+
+    private RecyclerView courseRV;
+    private ClanRecyclerViewAdapter adapter;
+    private LinkedList&lt;ClanItemObject&gt; clanItemList;
+    private MaterialToolbar materialToolbar;
+    private Button newClanButton;
+    private TextView textView1;
+    private TextView textView2;
+
+
+
+
+
+
+
+  //  String url = &quot;https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans&quot;;
+<span class="nc" id="L68">    String url = &quot;http://coms-309-033.class.las.iastate.edu:8080/clans/&quot;;</span>
+<span class="nc" id="L69">    private final String URL_POST_REQUEST = &quot;http://coms-309-033.class.las.iastate.edu:8080/clans/&quot;;</span>
+    private ProgressBar progressBar;
+
+
+    /**
+     * The following method initializes the screen when the screen is booted up
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     *
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L82">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L83">        setContentView(R.layout.activity_clan);</span>
+
+
+        // initialization of different screen elements
+<span class="nc" id="L87">        courseRV = findViewById(R.id.idRVCourses);</span>
+<span class="nc" id="L88">        materialToolbar = findViewById(R.id.materialToolbar);</span>
+<span class="nc" id="L89">        newClanButton = findViewById(R.id.newClanButton);</span>
+<span class="nc" id="L90">        textView1 = findViewById(R.id.clanNameInput);</span>
+<span class="nc" id="L91">        textView2 = findViewById(R.id.UserIdInput);</span>
+
+<span class="nc" id="L93">        materialToolbar.setOnClickListener(this);</span>
+<span class="nc" id="L94">        newClanButton.setOnClickListener(this);</span>
+
+<span class="nc" id="L96">        clanItemList = new LinkedList&lt;&gt;();</span>
+<span class="nc" id="L97">        parseJsonArray();</span>
+
+<span class="nc" id="L99">        constructRecyclerView();</span>
+
+<span class="nc" id="L101">    }</span>
+
+    /**
+     * The following method is initialized whenever the user clicks the back button or the create a
+     * clan button
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v)
+    {
+<span class="nc" id="L111">        int id1 = v.getId();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (id1 == R.id.materialToolbar) {</span>
+<span class="nc" id="L113">            startActivity(new Intent(ClanActivity.this, HomeActivity.class));</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        } else if (id1 == R.id.newClanButton)</span>
+        {
+<span class="nc" id="L116">            startActivity(new Intent(ClanActivity.this, CreateClanActivity.class));</span>
+      //      postRequest();
+      //      Toast.makeText(ClanActivity.this, &quot;Clan has been successfully added&quot;, Toast.LENGTH_SHORT).show();
+        }
+<span class="nc" id="L120">    }</span>
+
+
+    /**
+     * The following method is used to parse a JSON Array using Volley. It is invoked whenever the
+     * screen starts up to collect clans information from backend.
+     */
+    private void parseJsonArray() {
+<span class="nc" id="L128">        RequestQueue queue = Volley.newRequestQueue(ClanActivity.this);</span>
+
+<span class="nc" id="L130">        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener&lt;JSONArray&gt;() {</span>
+
+            @Override
+            public void onResponse(JSONArray response) {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                for (int i = 0; i &lt; response.length(); i++) {</span>
+                    try {
+<span class="nc" id="L136">                        JSONObject responseObj = response.getJSONObject(i);</span>
+<span class="nc" id="L137">                        String clanName = responseObj.getString(&quot;clanName&quot;);</span>
+<span class="nc" id="L138">                        JSONArray members = responseObj.getJSONArray(&quot;members&quot;);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">                        for (int j = 0; j &lt; members.length(); j++)</span>
+                        {
+<span class="nc" id="L141">                        Log.d(&quot;Clan Members&quot;, members.toString());</span>
+                        }
+<span class="nc" id="L143">                        int clanLevel = responseObj.getInt(&quot;leader&quot;);</span>
+<span class="nc" id="L144">                        clanItemList.add(new ClanItemObject(clanName, String.valueOf(clanLevel)));</span>
+<span class="nc" id="L145">                        constructRecyclerView();</span>
+
+<span class="nc" id="L147">                    } catch (JSONException e) {</span>
+
+<span class="nc" id="L149">                        e.printStackTrace();</span>
+
+<span class="nc" id="L151">                    }</span>
+
+                }
+
+<span class="nc" id="L155">            }</span>
+
+<span class="nc" id="L157">        }, new Response.ErrorListener() {</span>
+
+            @Override
+
+            public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L162">                Toast.makeText(ClanActivity.this, &quot;Fail to get the data..&quot;, Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L163">            }</span>
+
+        });
+<span class="nc" id="L166">        queue.add(jsonArrayRequest);</span>
+
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * The following method is used whenever a user tries to create a new clan. It sends a post
+     * request to backend.
+     */
+    private void postRequest() {
+
+        // Convert input to JSONObject
+<span class="nc" id="L177">        JSONObject postBody = null;</span>
+<span class="nc" id="L178">        String finalUrlPostRequest = &quot;&quot;;</span>
+        try {
+            // etRequest should contain a JSON object string as your POST body
+            // similar to what you would have in POSTMAN-body field
+            // and the fields should match with the object structure of @RequestBody on sb
+<span class="nc" id="L183">            finalUrlPostRequest = URL_POST_REQUEST + textView1.getText().toString() + &quot;/&quot;;</span>
+<span class="nc" id="L184">            finalUrlPostRequest = finalUrlPostRequest + textView2.getText().toString();</span>
+<span class="nc" id="L185">        } catch (Exception e) {</span>
+<span class="nc" id="L186">            e.printStackTrace();</span>
+<span class="nc" id="L187">        }</span>
+
+<span class="nc" id="L189">        JsonObjectRequest request = new JsonObjectRequest(</span>
+                Request.Method.POST,
+                finalUrlPostRequest,
+                postBody,
+<span class="nc" id="L193">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L196">                        Log.d(&quot;Volley Response to POST&quot;, response.toString());</span>
+<span class="nc" id="L197">                        String responseString = &quot;&quot;;</span>
+                        try {
+<span class="nc" id="L199">                           responseString = response.getString(&quot;message&quot;);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                            if(responseString.equals(&quot;success&quot;))</span>
+                            {
+<span class="nc" id="L202">                                Toast.makeText(ClanActivity.this, &quot;Clan has been successfully added&quot;, Toast.LENGTH_SHORT).show();</span>
+                            }
+<span class="nc bnc" id="L204" title="All 2 branches missed.">                            else if (responseString.equals(&quot;failure&quot;))</span>
+                            {
+<span class="nc" id="L206">                                Toast.makeText(ClanActivity.this, &quot;Error&quot;, Toast.LENGTH_SHORT).show();</span>
+                            }
+<span class="nc" id="L208">                        } catch (JSONException e) {</span>
+<span class="nc" id="L209">                            throw new RuntimeException(e);</span>
+<span class="nc" id="L210">                        }</span>
+
+<span class="nc" id="L212">                    }</span>
+                },
+<span class="nc" id="L214">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L217">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L218">                    }</span>
+                }
+<span class="nc" id="L220">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L223">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+                //                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+                //                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L226">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L231">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L234">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="nc" id="L239">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="nc" id="L240">    }</span>
+
+
+    /**
+     * The following method is used to construct the clan list. It initializes many different
+     * elements.
+     */
+    private void constructRecyclerView()
+    {
+<span class="nc" id="L249">        adapter = new ClanRecyclerViewAdapter(clanItemList, ClanActivity.this);</span>
+<span class="nc" id="L250">        LinearLayoutManager manager = new LinearLayoutManager(this);</span>
+<span class="nc" id="L251">        courseRV.setHasFixedSize(true);</span>
+<span class="nc" id="L252">        courseRV.setLayoutManager(manager);</span>
+<span class="nc" id="L253">        courseRV.setAdapter(adapter);</span>
+
+<span class="nc" id="L255">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>
