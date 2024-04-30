@@ -118,4 +118,19 @@ public class UserController {
         userRepository.deleteById(id);
         return success;
     }
+
+    @PostMapping(path = "/users/xp/{id}/{amount}")
+    void addUserXp(@PathVariable int id, @PathVariable int amount) {
+        User user = userRepository.findById(id);
+        user.setXp(user.getXp() + amount);
+        userRepository.save(user);
+    }
+
+    @PostMapping(path = "/users/bank/{id}/{amount}")
+    void addUserBank(@PathVariable int id, @PathVariable int amount) {
+        User user = userRepository.findById(id);
+        user.setBank(user.getBank() + amount);
+        userRepository.save(user);
+    }
+
 }
