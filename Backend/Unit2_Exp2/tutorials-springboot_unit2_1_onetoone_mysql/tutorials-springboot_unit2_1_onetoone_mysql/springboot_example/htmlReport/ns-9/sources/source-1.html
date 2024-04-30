@@ -41,46 +41,40 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">User</td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (10/20)
+    (25/25)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    55.8%
+    92.3%
   </span>
   <span class="absValue">
-    (24/43)
+    (48/52)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">User$HibernateProxy$EfZbps7k</td>
-  </tr>
-  <tr>
-    <td class="name">User$HibernateProxy$Jj84xAm1</td>
-  </tr>
-  <tr>
-    <td class="name">User$HibernateProxy$UEXPpxjn</td>
+    <td class="name">User$HibernateProxy$HePIsZCm</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (10/20)
+    (25/25)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    55.8%
+    92.3%
   </span>
   <span class="absValue">
-    (24/43)
+    (48/52)
   </span>
 </td>
 </tr>
@@ -103,13 +97,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import onetoone.MatchHistory.History;
 &nbsp;import onetoone.ShopItems.ShopItem;
 &nbsp;import onetoone.Wins.Wins;
+&nbsp;
+&nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
+&nbsp;import onetoone.Clans.ClanRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;
 &nbsp;/**
 &nbsp; * 
 &nbsp; * @author Vivek Bengre
 &nbsp; * 
-&nbsp; */ 
+&nbsp; */
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;@Entity
 &nbsp;public class User {
@@ -141,14 +141,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @JsonBackReference
 &nbsp;    private Wins wins;
 &nbsp;
+<b class="fc">&nbsp;    private int bank = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;    private int xp = 0;</b>
+&nbsp;
 &nbsp;    /*
 &nbsp;     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
 &nbsp;     * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
 &nbsp;     * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
 &nbsp;     * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
 &nbsp;     */
-&nbsp;
-<b class="fc">&nbsp;    public User(String Username, String password) {</b>
+&nbsp;//    @Autowired
+&nbsp;//    ClanRepository clanRepository;
+<b class="fc">&nbsp;    public User(String Username, String password, ClanRepository clanRepository) {</b>
 <b class="fc">&nbsp;        if(Username != null) {</b>
 <b class="fc">&nbsp;            this.username = Username;</b>
 &nbsp;        }
@@ -157,7 +162,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        }
 <b class="fc">&nbsp;        this.password = password;</b>
 <b class="fc">&nbsp;        this.setWins(0);</b>
-&nbsp;
+<b class="fc">&nbsp;        this.clan = clanRepository.findById(1);</b>
 &nbsp;    }
 &nbsp;
 <b class="fc">&nbsp;    public User() {</b>
@@ -170,24 +175,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setId(int id){
-<b class="nc">&nbsp;        this.id = id;</b>
+<b class="fc">&nbsp;        this.id = id;</b>
 &nbsp;    }
 &nbsp;    public String getUsername(){
 <b class="fc">&nbsp;        return username;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setUsername(String Username){
-<b class="nc">&nbsp;        this.username = Username;</b>
+<b class="fc">&nbsp;        this.username = Username;</b>
 &nbsp;    }
 &nbsp;    public String getPassword(){
 <b class="fc">&nbsp;        return password;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setPassword(String Password){
-<b class="nc">&nbsp;        this.password = Password;</b>
+<b class="fc">&nbsp;        this.password = Password;</b>
 &nbsp;    }
 &nbsp;    public int getClan(){
-<b class="nc">&nbsp;        return clan.getId();</b>
+<b class="fc">&nbsp;        return clan.getId();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setClan(Clan clan){
@@ -201,7 +206,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;//        this.user_match = um;
 &nbsp;//    }
 &nbsp;    public Inventory getInventory(){
-<b class="nc">&nbsp;        return inventory;</b>
+<b class="fc">&nbsp;        return inventory;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setInventory(Inventory inventory){
@@ -231,10 +236,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;//        this.inventory = inventory;
 &nbsp;//    }
 &nbsp;    public void setItems(List&lt;ShopItem&gt; shopItem){
-<b class="nc">&nbsp;        if (this.inventory == null) {</b>
+<b class="fc">&nbsp;        if (this.inventory == null) {</b>
 <b class="nc">&nbsp;            this.inventory = new Inventory();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        this.inventory.setShopItems(shopItem);</b>
+<b class="fc">&nbsp;        this.inventory.setShopItems(shopItem);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;//    public void setHistory(List&lt;History&gt; history){
@@ -245,29 +250,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;//    }
 &nbsp;
 &nbsp;    public void setItems(ShopItem shopItem){
-<b class="nc">&nbsp;        if (this.inventory == null) {</b>
+<b class="fc">&nbsp;        if (this.inventory == null) {</b>
 <b class="nc">&nbsp;            this.inventory = new Inventory();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        this.inventory.setShopItems(shopItem);</b>
+<b class="fc">&nbsp;        this.inventory.setShopItems(shopItem);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setequippedItems(List&lt;ShopItem&gt; shopItem){
-<b class="nc">&nbsp;        if (this.equippedItems == null) {</b>
-<b class="nc">&nbsp;            this.equippedItems = new EquippedItems();</b>
+<b class="fc">&nbsp;        if (this.equippedItems == null) {</b>
+<b class="fc">&nbsp;            this.equippedItems = new EquippedItems();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        this.equippedItems.setShopItems(shopItem);</b>
+<b class="fc">&nbsp;        this.equippedItems.setShopItems(shopItem);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setequippedItems(ShopItem shopItem){
-<b class="nc">&nbsp;        if (this.equippedItems == null) {</b>
+<b class="fc">&nbsp;        if (this.equippedItems == null) {</b>
 <b class="nc">&nbsp;            this.equippedItems = new EquippedItems();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        this.equippedItems.setShopItems(shopItem);</b>
+<b class="fc">&nbsp;        this.equippedItems.setShopItems(shopItem);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;
 &nbsp;    public Wins getWins(){
-<b class="nc">&nbsp;        return wins;</b>
+<b class="fc">&nbsp;        return wins;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setWins(int wins){
@@ -281,6 +286,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        }
 <b class="fc">&nbsp;        this.wins.setWins(wins);</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    public void setWins2(int wins){
+<b class="fc">&nbsp;        Wins tmp = new Wins(wins);</b>
+<b class="fc">&nbsp;        this.wins = tmp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setXp(int xp){
+<b class="fc">&nbsp;        this.xp = xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getXp() {
+<b class="fc">&nbsp;        return this.xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBank(int xp){
+<b class="fc">&nbsp;        this.bank = xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBank() {
+<b class="fc">&nbsp;        return this.bank;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;}
@@ -307,7 +335,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

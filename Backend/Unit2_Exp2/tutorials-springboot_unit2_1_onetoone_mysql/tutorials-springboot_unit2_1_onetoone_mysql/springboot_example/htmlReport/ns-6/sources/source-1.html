@@ -41,46 +41,40 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">Inventory</td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (4/8)
+    (8/8)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    40%
+    86.7%
   </span>
   <span class="absValue">
-    (6/15)
+    (13/15)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">Inventory$HibernateProxy$859cT9GP</td>
-  </tr>
-  <tr>
-    <td class="name">Inventory$HibernateProxy$GN8KJynZ</td>
-  </tr>
-  <tr>
-    <td class="name">Inventory$HibernateProxy$WyJzQ74I</td>
+    <td class="name">Inventory$HibernateProxy$UcbXfq3u</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (4/8)
+    (8/8)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    40%
+    86.7%
   </span>
   <span class="absValue">
-    (6/15)
+    (13/15)
   </span>
 </td>
 </tr>
@@ -126,11 +120,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setId(int id){
-<b class="nc">&nbsp;        this.id = id;</b>
+<b class="fc">&nbsp;        this.id = id;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public User getUser() {
-<b class="nc">&nbsp;        return user;</b>
+<b class="fc">&nbsp;        return user;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setUser(User user) {
@@ -138,23 +132,23 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public List&lt;ShopItem&gt; getShopItems(){
-<b class="nc">&nbsp;        return this.shopItems;</b>
+<b class="fc">&nbsp;        return this.shopItems;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void setShopItems(List&lt;ShopItem&gt; shopItems){
 <b class="fc">&nbsp;        if (this.shopItems == null){</b>
-<b class="fc">&nbsp;            this.shopItems = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            this.shopItems = new ArrayList&lt;&gt;();</b>
 &nbsp;        }
 <b class="fc">&nbsp;        this.shopItems = shopItems;</b>
 &nbsp;    }
 &nbsp;    public void setShopItems(ShopItem shopItem){
-<b class="nc">&nbsp;        if (this.shopItems == null){</b>
+<b class="fc">&nbsp;        if (this.shopItems == null){</b>
 <b class="nc">&nbsp;            this.shopItems = new ArrayList&lt;&gt;();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; inv = this.getShopItems();</b>
-<b class="nc">&nbsp;        inv.add(shopItem);</b>
-<b class="nc">&nbsp;        this.user.setItems(inv);</b>
-<b class="nc">&nbsp;        System.out.println(shopItems);</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; inv = this.getShopItems();</b>
+<b class="fc">&nbsp;        inv.add(shopItem);</b>
+<b class="fc">&nbsp;        this.user.setItems(inv);</b>
+<b class="fc">&nbsp;        System.out.println(shopItems);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;}
@@ -181,7 +175,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

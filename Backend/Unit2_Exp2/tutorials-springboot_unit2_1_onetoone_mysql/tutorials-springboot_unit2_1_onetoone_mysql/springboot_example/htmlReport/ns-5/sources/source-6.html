@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > GameSocket</title>
+  <title>Coverage Report > GameSocket2</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,14 +22,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">onetoone.Game</a>
 </div>
 
-<h1>Coverage Summary for Class: GameSocket (onetoone.Game)</h1>
+<h1>Coverage Summary for Class: GameSocket2 (onetoone.Game)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">GameSocket</td>
+  <td class="name">GameSocket2</td>
 </tr>
 
 </table>
@@ -42,7 +42,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
 &nbsp;
 &nbsp;import java.io.IOException;
-&nbsp;import java.net.URI;
 &nbsp;import java.util.Hashtable;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Map;
@@ -68,8 +67,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import org.springframework.stereotype.Controller;
 &nbsp;@Disabled(&quot;Exclude from test coverage&quot;)
 &nbsp;@Controller      // this is needed for this to be an endpoint to springboot
-&nbsp;@ServerEndpoint(value = &quot;/game/{username}&quot;)  // this is Websocket url
-&nbsp;public class GameSocket {
+&nbsp;@ServerEndpoint(value = &quot;/game2/{username}&quot;)  // this is Websocket url
+&nbsp;public class GameSocket2 {
 &nbsp;
 &nbsp;    // cannot autowire static directly (instead we do it by the below
 &nbsp;    // method
@@ -111,15 +110,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        usernameSessionMap.put(username, session);
 &nbsp;        int idk = usernameSessionMap.size();
 &nbsp;        String number = Integer.toString(idk);
-&nbsp;        if(idk &gt; 4) {
-&nbsp;            URI uri = session.getRequestURI();
-&nbsp;            String newEndpoint = uri.getScheme() + &quot;://&quot; + uri.getHost() + &quot;:&quot; + uri.getPort() + &quot;/game2/&quot; + username;
-&nbsp;            session.getUserProperties().put(&quot;redirected&quot;, true);
-&nbsp;            session.getUserProperties().put(&quot;newEndpoint&quot;, newEndpoint);
-&nbsp;            session.getBasicRemote().sendText(&quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;2\&quot;}&quot;);
-&nbsp;            session.close();
-&nbsp;            return;
-&nbsp;        }
 &nbsp;
 &nbsp;        //Send chat history to the newly connected user
 &nbsp;        //sendMessageToPArticularUser(username, getChatHistory());
@@ -130,8 +120,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
 &nbsp;        //broadcast(number);
 &nbsp;
-&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 1&quot;;
-&nbsp;        String test = &quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;1\&quot;}&quot;;
+&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 2&quot;;
+&nbsp;        String test = &quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;2\&quot;}&quot;;
 &nbsp;        broadcast(test);
 &nbsp;
 &nbsp;
@@ -196,6 +186,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        throwable.printStackTrace();
 &nbsp;    }
 &nbsp;
+&nbsp;
 &nbsp;    private void sendMessageToPArticularUser(String username, String message) {
 &nbsp;        try {
 &nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);
@@ -205,6 +196,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;            e.printStackTrace();
 &nbsp;        }
 &nbsp;    }
+&nbsp;
 &nbsp;
 &nbsp;    private void broadcast(String message) {
 &nbsp;        sessionUsernameMap.forEach((session, username) -&gt; {

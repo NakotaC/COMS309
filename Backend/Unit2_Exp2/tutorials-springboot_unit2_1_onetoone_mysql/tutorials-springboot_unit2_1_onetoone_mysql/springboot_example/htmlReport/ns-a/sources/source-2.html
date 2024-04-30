@@ -41,18 +41,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">WinsController</td>
 <td class="coverageStat">
   <span class="percent">
-    70%
+    100%
   </span>
   <span class="absValue">
-    (7/10)
+    (10/10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    63.2%
+    88.2%
   </span>
   <span class="absValue">
-    (48/76)
+    (67/76)
   </span>
 </td>
 </tr>
@@ -79,18 +79,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    75%
+    100%
   </span>
   <span class="absValue">
-    (9/12)
+    (12/12)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    64.1%
+    88.5%
   </span>
   <span class="absValue">
-    (50/78)
+    (69/78)
   </span>
 </td>
 </tr>
@@ -222,11 +222,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;                    Random rand = new Random();</b>
 <b class="fc">&nbsp;                    int a = rand.nextInt();</b>
 <b class="fc">&nbsp;                    if (a % 2 == 0) {</b>
-<b class="fc">&nbsp;                        winner.setQuest(3);</b>
-<b class="fc">&nbsp;                        winner.setScalar(5);</b>
-<b class="nc">&nbsp;                    } else if (a % 2 == 1) {</b>
-<b class="nc">&nbsp;                        winner.setQuest(5);</b>
-<b class="nc">&nbsp;                        winner.setScalar(8);</b>
+<b class="nc">&nbsp;                        winner.setQuest(3);</b>
+<b class="nc">&nbsp;                        winner.setScalar(5);</b>
+<b class="fc">&nbsp;                    } else if (a % 2 == 1) {</b>
+<b class="fc">&nbsp;                        winner.setQuest(5);</b>
+<b class="fc">&nbsp;                        winner.setScalar(8);</b>
 &nbsp;                    }
 <b class="fc">&nbsp;                    winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate());</b>
 <b class="fc">&nbsp;                }</b>
@@ -242,20 +242,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;//      (called when: USER LOGS ON)
 &nbsp;        @PutMapping(path = &quot;/quest/{user_id}&quot;)
 &nbsp;        void putQuest(@PathVariable int user_id) {
-<b class="nc">&nbsp;            Wins winner = winsRepository.findById(user_id);</b>
-<b class="nc">&nbsp;            if (new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate() != winner.getQDate()) {</b>
-<b class="nc">&nbsp;                Random rand = new Random();</b>
-<b class="nc">&nbsp;                int a = rand.nextInt();</b>
-<b class="nc">&nbsp;                if (a % 2 == 0) {</b>
+<b class="fc">&nbsp;            Wins winner = winsRepository.findById(user_id);</b>
+<b class="fc">&nbsp;            if (new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate() != winner.getQDate()) {</b>
+<b class="fc">&nbsp;                Random rand = new Random();</b>
+<b class="fc">&nbsp;                int a = rand.nextInt();</b>
+<b class="fc">&nbsp;                if (a % 2 == 0) {</b>
 <b class="nc">&nbsp;                    winner.setQuest(3);</b>
 <b class="nc">&nbsp;                    winner.setScalar(5);</b>
-<b class="nc">&nbsp;                } else if (a % 2 == 1) {</b>
+<b class="fc">&nbsp;                } else if (a % 2 == 1) {</b>
 <b class="nc">&nbsp;                    winner.setQuest(5);</b>
 <b class="nc">&nbsp;                    winner.setScalar(8);</b>
 &nbsp;                }
-<b class="nc">&nbsp;                winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate());</b>
+<b class="fc">&nbsp;                winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate());</b>
 &nbsp;            }
-<b class="nc">&nbsp;            winsRepository.save(winner);</b>
+<b class="fc">&nbsp;            winsRepository.save(winner);</b>
 &nbsp;        }
 &nbsp;
 &nbsp;        // Put method to run after every game
@@ -263,9 +263,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        // if(game won) { put user_id.wins_needed PUT(user) if (wins_needed == 0, make currency requests}
 &nbsp;    @PutMapping(path = &quot;/quest/{user_id}/{wins_needed}&quot;)
 &nbsp;    void putWinQuest(@PathVariable int user_id, @PathVariable Integer wins_needed) {
-<b class="nc">&nbsp;        Wins winner = winsRepository.findById(user_id);</b>
-<b class="nc">&nbsp;        winner.setQuest(wins_needed);</b>
-<b class="nc">&nbsp;        winsRepository.save(winner);</b>
+<b class="fc">&nbsp;        Wins winner = winsRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        winner.setQuest(wins_needed);</b>
+<b class="fc">&nbsp;        winsRepository.save(winner);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;//different variation of the POST request to allow for very specific quests with rewards to be given
@@ -273,15 +273,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    //THESE ARE BOTH COMING IN AS NULL TOO.
 &nbsp;    @PostMapping(path = &quot;/quest/{user_id}/{win}/{reward_scalar}&quot;)
 &nbsp;    String postUserQuest(@PathVariable int user_id, @PathVariable Integer win, @PathVariable Integer reward_scalar) {
-<b class="nc">&nbsp;        Wins winner = winsRepository.findById(user_id);</b>
-<b class="nc">&nbsp;        if(win == null || reward_scalar == null) {</b>
+<b class="fc">&nbsp;        Wins winner = winsRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        if(win == null || reward_scalar == null) {</b>
 <b class="nc">&nbsp;            return failure;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        winner.setQuest(win);</b>
-<b class="nc">&nbsp;        winner.setScalar(reward_scalar);</b>
-<b class="nc">&nbsp;        winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate());</b>
-<b class="nc">&nbsp;        winsRepository.save(winner);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        winner.setQuest(win);</b>
+<b class="fc">&nbsp;        winner.setScalar(reward_scalar);</b>
+<b class="fc">&nbsp;        winner.setQDate(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)).getTime().getDate());</b>
+<b class="fc">&nbsp;        winsRepository.save(winner);</b>
+<b class="fc">&nbsp;        return success;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    }
@@ -308,7 +308,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>
