@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    100%
   </span>
   <span class="absValue">
-    (1/5)
+    (5/5)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    10%
+    100%
   </span>
   <span class="absValue">
-    (3/30)
+    (35/35)
   </span>
 </td>
 </tr>
@@ -87,6 +87,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.web.bind.annotation.*;
 &nbsp;
+&nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
 &nbsp;@Api(value = &quot;EquippedItemsController&quot;, description = &quot;REST APIs related to the EquippedItems Entity&quot;)
 &nbsp;@RestController
@@ -107,47 +108,59 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
 &nbsp;
 &nbsp;    //return all cosmetics in the game (in the DB)
-&nbsp;    @GetMapping(path = &quot;/equippedItems&quot;)
-<b class="nc">&nbsp;    List&lt;EquippedItems&gt; getEquippedItems() { return equippedItemsRepository.findAll(); }</b>
+&nbsp;//    @GetMapping(path = &quot;/equippedItems&quot;)
+&nbsp;//    List&lt;EquippedItems&gt; getEquippedItems() { return equippedItemsRepository.findAll(); }
 &nbsp;
 &nbsp;    //@GetMapping(path = &quot;/inventory/shop&quot;)
 &nbsp;
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/equippedItems/{uid}&quot;)
 &nbsp;    List&lt;ShopItem&gt; getAllEquippedItemsUser(@PathVariable int uid){
-<b class="nc">&nbsp;        User u = userRepository.findById(uid);</b>
-<b class="nc">&nbsp;        EquippedItems i = u.getEquipped();</b>
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; tmp = i.getShopItems();</b>
-<b class="nc">&nbsp;        return tmp;</b>
+<b class="fc">&nbsp;        User u = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        EquippedItems i = u.getEquipped();</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; tmp = i.getShopItems();</b>
+<b class="fc">&nbsp;        return tmp;</b>
 &nbsp;    }
 &nbsp;    @DeleteMapping(path = &quot;/unequip/{uid}&quot;)
 &nbsp;    String ue(@RequestHeader(&quot;itemNum&quot;) String iiid, @PathVariable int uid){
-<b class="nc">&nbsp;        User u = userRepository.findById(uid);</b>
-<b class="nc">&nbsp;        EquippedItems i = u.getEquipped();</b>
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; c = i.getShopItems();</b>
-<b class="nc">&nbsp;        int iiiid = Integer.parseInt(iiid);</b>
-<b class="nc">&nbsp;        c.remove(iiiid);</b>
-<b class="nc">&nbsp;        i.setShopItems(c);</b>
-<b class="nc">&nbsp;        equippedItemsRepository.save(i);</b>
-<b class="nc">&nbsp;        u.setEquipped(i);</b>
-<b class="nc">&nbsp;        userRepository.save(u);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        User u = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        EquippedItems i = u.getEquipped();</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; c = i.getShopItems();</b>
+<b class="fc">&nbsp;        int iiiid = Integer.parseInt(iiid);</b>
+<b class="fc">&nbsp;        c.remove(iiiid);</b>
+<b class="fc">&nbsp;        i.setShopItems(c);</b>
+<b class="fc">&nbsp;        equippedItemsRepository.save(i);</b>
+<b class="fc">&nbsp;        u.setEquipped(i);</b>
+<b class="fc">&nbsp;        userRepository.save(u);</b>
+<b class="fc">&nbsp;        return success;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @PutMapping(path = &quot;/equip/{uid}&quot;)
 &nbsp;    String eq(@RequestHeader(&quot;itemNum&quot;) String iiid, @PathVariable int uid){
-<b class="nc">&nbsp;        User u = userRepository.findById(uid);</b>
-<b class="nc">&nbsp;        EquippedItems i = u.getEquipped();</b>
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; c = i.getShopItems();</b>
-<b class="nc">&nbsp;        Inventory i2 = u.getInventory();</b>
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; c2 = i2.getShopItems();</b>
-<b class="nc">&nbsp;        int iiiid = Integer.parseInt(iiid);</b>
-<b class="nc">&nbsp;        c.add(c2.get(iiiid));</b>
-<b class="nc">&nbsp;        i.setShopItems(c);</b>
-<b class="nc">&nbsp;        equippedItemsRepository.save(i);</b>
-<b class="nc">&nbsp;        u.setEquipped(i);</b>
-<b class="nc">&nbsp;        userRepository.save(u);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        User u = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        EquippedItems i = u.getEquipped();</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; c = i.getShopItems();</b>
+<b class="fc">&nbsp;        Inventory i2 = u.getInventory();</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; c2 = i2.getShopItems();</b>
+<b class="fc">&nbsp;        int iiiid = Integer.parseInt(iiid);</b>
+<b class="fc">&nbsp;        c.add(c2.get(iiiid));</b>
+<b class="fc">&nbsp;        i.setShopItems(c);</b>
+<b class="fc">&nbsp;        equippedItemsRepository.save(i);</b>
+<b class="fc">&nbsp;        u.setEquipped(i);</b>
+<b class="fc">&nbsp;        userRepository.save(u);</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/newEquip/{uid}&quot;)
+&nbsp;    void newInv(@PathVariable int uid) {
+<b class="fc">&nbsp;        EquippedItems i = new EquippedItems();</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        i.setUser(user);</b>
+<b class="fc">&nbsp;        ArrayList&lt;ShopItem&gt; inv1items = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        i.setShopItems(inv1items);</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        equippedItemsRepository.save(i);</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -173,7 +186,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-29 22:11</div>
 </div>
 </body>
 </html>

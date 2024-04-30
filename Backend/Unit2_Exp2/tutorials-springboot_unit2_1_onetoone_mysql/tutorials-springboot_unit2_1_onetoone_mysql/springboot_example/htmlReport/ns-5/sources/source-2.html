@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    33.3%
+    100%
   </span>
   <span class="absValue">
-    (1/3)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    100%
   </span>
   <span class="absValue">
-    (3/15)
+    (11/11)
   </span>
 </td>
 </tr>
@@ -112,24 +112,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    //@GetMapping(path = &quot;/inventory/shop&quot;)
 &nbsp;
-&nbsp;    @GetMapping(path = &quot;/draw&quot;)
-&nbsp;    int draw(@RequestHeader(&quot;gameid&quot;) String gameid) throws JsonProcessingException {
-<b class="nc">&nbsp;        int gid = Integer.parseInt(gameid);</b>
-<b class="nc">&nbsp;        int card = gameRepository.findById(gid).Draw();</b>
-<b class="nc">&nbsp;        gameRepository.save(gameRepository.findById(gid));</b>
-<b class="nc">&nbsp;        return card;</b>
-&nbsp;    }
+&nbsp;//    @GetMapping(path = &quot;/draw&quot;)
+&nbsp;//    int draw(@RequestHeader(&quot;gameid&quot;) String gameid) throws JsonProcessingException {
+&nbsp;//        int gid = Integer.parseInt(gameid);
+&nbsp;//        int card = gameRepository.findById(gid).Draw();
+&nbsp;//        gameRepository.save(gameRepository.findById(gid));
+&nbsp;//        return card;
+&nbsp;//    } fortnite321321YABABABA
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/draw/str&quot;)
 &nbsp;    String drawString(@RequestHeader(&quot;gameid&quot;) String gameid) throws JsonProcessingException {
-<b class="nc">&nbsp;        int gid = Integer.parseInt(gameid);</b>
-<b class="nc">&nbsp;        int card = gameRepository.findById(gid).Draw();</b>
-<b class="nc">&nbsp;        String cards = Integer.toString(card);</b>
-<b class="nc">&nbsp;        gameRepository.save(gameRepository.findById(gid));</b>
-<b class="nc">&nbsp;        String tmp = &quot;{\&quot;Card\&quot;:\&quot;&quot;;</b>
-<b class="nc">&nbsp;        tmp = tmp.concat(cards);</b>
-<b class="nc">&nbsp;        tmp = tmp.concat(&quot;\&quot;}&quot;);</b>
-<b class="nc">&nbsp;        return tmp;</b>
+<b class="fc">&nbsp;        int gid = Integer.parseInt(gameid);</b>
+<b class="fc">&nbsp;        int card = gameRepository.findById(gid).Draw();</b>
+<b class="fc">&nbsp;        String cards = Integer.toString(card);</b>
+<b class="fc">&nbsp;        gameRepository.save(gameRepository.findById(gid));</b>
+<b class="fc">&nbsp;        String tmp = &quot;{\&quot;Card\&quot;:\&quot;&quot;;</b>
+<b class="fc">&nbsp;        tmp = tmp.concat(cards);</b>
+<b class="fc">&nbsp;        tmp = tmp.concat(&quot;\&quot;}&quot;);</b>
+<b class="fc">&nbsp;        return tmp;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;
@@ -157,7 +157,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-29 22:11</div>
 </div>
 </body>
 </html>

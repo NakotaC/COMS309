@@ -60,10 +60,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    13.6%
+    11.8%
   </span>
   <span class="absValue">
-    (6/44)
+    (6/51)
   </span>
 </td>
 </tr>
@@ -78,6 +78,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
 &nbsp;
 &nbsp;import java.io.IOException;
+&nbsp;import java.net.URI;
 &nbsp;import java.util.Hashtable;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Map;
@@ -144,15 +145,31 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
 <b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
 <b class="nc">&nbsp;        int idk = usernameSessionMap.size();</b>
+<b class="nc">&nbsp;        if(idk &gt; 4) {</b>
+<b class="nc">&nbsp;            URI uri = session.getRequestURI();</b>
+<b class="nc">&nbsp;            String newEndpoint = uri.getScheme() + &quot;://&quot; + uri.getHost() + &quot;:&quot; + uri.getPort() + &quot;/game2/&quot; + username;</b>
+<b class="nc">&nbsp;            session.getUserProperties().put(&quot;redirected&quot;, true);</b>
+<b class="nc">&nbsp;            session.getUserProperties().put(&quot;newEndpoint&quot;, newEndpoint);</b>
+<b class="nc">&nbsp;            session.getBasicRemote().sendText(newEndpoint);</b>
+<b class="nc">&nbsp;            session.close();</b>
+&nbsp;            return;
+&nbsp;        }
 <b class="nc">&nbsp;        String number = Integer.toString(idk);</b>
 &nbsp;
 &nbsp;        //Send chat history to the newly connected user
 &nbsp;        //sendMessageToPArticularUser(username, getChatHistory());
 &nbsp;
 &nbsp;        // broadcast that new user joined
-<b class="nc">&nbsp;        String message = &quot;User:&quot; + username + &quot; has Joined the game&quot;;</b>
+&nbsp;        //String message = &quot;User:&quot; + username + &quot; has Joined the game&quot;;
+&nbsp;
+&nbsp;        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
 &nbsp;        //broadcast(number);
-<b class="nc">&nbsp;        session.getBasicRemote().sendText(number);</b>
+&nbsp;
+<b class="nc">&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 1&quot;;</b>
+<b class="nc">&nbsp;        broadcast(testmessage);</b>
+&nbsp;
+&nbsp;
+&nbsp;        //session.getBasicRemote().sendText(number);
 &nbsp;    }
 &nbsp;
 &nbsp;
@@ -173,7 +190,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        www = www.concat(player);</b>
 <b class="nc">&nbsp;        www = www.concat(&quot; drew a &quot;);</b>
 <b class="nc">&nbsp;        www = www.concat(card);</b>
-<b class="nc">&nbsp;        broadcast(www);</b>
+&nbsp;        //Change message to www if you want to send &quot;Player _ drew a _&quot; !!???????
+<b class="nc">&nbsp;        broadcast(message);</b>
 &nbsp;
 &nbsp;        // Direct message to a user using the format &quot;@username &lt;message&gt;&quot;
 &nbsp;//        if (message.startsWith(&quot;@&quot;)) {
@@ -277,7 +295,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-29 22:11</div>
 </div>
 </body>
 </html>

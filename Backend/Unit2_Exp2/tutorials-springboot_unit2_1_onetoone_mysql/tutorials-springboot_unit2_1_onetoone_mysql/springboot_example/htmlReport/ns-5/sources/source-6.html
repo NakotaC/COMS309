@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > EquippedItemsRepository</title>
+  <title>Coverage Report > GameRepository</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,17 +19,17 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">onetoone.EquippedItems</a>
+    <a href="../index.html">onetoone.Game</a>
 </div>
 
-<h1>Coverage Summary for Class: EquippedItemsRepository (onetoone.EquippedItems)</h1>
+<h1>Coverage Summary for Class: GameRepository (onetoone.Game)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">EquippedItemsRepository</td>
+  <td class="name">GameRepository</td>
 </tr>
 
 </table>
@@ -39,16 +39,17 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.EquippedItems;
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
 &nbsp;
 &nbsp;import onetoone.Inventory.Inventory;
-&nbsp;import org.springframework.stereotype.Repository;
 &nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.stereotype.Repository;
 &nbsp;
 &nbsp;import javax.transaction.Transactional;
 &nbsp;@Repository
-&nbsp;public interface EquippedItemsRepository extends JpaRepository&lt;EquippedItems, Long&gt;{
-&nbsp;    Inventory findById(int id);
+&nbsp;public interface GameRepository extends JpaRepository&lt;Game, Long&gt; {
+&nbsp;
+&nbsp;    Game findById(int id);
 &nbsp;
 &nbsp;    @Transactional
 &nbsp;    void deleteById(int id);

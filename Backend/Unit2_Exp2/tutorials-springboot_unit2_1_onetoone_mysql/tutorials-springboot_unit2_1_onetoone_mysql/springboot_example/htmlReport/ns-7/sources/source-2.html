@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    100%
   </span>
   <span class="absValue">
-    (1/5)
+    (5/5)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    80%
   </span>
   <span class="absValue">
-    (3/15)
+    (12/15)
   </span>
 </td>
 </tr>
@@ -101,33 +101,33 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/history/all&quot;)
-<b class="nc">&nbsp;    List&lt;History&gt; getHistory() { return historyRepository.findAll(); }</b>
+<b class="fc">&nbsp;    List&lt;History&gt; getHistory() { return historyRepository.findAll(); }</b>
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/history/{user_id}&quot;)
 &nbsp;    List&lt;History&gt; getUserHistory(@PathVariable int user_id) {
-<b class="nc">&nbsp;        List&lt;History&gt; h = new ArrayList&lt;&gt;();</b>
-<b class="nc">&nbsp;        for(int i = 1; i &lt;= historyRepository.count(); i++) {</b>
+<b class="fc">&nbsp;        List&lt;History&gt; h = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for(int i = 1; i &lt;= historyRepository.count(); i++) {</b>
 <b class="nc">&nbsp;            if(historyRepository.findById(i).getId() == user_id) {</b>
 <b class="nc">&nbsp;                h.add(historyRepository.findById(i));</b>
 &nbsp;            }
 &nbsp;        }
-<b class="nc">&nbsp;        return h;</b>
+<b class="fc">&nbsp;        return h;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @PostMapping(path = &quot;/history/{user_id}/{winner_id}&quot;)
 &nbsp;    void postHistory(@PathVariable int user_id, @PathVariable int winner_id) {
-<b class="nc">&nbsp;        History h = new History(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)), userRepository.findById(user_id),  userRepository.findById(winner_id));</b>
-<b class="nc">&nbsp;        historyRepository.save(h);</b>
+<b class="fc">&nbsp;        History h = new History(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)), userRepository.findById(user_id),  userRepository.findById(winner_id));</b>
+<b class="fc">&nbsp;        historyRepository.save(h);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    //comment for CICD
 &nbsp;    @DeleteMapping(path=&quot;/history/{match_id}&quot;)
 &nbsp;    String deleteHistoryId(@PathVariable int match_id){
-<b class="nc">&nbsp;        if(historyRepository.findById(match_id) == null) {</b>
+<b class="fc">&nbsp;        if(historyRepository.findById(match_id) == null) {</b>
 <b class="nc">&nbsp;            return failure;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        historyRepository.deleteById(match_id);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        historyRepository.deleteById(match_id);</b>
+<b class="fc">&nbsp;        return success;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;}
@@ -154,7 +154,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-29 22:11</div>
 </div>
 </body>
 </html>
