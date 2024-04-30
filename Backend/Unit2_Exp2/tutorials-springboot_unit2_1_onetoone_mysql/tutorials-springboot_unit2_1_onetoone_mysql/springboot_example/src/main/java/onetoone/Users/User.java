@@ -200,6 +200,11 @@ public class User {
         this.wins.setWins(wins);
     }
 
+    public void setWins2(int wins){
+        Wins tmp = new Wins(wins);
+        this.wins = tmp;
+    }
+
     public void setXp(int xp){
         this.xp = xp;
     }

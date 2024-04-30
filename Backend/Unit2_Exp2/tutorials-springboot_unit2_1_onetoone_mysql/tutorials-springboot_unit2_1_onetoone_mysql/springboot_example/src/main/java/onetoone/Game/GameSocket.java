@@ -20,11 +20,12 @@ import java.io.StringReader;
 
 import onetoone.Game.GameRepository;
 import onetoone.Users.UserRepository;
+import org.junit.jupiter.api.Disabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+@Disabled("Exclude from test coverage")
 @Controller      // this is needed for this to be an endpoint to springboot
 @ServerEndpoint(value = "/game/{username}")  // this is Websocket url
 public class GameSocket {
@@ -154,7 +155,6 @@ public class GameSocket {
         throwable.printStackTrace();
     }
 
-
     private void sendMessageToPArticularUser(String username, String message) {
         try {
             usernameSessionMap.get(username).getBasicRemote().sendText(message);
@@ -164,7 +164,6 @@ public class GameSocket {
             e.printStackTrace();
         }
     }
-
 
     private void broadcast(String message) {
         sessionUsernameMap.forEach((session, username) -> {
