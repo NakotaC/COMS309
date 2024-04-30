@@ -164,6 +164,14 @@ public class MoreSystemTest {
         Response response = RestAssured.given().get("/users/1");
         int statuscode = response.getStatusCode();
         assertEquals(200, statuscode);
+
+        response = RestAssured.given().get("/users/xp/1/0");
+        statuscode = response.getStatusCode();
+        assertEquals(200, statuscode);
+
+        response = RestAssured.given().get("/users/bank/1/0");
+        statuscode = response.getStatusCode();
+        assertEquals(200, statuscode);
     }
 
     @Test
