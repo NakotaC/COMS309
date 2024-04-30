@@ -165,6 +165,24 @@ public class ClanController {
         return success;
     }
 
+    @PostMapping(path = "/clanxp")
+    String setClanXp() {
+        int clanxp = 0;
+        //Starting at two in order to leave noClan xp at 0
+
+        for(int i = 2; i <= clanRepository.count(); i++) {
+            clanxp = 0;
+            ArrayList<Integer> mems = clanRepository.findById(i).toIntList(clanRepository.findById(i).getMembers());
+            for(int j = 0; j < mems.size(); j++) {
+                clanxp += userRepository.findById(mems.get(j)).getXp();
+            }
+            clanRepository.findById(i).setClan_xp(clanxp);
+            clanRepository.save(clanRepository.findById(i));
+
+        }
+        return success;
+    }
+
     
 
 }
