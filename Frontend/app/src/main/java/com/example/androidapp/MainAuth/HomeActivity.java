@@ -122,11 +122,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
 
+
         if (equippedItems.length() != 0)
         {
         assert user != null;
         welcomeText.setText("Welcome " + user.getUsername());
-        welcomeText.setTextAppearance(2131887200);
+        welcomeText.setTextAppearance(R.style.titleFont);
         welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
         else if (equippedItems.length() == 0)
