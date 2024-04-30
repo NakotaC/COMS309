@@ -33,6 +33,7 @@ public class Clan {
     @OneToMany(mappedBy = "clan", cascade = CascadeType.ALL)
     private List<User> members;
 
+
     public Clan(String clan_name, int leader_id, UserRepository userRepository) {
             this.clan_name = clan_name;
             this.clan_leader = leader_id;
@@ -82,9 +83,6 @@ public class Clan {
     public Integer getLeader() {
         return clan_leader;
     }
-    public void setLeader(Integer id) {
-        this.clan_leader = id;
-    }
 
     public String getClanName() {
         return clan_name;
@@ -98,16 +96,12 @@ public class Clan {
         this.clan_type = s;
     }
 
-    public void setClanName(String name) {
-        this.clan_name = name;
-    }
-
-    public void addClan_xp(int xp) {
-        this.clan_xp = this.clan_xp + xp;
-    }
-
     public int getClan_xp() {
         return clan_xp;
+    }
+
+    public void setClan_xp(int cxp) {
+        this.clan_xp = cxp;
     }
     public String getMembers() {
         return clan_members;
@@ -117,7 +111,4 @@ public class Clan {
         this.max_members = max;
     }
 
-    public void setClanXp(int xp) {
-        this.clan_xp = xp;
-    }
 }

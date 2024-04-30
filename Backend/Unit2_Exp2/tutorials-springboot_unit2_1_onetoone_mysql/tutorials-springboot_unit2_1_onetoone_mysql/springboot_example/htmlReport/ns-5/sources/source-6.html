@@ -1,0 +1,257 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GameSocket2</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">onetoone.Game</a>
+</div>
+
+<h1>Coverage Summary for Class: GameSocket2 (onetoone.Game)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">GameSocket2</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Hashtable;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;import javax.websocket.OnClose;
+&nbsp;import javax.websocket.OnError;
+&nbsp;import javax.websocket.OnMessage;
+&nbsp;import javax.websocket.OnOpen;
+&nbsp;import javax.websocket.Session;
+&nbsp;import javax.websocket.server.PathParam;
+&nbsp;import javax.websocket.server.ServerEndpoint;
+&nbsp;import javax.json.Json;
+&nbsp;import javax.json.JsonObject;
+&nbsp;import javax.json.JsonReader;
+&nbsp;import java.io.StringReader;
+&nbsp;
+&nbsp;import onetoone.Game.GameRepository;
+&nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.junit.jupiter.api.Disabled;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;@Disabled(&quot;Exclude from test coverage&quot;)
+&nbsp;@Controller      // this is needed for this to be an endpoint to springboot
+&nbsp;@ServerEndpoint(value = &quot;/game2/{username}&quot;)  // this is Websocket url
+&nbsp;public class GameSocket2 {
+&nbsp;
+&nbsp;    // cannot autowire static directly (instead we do it by the below
+&nbsp;    // method
+&nbsp;    private static GameRepository gameRepo;
+&nbsp;
+&nbsp;    private static UserRepository userRepo;
+&nbsp;
+&nbsp;    /*
+&nbsp;     * Grabs the MessageRepository singleton from the Spring Application
+&nbsp;     * Context.  This works because of the @Controller annotation on this
+&nbsp;     * class and because the variable is declared as static.
+&nbsp;     * There are other ways to set this. However, this approach is
+&nbsp;     * easiest.
+&nbsp;     */
+&nbsp;    @Autowired
+&nbsp;    public void setGameRepository(GameRepository repo) {
+&nbsp;        gameRepo = repo;  // we are setting the static variable
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserRepository(UserRepository repo) {
+&nbsp;        userRepo = repo;  // we are setting the static variable
+&nbsp;    }
+&nbsp;
+&nbsp;    // Store all socket session and their corresponding username.
+&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();
+&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();
+&nbsp;
+&nbsp;    private final Logger logger = LoggerFactory.getLogger(GameSocket.class);
+&nbsp;
+&nbsp;    @OnOpen
+&nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username)
+&nbsp;            throws IOException {
+&nbsp;
+&nbsp;        logger.info(&quot;Entered into Open&quot;);
+&nbsp;
+&nbsp;        // store connecting user information
+&nbsp;        sessionUsernameMap.put(session, username);
+&nbsp;        usernameSessionMap.put(username, session);
+&nbsp;        int idk = usernameSessionMap.size();
+&nbsp;        String number = Integer.toString(idk);
+&nbsp;
+&nbsp;        //Send chat history to the newly connected user
+&nbsp;        //sendMessageToPArticularUser(username, getChatHistory());
+&nbsp;
+&nbsp;        // broadcast that new user joined
+&nbsp;        //String message = &quot;User:&quot; + username + &quot; has Joined the game&quot;;
+&nbsp;
+&nbsp;        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
+&nbsp;        //broadcast(number);
+&nbsp;
+&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 2&quot;;
+&nbsp;        String test = &quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;2\&quot;}&quot;;
+&nbsp;        broadcast(test);
+&nbsp;
+&nbsp;
+&nbsp;        //session.getBasicRemote().sendText(number);
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @OnMessage
+&nbsp;    public void onMessage(Session session, String message) throws IOException {
+&nbsp;
+&nbsp;        JsonReader reader = Json.createReader(new StringReader(message));
+&nbsp;        JsonObject jsonObject = reader.readObject();
+&nbsp;        reader.close();
+&nbsp;
+&nbsp;        String player = jsonObject.getString(&quot;player&quot;);
+&nbsp;        String card = jsonObject.getString(&quot;Card&quot;);
+&nbsp;
+&nbsp;        // Handle new messages
+&nbsp;        logger.info(&quot;Entered into Message: Got Message:&quot; + message);
+&nbsp;        String username = sessionUsernameMap.get(session);
+&nbsp;        String www = &quot;Player &quot;;
+&nbsp;        www = www.concat(player);
+&nbsp;        www = www.concat(&quot; drew a &quot;);
+&nbsp;        www = www.concat(card);
+&nbsp;        //Change message to www if you want to send &quot;Player _ drew a _&quot; !!???????
+&nbsp;        broadcast(message);
+&nbsp;
+&nbsp;        // Direct message to a user using the format &quot;@username &lt;message&gt;&quot;
+&nbsp;//        if (message.startsWith(&quot;@&quot;)) {
+&nbsp;//            String destUsername = message.split(&quot; &quot;)[0].substring(1);
+&nbsp;//
+&nbsp;//            // send the message to the sender and receiver
+&nbsp;//            sendMessageToPArticularUser(destUsername, &quot;[DM] &quot; + username + &quot;: &quot; + message);
+&nbsp;//            sendMessageToPArticularUser(username, &quot;[DM] &quot; + username + &quot;: &quot; + message);
+&nbsp;//
+&nbsp;//        }
+&nbsp;//        else { // broadcast
+&nbsp;//            broadcast(username + &quot;: &quot; + message);
+&nbsp;//        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @OnClose
+&nbsp;    public void onClose(Session session) throws IOException {
+&nbsp;        logger.info(&quot;Entered into Close&quot;);
+&nbsp;
+&nbsp;        // remove the user connection information
+&nbsp;        String username = sessionUsernameMap.get(session);
+&nbsp;        sessionUsernameMap.remove(session);
+&nbsp;        usernameSessionMap.remove(username);
+&nbsp;
+&nbsp;        // broadcase that the user disconnected
+&nbsp;        String message = username + &quot; disconnected&quot;;
+&nbsp;        broadcast(message);
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @OnError
+&nbsp;    public void onError(Session session, Throwable throwable) {
+&nbsp;        // Do error handling here
+&nbsp;        logger.info(&quot;Entered into Error&quot;);
+&nbsp;        throwable.printStackTrace();
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void sendMessageToPArticularUser(String username, String message) {
+&nbsp;        try {
+&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);
+&nbsp;        }
+&nbsp;        catch (IOException e) {
+&nbsp;            logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;            e.printStackTrace();
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void broadcast(String message) {
+&nbsp;        sessionUsernameMap.forEach((session, username) -&gt; {
+&nbsp;            try {
+&nbsp;                session.getBasicRemote().sendText(message);
+&nbsp;            }
+&nbsp;            catch (IOException e) {
+&nbsp;                logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;                e.printStackTrace();
+&nbsp;            }
+&nbsp;
+&nbsp;        });
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // Gets the Chat history from the repository
+&nbsp;//    private String getChatHistory() {
+&nbsp;//        List&lt;Message&gt; messages = msgRepo.findAll();
+&nbsp;//
+&nbsp;//        // convert the list to a string
+&nbsp;//        StringBuilder sb = new StringBuilder();
+&nbsp;//        if(messages != null &amp;&amp; messages.size() != 0) {
+&nbsp;//            for (Message message : messages) {
+&nbsp;//                sb.append(message.getUserName() + &quot;: &quot; + message.getContent() + &quot;\n&quot;);
+&nbsp;//            }
+&nbsp;//        }
+&nbsp;//        return sb.toString();
+&nbsp;//    }
+&nbsp;
+&nbsp;} // end of Class
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
+</div>
+</body>
+</html>

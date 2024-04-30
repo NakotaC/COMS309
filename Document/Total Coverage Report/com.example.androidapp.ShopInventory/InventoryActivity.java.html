@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.ShopInventory</a> &gt; <span class="el_source">InventoryActivity.java</span></div><h1>InventoryActivity.java</h1><pre class="source lang-java linenums">package com.example.androidapp.ShopInventory;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Game.User;
+import com.example.androidapp.R;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Class to handle the Shop screen
+ */
+<span class="fc" id="L36">public class InventoryActivity extends AppCompatActivity implements View.OnClickListener{</span>
+    private TextView inventoryHeader, inventoryItemText, equippedText, equipUnequipText;
+    private ListAdapterInventory adapterInventory;
+    private ListAdapterEquippedInventory adapterEquipped;
+    private ListView listViewEquipped, listViewInventory;
+    private int equipNum, id;
+    Button back;
+    User user;
+    JSONArray equippedItems;
+<span class="fc" id="L45">    JSONArray ownedItems,  ownedItemsSansEquipped = new JSONArray();</span>
+    private static String URL;
+    int inventoryNum;
+    String msg;
+    //private static String URL = &quot;http://coms-309-033.class.las.iastate.edu:8080/inventory/shop&quot;
+
+    /**
+     * Handles the creation and functionality of the elements when the screen is initialized
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     *
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L60">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L61">        setContentView(R.layout.activity_inventory);</span>
+
+<span class="fc" id="L63">        Bundle extras = getIntent().getExtras();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        assert extras != null;</span>
+<span class="fc" id="L65">        user = (User) extras.getSerializable(&quot;USEROBJ&quot;);</span>
+
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        assert user != null;</span>
+<span class="fc" id="L69">        equippedItems = user.getEquippedItems();</span>
+<span class="fc" id="L70">        id = user.getId();</span>
+<span class="fc" id="L71">        ownedItems = user.getInventory();</span>
+<span class="fc" id="L72">        msg = user.invStr;</span>
+
+        //URL = &quot;https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop&quot;;
+        //URL = &quot;http://coms-309-033.class.las.iastate.edu:8080/inventory/&quot; + id;
+
+<span class="fc" id="L77">        inventoryHeader = findViewById(R.id.InventoryHeader);</span>
+<span class="fc" id="L78">        inventoryItemText = findViewById(R.id.inventoryItemTxt);</span>
+<span class="fc" id="L79">        equippedText = findViewById(R.id.equippedTxt);</span>
+<span class="fc" id="L80">        listViewEquipped = findViewById(R.id.listview_equipped);</span>
+<span class="fc" id="L81">        listViewInventory = findViewById(R.id.listView_inventory);</span>
+<span class="fc" id="L82">        back = findViewById(R.id.inventoryBtn);</span>
+<span class="fc" id="L83">        equipUnequipText = findViewById(R.id.equip_unequip_txt);</span>
+<span class="fc" id="L84">        equipUnequipText.setVisibility(View.INVISIBLE);</span>
+        // Initialize the adapter with an empty list (data will be added later)
+<span class="fc" id="L86">        adapterEquipped = new ListAdapterEquippedInventory(this, new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L87">        listViewEquipped.setAdapter(adapterEquipped);</span>
+
+<span class="fc" id="L89">        adapterInventory = new ListAdapterInventory(this, new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L90">        listViewInventory.setAdapter(adapterInventory);</span>
+
+<span class="fc" id="L92">        back.setOnClickListener(this);</span>
+<span class="fc" id="L93">        JSONObject tmpOwned = null;</span>
+<span class="fc" id="L94">        int numRemoved = 0;</span>
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if(msg != null){</span>
+<span class="fc" id="L97">            equipUnequipText.setText(msg);</span>
+<span class="fc" id="L98">            equipUnequipText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);</span>
+<span class="fc" id="L99">            equipUnequipText.setVisibility(View.VISIBLE);</span>
+        }
+
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if(!equippedItems.isNull(0)) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            for (int i = 0; i &lt; ownedItems.length(); i++) {</span>
+<span class="fc" id="L104">                boolean inEquipped = false;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                for (int k = 0; k &lt; equippedItems.length(); k++) {</span>
+                    try {
+<span class="fc" id="L107">                        tmpOwned = ownedItems.getJSONObject(i);</span>
+<span class="fc" id="L108">                        JSONObject tmpEquipped = equippedItems.getJSONObject(k);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                        if (tmpOwned.getString(&quot;itemName&quot;).equals(tmpEquipped.getString(&quot;itemName&quot;))) {</span>
+<span class="fc" id="L110">                            inEquipped = true;</span>
+<span class="fc" id="L111">                            break;</span>
+                        } else {
+<span class="fc" id="L113">                            continue;</span>
+                        }
+<span class="nc" id="L115">                    } catch (JSONException e) {</span>
+<span class="nc" id="L116">                        throw new RuntimeException(e);</span>
+                    }
+                }
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (!inEquipped) {</span>
+
+<span class="fc" id="L121">                    ownedItemsSansEquipped = ownedItemsSansEquipped.put(tmpOwned);</span>
+<span class="fc" id="L122">                    numRemoved++;</span>
+                }
+            }
+        }else{
+<span class="nc" id="L126">            ownedItemsSansEquipped = ownedItems;</span>
+        }
+
+
+
+
+
+<span class="fc" id="L133">        listViewEquipped.setOnItemClickListener(new AdapterView.OnItemClickListener() {</span>
+            public void onItemClick(AdapterView &lt;? &gt; arg0, View view, int position, long id) {
+<span class="fc" id="L135">                equipNum = (int)id;</span>
+<span class="fc" id="L136">                unequipRequest();</span>
+<span class="fc" id="L137">            }</span>
+
+        });
+
+<span class="fc" id="L141">        listViewInventory.setOnItemClickListener(new AdapterView.OnItemClickListener() {</span>
+            public void onItemClick(AdapterView &lt;? &gt; arg0, View view, int position, long id) {
+<span class="fc" id="L143">                equipNum = (int)id;</span>
+<span class="fc" id="L144">                Gson gson = new Gson();</span>
+<span class="fc" id="L145">                JSONObject temp = null;</span>
+                try {
+<span class="fc" id="L147">                    temp = new JSONObject(gson.toJson(adapterInventory.getItem(equipNum)));</span>
+<span class="nc" id="L148">                } catch (JSONException e) {</span>
+<span class="nc" id="L149">                    throw new RuntimeException(e);</span>
+<span class="fc" id="L150">                }</span>
+                try {
+<span class="fc" id="L152">                    inventoryNum = user.getItemPosition(temp);</span>
+<span class="nc" id="L153">                } catch (JSONException e) {</span>
+<span class="nc" id="L154">                    throw new RuntimeException(e);</span>
+<span class="fc" id="L155">                }</span>
+<span class="fc" id="L156">                equipRequest();</span>
+<span class="fc" id="L157">            }</span>
+
+        });
+
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (int i = 0; i &lt; equippedItems.length(); i++) {</span>
+            try {
+<span class="fc" id="L163">                JSONObject jsonObject = equippedItems.getJSONObject(i);</span>
+<span class="fc" id="L164">                String name = jsonObject.getString(&quot;itemName&quot;);</span>
+<span class="fc" id="L165">                String description = jsonObject.getString(&quot;description&quot;);</span>
+
+                // Create a ListItemObject and add it to the adapter
+<span class="fc" id="L168">                EquippedItemInventory item = new EquippedItemInventory(name, description);</span>
+                //   ListAdapterInventory tmp = adapter;
+<span class="fc" id="L170">                adapterEquipped.add(item);</span>
+
+<span class="nc" id="L172">            } catch (JSONException e) {</span>
+<span class="nc" id="L173">                e.printStackTrace();</span>
+<span class="fc" id="L174">            }</span>
+        }
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (int i = 0; i &lt; ownedItemsSansEquipped.length(); i++) {</span>
+            try {
+<span class="fc" id="L178">                JSONObject jsonObject = ownedItemsSansEquipped.getJSONObject(i);</span>
+<span class="fc" id="L179">                String name = jsonObject.getString(&quot;itemName&quot;);</span>
+<span class="fc" id="L180">                String description = jsonObject.getString(&quot;description&quot;);</span>
+
+                // Create a ListItemObject and add it to the adapter
+<span class="fc" id="L183">                ListItemObjectInventory item = new ListItemObjectInventory(name, description);</span>
+                //   ListAdapterInventory tmp = adapter;
+<span class="fc" id="L185">                adapterInventory.add(item);</span>
+
+<span class="nc" id="L187">            } catch (JSONException e) {</span>
+<span class="nc" id="L188">                e.printStackTrace();</span>
+<span class="fc" id="L189">            }</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    /**
+     * Handles the logic for the buttons on screen
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+<span class="fc" id="L199">        int id = v.getId();</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if(id == R.id.inventoryBtn){</span>
+<span class="fc" id="L201">            Intent intent = new Intent(InventoryActivity.this, ShopActivity.class);</span>
+<span class="fc" id="L202">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L203">            startActivity(intent);</span>
+        }
+<span class="fc" id="L205">    }</span>
+
+
+    private void unequipRequest() {
+
+<span class="fc" id="L210">        JsonObjectRequest request = new JsonObjectRequest(</span>
+                Request.Method.DELETE,
+<span class="fc" id="L212">                &quot;http://coms-309-033.class.las.iastate.edu:8080/unequip/&quot; + user.getId(),</span>
+                //&quot;https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail&quot;,
+                null,
+<span class="fc" id="L215">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String responseStr;
+                        try {
+<span class="fc" id="L220">                            responseStr = response.getString(&quot;message&quot;);</span>
+<span class="nc" id="L221">                        } catch (JSONException e) {</span>
+<span class="nc" id="L222">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L223">                        }</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">                    if(Objects.equals(responseStr, &quot;success&quot;)){</span>
+                        try {
+<span class="fc" id="L226">                            user.removeEquippedItem(equipNum);</span>
+<span class="nc" id="L227">                        } catch (JSONException e) {</span>
+<span class="nc" id="L228">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L229">                        }</span>
+<span class="fc" id="L230">                        Intent intent = new Intent(InventoryActivity.this, InventoryActivity.class);</span>
+<span class="fc" id="L231">                        user.invStr = &quot;Unequipped&quot;;</span>
+<span class="fc" id="L232">                        intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L233">                        startActivity(intent);</span>
+<span class="fc" id="L234">                    }else{</span>
+<span class="nc" id="L235">                        Toast toast = new Toast(InventoryActivity.this);</span>
+<span class="nc" id="L236">                        toast.setText(&quot;Unequip Failed. Try Again.&quot;);</span>
+<span class="nc" id="L237">                        toast.setDuration(Toast.LENGTH_LONG);</span>
+<span class="nc" id="L238">                        toast.show();</span>
+                    }
+
+
+<span class="fc" id="L242">                    }</span>
+                },
+<span class="fc" id="L244">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+<span class="nc" id="L248">                    }</span>
+                }
+<span class="fc" id="L250">        ){</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="fc" id="L253">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+               // headers.put(&quot;username&quot;, );
+<span class="fc" id="L255">                headers.put(&quot;itemNum&quot;, String.valueOf(equipNum));</span>
+<span class="fc" id="L256">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L261">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L264">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="fc" id="L269">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="fc" id="L270">    }</span>
+    private void equipRequest() {
+
+<span class="fc" id="L273">        JsonObjectRequest request = new JsonObjectRequest(</span>
+                Request.Method.PUT,
+<span class="fc" id="L275">                &quot;http://coms-309-033.class.las.iastate.edu:8080/equip/&quot; + user.getId(),</span>
+                //&quot;https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/shop/equip/fail&quot;,
+                null,
+<span class="fc" id="L278">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String responseStr;
+                        try {
+<span class="fc" id="L283">                            responseStr = response.getString(&quot;message&quot;);</span>
+<span class="nc" id="L284">                        } catch (JSONException e) {</span>
+<span class="nc" id="L285">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L286">                        }</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">                        if(Objects.equals(responseStr, &quot;success&quot;)){</span>
+                            try {
+<span class="fc" id="L289">                                user.addEquippedItem(ownedItems.getJSONObject(inventoryNum));</span>
+<span class="nc" id="L290">                            } catch (JSONException e) {</span>
+<span class="nc" id="L291">                                throw new RuntimeException(e);</span>
+<span class="fc" id="L292">                            }</span>
+<span class="fc" id="L293">                            Intent intent = new Intent(InventoryActivity.this, InventoryActivity.class);</span>
+<span class="fc" id="L294">                            user.invStr = &quot;Equipped&quot;;</span>
+<span class="fc" id="L295">                            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L296">                            startActivity(intent);</span>
+<span class="fc" id="L297">                        }else{</span>
+<span class="nc" id="L298">                            Toast toastEquip = new Toast(InventoryActivity.this);</span>
+<span class="nc" id="L299">                            toastEquip.setText(&quot;Equip Failed. Try Again.&quot;);</span>
+<span class="nc" id="L300">                            toastEquip.setDuration(Toast.LENGTH_LONG);</span>
+<span class="nc" id="L301">                            toastEquip.show();</span>
+                        }
+
+
+<span class="fc" id="L305">                    }</span>
+                },
+<span class="fc" id="L307">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+<span class="nc" id="L311">                    }</span>
+                }
+<span class="fc" id="L313">        ){</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="fc" id="L316">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+                // headers.put(&quot;username&quot;, );
+<span class="fc" id="L318">                headers.put(&quot;itemNum&quot;, String.valueOf(inventoryNum));</span>
+<span class="fc" id="L319">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L324">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L327">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="fc" id="L332">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="fc" id="L333">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

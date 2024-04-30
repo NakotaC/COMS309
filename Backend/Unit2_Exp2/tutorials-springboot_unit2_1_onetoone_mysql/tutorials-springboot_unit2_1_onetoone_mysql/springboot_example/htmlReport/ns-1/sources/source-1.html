@@ -49,30 +49,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    98.7%
+    12.5%
   </span>
   <span class="absValue">
-    (76/77)
+    (3/24)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$6a2206bf</td>
+    <td class="name">Main$$EnhancerBySpringCGLIB$$beaffc21</td>
   </tr>
   <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$6a2206bf$$FastClassBySpringCGLIB$$c9a98b6c</td>
-  </tr>
-  <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$b03233dc</td>
-  </tr>
-  <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$b03233dc$$FastClassBySpringCGLIB$$86021503</td>
-  </tr>
-  <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$e7133b52</td>
-  </tr>
-  <tr>
-    <td class="name">Main$$EnhancerBySpringCGLIB$$e7133b52$$FastClassBySpringCGLIB$$2c964b37</td>
+    <td class="name">Main$$EnhancerBySpringCGLIB$$beaffc21$$FastClassBySpringCGLIB$$cb1fe91b</td>
   </tr>
   <tr>
     <td class="name">Main$$FastClassBySpringCGLIB$$e6e8dec2</td>
@@ -89,10 +77,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    98.7%
+    12.5%
   </span>
   <span class="absValue">
-    (76/77)
+    (3/24)
   </span>
 </td>
 </tr>
@@ -118,6 +106,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import org.springframework.boot.CommandLineRunner;
 &nbsp;import org.springframework.boot.SpringApplication;
 &nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
+&nbsp;import org.springframework.http.HttpEntity;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.MediaType;
+&nbsp;import org.springframework.web.client.RestTemplate;
 &nbsp;import org.springframework.context.annotation.Bean;
 &nbsp;import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 &nbsp;import onetoone.Users.User;
@@ -135,6 +127,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.GregorianCalendar;
 &nbsp;import java.util.TimeZone;
 &nbsp;
+&nbsp;
+&nbsp;
 &nbsp;/**
 &nbsp; * 
 &nbsp; * @author Vivek Bengre
@@ -147,9 +141,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    public static void main(String[] args) {
 <b class="nc">&nbsp;        SpringApplication.run(Main.class, args);</b>
-&nbsp;
-&nbsp;
-&nbsp;
 &nbsp;    }
 &nbsp;
 &nbsp;    // Create 3 users with their machines
@@ -162,83 +153,30 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @Bean
 &nbsp;    CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, EquippedItemsRepository equippedItemsRepository) {
 <b class="fc">&nbsp;        return args -&gt; {</b>
-<b class="fc">&nbsp;            User user1 = new User(&quot;John&quot;, &quot;JohnPassword&quot;);</b>
-<b class="fc">&nbsp;            User user2 = new User(&quot;Tom&quot;, &quot;TomPassword&quot;);</b>
-<b class="fc">&nbsp;            User user3 = new User(&quot;Robby&quot;, &quot;RobbyPassword&quot;);</b>
-<b class="fc">&nbsp;            Inventory inventory1 = new Inventory();</b>
-<b class="fc">&nbsp;            Inventory inventory2 = new Inventory();</b>
-<b class="fc">&nbsp;            Inventory inventory3 = new Inventory();</b>
-<b class="fc">&nbsp;            EquippedItems EI1 = new EquippedItems();</b>
-<b class="fc">&nbsp;            EquippedItems EI2 = new EquippedItems();</b>
-<b class="fc">&nbsp;            EquippedItems EI3 = new EquippedItems();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; inv1items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; inv2items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; inv3items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; Einv1items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; Einv2items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ArrayList&lt;ShopItem&gt; Einv3items = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            ShopItem SI1 = new ShopItem(&quot;Item1&quot;, &quot;Description of Item1&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI2 = new ShopItem(&quot;Item2&quot;, &quot;Description of Item2&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI3 = new ShopItem(&quot;Item3&quot;, &quot;Description of Item3&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI4 = new ShopItem(&quot;Item4&quot;, &quot;Description of Item4&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI5 = new ShopItem(&quot;Item5&quot;, &quot;Description of Item5&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI6 = new ShopItem(&quot;Item6&quot;, &quot;Description of Item6&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI7 = new ShopItem(&quot;Item7&quot;, &quot;Description of Item7&quot;);</b>
-<b class="fc">&nbsp;            ShopItem SI8 = new ShopItem(&quot;Item8&quot;, &quot;Description of Item8&quot;);</b>
-<b class="fc">&nbsp;            inv1items.add(SI1);</b>
-<b class="fc">&nbsp;            inv1items.add(SI2);</b>
-<b class="fc">&nbsp;            inv1items.add(SI3);</b>
-<b class="fc">&nbsp;            inv2items.add(SI4);</b>
-<b class="fc">&nbsp;            inv2items.add(SI5);</b>
-<b class="fc">&nbsp;            inv2items.add(SI6);</b>
-<b class="fc">&nbsp;            inv3items.add(SI7);</b>
-<b class="fc">&nbsp;            inv3items.add(SI8);</b>
-<b class="fc">&nbsp;            Einv1items.add(SI1);</b>
-<b class="fc">&nbsp;            Einv2items.add(SI4);</b>
-<b class="fc">&nbsp;            Einv3items.add(SI8);</b>
-<b class="fc">&nbsp;            user2.setWins(14000);</b>
-<b class="fc">&nbsp;            inventory1.setShopItems(inv1items);</b>
-<b class="fc">&nbsp;            inventory2.setShopItems(inv2items);</b>
-<b class="fc">&nbsp;            inventory3.setShopItems(inv3items);</b>
-<b class="fc">&nbsp;            EI1.setShopItems(Einv1items);</b>
-<b class="fc">&nbsp;            EI2.setShopItems(Einv2items);</b>
-<b class="fc">&nbsp;            EI3.setShopItems(Einv3items);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI1);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI2);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI3);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI4);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI5);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI6);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI7);</b>
-<b class="fc">&nbsp;            shopItemsRepository.save(SI8);</b>
-<b class="fc">&nbsp;            inventoryRepository.save(inventory1);</b>
-<b class="fc">&nbsp;            inventoryRepository.save(inventory2);</b>
-<b class="fc">&nbsp;            inventoryRepository.save(inventory3);</b>
-<b class="fc">&nbsp;            equippedItemsRepository.save(EI1);</b>
-<b class="fc">&nbsp;            equippedItemsRepository.save(EI2);</b>
-<b class="fc">&nbsp;            equippedItemsRepository.save(EI3);</b>
-<b class="fc">&nbsp;            user1.setInventory(inventory1);</b>
-<b class="fc">&nbsp;            user2.setInventory(inventory2);</b>
-<b class="fc">&nbsp;            user3.setInventory(inventory3);</b>
-<b class="fc">&nbsp;            user1.setEquipped(EI1);</b>
-<b class="fc">&nbsp;            user2.setEquipped(EI2);</b>
-<b class="fc">&nbsp;            user3.setEquipped(EI3);</b>
-<b class="fc">&nbsp;            userRepository.save(user1);</b>
-<b class="fc">&nbsp;            userRepository.save(user2);</b>
-<b class="fc">&nbsp;            userRepository.save(user3);</b>
-<b class="fc">&nbsp;            Clan clan1 = new Clan(&quot;JennyClan&quot;, user2.getId());</b>
-<b class="fc">&nbsp;            clanRepository.save(clan1);</b>
-<b class="fc">&nbsp;            user2.setClan(clan1);</b>
-<b class="fc">&nbsp;            user1.setClan(clan1);</b>
-<b class="fc">&nbsp;            user3.setClan(clan1);</b>
-<b class="fc">&nbsp;            userRepository.save(user1);</b>
-<b class="fc">&nbsp;            userRepository.save(user2);</b>
-<b class="fc">&nbsp;            userRepository.save(user3);</b>
-<b class="fc">&nbsp;            Game g = new Game();</b>
-<b class="fc">&nbsp;            gameRepository.save(g);</b>
-&nbsp;//            System.out.println(&quot;hello&quot;);
-&nbsp;//            History h = new History(new GregorianCalendar(TimeZone.getTimeZone(&quot;UTC+5:00&quot;)), user1,  user1);
-&nbsp;//            historyRepository.save(h);
+&nbsp;            //NEEDS TO STAY IN MAIN WHEN GAME IS &quot;RELEASED&quot;
+<b class="fc">&nbsp;            if(shopItemsRepository.count() &lt;= 0) {</b>
+<b class="nc">&nbsp;                ShopItem SI1 = new ShopItem(&quot;Red&quot;, &quot;Red game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI2 = new ShopItem(&quot;Yellow&quot;, &quot;Yellow game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI3 = new ShopItem(&quot;Orange&quot;, &quot;Orange game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI4 = new ShopItem(&quot;Green&quot;, &quot;Green game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI5 = new ShopItem(&quot;Blue&quot;, &quot;Blue game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI6 = new ShopItem(&quot;Purple&quot;, &quot;Purple game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI7 = new ShopItem(&quot;Pink&quot;, &quot;Pink game piece&quot;);</b>
+<b class="nc">&nbsp;                ShopItem SI8 = new ShopItem(&quot;White&quot;, &quot;White game piece&quot;);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI1);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI2);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI3);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI4);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI5);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI6);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI7);</b>
+<b class="nc">&nbsp;                shopItemsRepository.save(SI8);</b>
+<b class="nc">&nbsp;                Game g = new Game();</b>
+<b class="nc">&nbsp;                gameRepository.save(g);</b>
+<b class="nc">&nbsp;                Game g2 = new Game();</b>
+<b class="nc">&nbsp;                gameRepository.save(g2);</b>
+&nbsp;            }
+&nbsp;
 &nbsp;        };
 &nbsp;    }
 &nbsp;
@@ -266,7 +204,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

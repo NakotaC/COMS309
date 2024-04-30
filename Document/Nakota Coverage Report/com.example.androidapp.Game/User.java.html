@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Game</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Game;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+
+/**
+ * Class to represent the user and hold data that could be useful
+ */
+public class User implements Serializable {
+    private final String username;
+    private  SerializableJSONArray inventory;
+    private SerializableJSONArray equippedItems;
+    private SerializableJSONArray quests;
+    private int bank;
+    private final int id;
+    private int xp;
+    private int playerNum;
+
+    public String invStr;
+
+    public int getGameId() {
+<span class="fc" id="L25">        return gameId;</span>
+    }
+
+    public void setGameId(int gameId) {
+<span class="fc" id="L29">        this.gameId = gameId;</span>
+<span class="fc" id="L30">    }</span>
+
+    private int gameId;
+
+    /**
+     * Gets the player Number(Keeps track of their place in the rotation)
+     * @return player number
+     */
+    public int getPlayerNum() {
+<span class="fc" id="L39">        return playerNum;</span>
+    }
+
+
+
+    /**
+     * Creates a User object with all fields blank
+     */
+<span class="fc" id="L47">    public User(){</span>
+<span class="fc" id="L48">        username = null;</span>
+<span class="fc" id="L49">        inventory = null;</span>
+<span class="fc" id="L50">        equippedItems = null;</span>
+<span class="fc" id="L51">        bank = 0;</span>
+<span class="fc" id="L52">        id = 0;</span>
+<span class="fc" id="L53">        playerNum = 0;</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Creates a User object from a given JSONObject
+     * @param object is the JSONObject that has the user data
+     * @throws JSONException if object is missing params. Exception will be thrown
+     */
+<span class="fc" id="L61">    public User(JSONObject object, JSONArray inventory, JSONArray equippedItems, JSONArray quests) throws JSONException {</span>
+<span class="fc" id="L62">        this.username = object.getString(&quot;username&quot;);</span>
+<span class="fc" id="L63">        this.bank = object.getInt(&quot;bank&quot;);</span>
+<span class="fc" id="L64">        this.xp = object.getInt(&quot;xp&quot;);</span>
+<span class="fc" id="L65">        this.id = object.getInt(&quot;id&quot;);</span>
+<span class="fc" id="L66">        this.equippedItems = new SerializableJSONArray(equippedItems);</span>
+<span class="fc" id="L67">        this.inventory = new SerializableJSONArray(inventory);</span>
+<span class="fc" id="L68">        this.quests = new SerializableJSONArray(quests);</span>
+<span class="fc" id="L69">        playerNum = 0;</span>
+<span class="fc" id="L70">        invStr = null;</span>
+<span class="fc" id="L71">    }</span>
+    /**
+     * Gets the value of the bank of the User
+     * @return The value in the user's bank
+     */
+    public int getBank() {
+<span class="nc" id="L77">        return bank;</span>
+    }
+
+    public int getId() {
+<span class="fc" id="L81">        return id;</span>
+    }
+
+    /**
+     * Gets the items that the User owns
+     * @return Array of items in the user's inventory
+     */
+    public JSONArray getInventory() {
+<span class="fc" id="L89">        return inventory.getJSONArray();</span>
+    }
+
+    public JSONArray getEquippedItems() {
+<span class="fc" id="L93">        return equippedItems.getJSONArray();</span>
+    }
+    public JSONArray getQuests()
+    {
+<span class="nc" id="L97">    return quests.getJSONArray();</span>
+    }
+
+    /**
+     * Gets the username of the User
+     * @return returns the user's username
+     */
+    public String getUsername() {
+<span class="fc" id="L105">        return username;</span>
+    }
+
+    /**
+     * sets the player number of the user
+     * @param playerNum is the given number for the user's turn in rotation
+     */
+    public void setPlayerNum(int playerNum) {
+<span class="fc" id="L113">        this.playerNum = playerNum;</span>
+<span class="fc" id="L114">    }</span>
+
+
+    public JSONArray addEquippedItem(JSONObject obj) throws JSONException {
+<span class="fc" id="L118">        int length = this.equippedItems.getJSONArray().length() + 1;</span>
+<span class="fc" id="L119">        JSONArray temp = new JSONArray();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        for (int i = 0; i &lt; length - 1; i++){</span>
+<span class="fc" id="L121">            temp.put(this.equippedItems.getJSONArray().getJSONObject(i));</span>
+        }
+<span class="fc" id="L123">        temp.put(obj);</span>
+<span class="fc" id="L124">        this.equippedItems = new SerializableJSONArray(temp);</span>
+<span class="fc" id="L125">        return temp;</span>
+    }
+    public JSONArray removeEquippedItem(int position) throws JSONException {
+        JSONArray result;
+<span class="fc" id="L129">        result = new JSONArray();</span>
+
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for(int i = 0; i &lt; equippedItems.getJSONArray().length(); i++){</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if(i != position){</span>
+<span class="fc" id="L133">                result.put(equippedItems.getJSONArray().get(i));</span>
+            }
+        }
+<span class="fc" id="L136">        this.equippedItems = new SerializableJSONArray(result);</span>
+<span class="fc" id="L137">        return result;</span>
+    }
+    public int getItemPosition(JSONObject obj) throws JSONException {
+        int i;
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        for (i = 0; i &lt; inventory.getJSONArray().length(); i++) {</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">            if (inventory.getJSONArray().getJSONObject(i).getString(&quot;itemName&quot;).equals(obj.getString(&quot;itemName&quot;))) {</span>
+<span class="fc" id="L143">                break;</span>
+            }
+        }
+<span class="fc" id="L146">        return i;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

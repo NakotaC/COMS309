@@ -51,7 +51,7 @@ public class GlobalChatActivity extends AppCompatActivity implements WebSocketLi
              // send message
              WebSocketManager.getInstance().sendMessage(msgContent.getText().toString());
          } catch (Exception e) {
-             Log.d("ExceptionSendMessage:", e.getMessage().toString());
+             Log.d("ExceptionSendMessage:", e.getMessage());
          }
      });
 

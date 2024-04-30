@@ -55,15 +55,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (9/9)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    53.3%
+    87.9%
   </span>
   <span class="absValue">
-    (8/15)
+    (80/91)
   </span>
 </td>
 </tr>
@@ -89,6 +89,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import onetoone.Users.UserRepository;
 &nbsp;import onetoone.Users.User;
 &nbsp;
+&nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
 &nbsp;@Api(value = &quot;ClanController&quot;, description = &quot;REST APIs related to the Clan Entity&quot;)
 &nbsp;@RestController
@@ -108,6 +109,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        return clanRepository.findAll();</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @GetMapping(path = &quot;/clans/open&quot;)
+&nbsp;    List&lt;Clan&gt; getAllOpenClans() {
+<b class="fc">&nbsp;        ArrayList&lt;Clan&gt; openClans = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (int i = 1; i &lt; clanRepository.count() + 1; i++) {</b>
+<b class="fc">&nbsp;            if (clanRepository.findById(i).getClanType().toLowerCase().equals(&quot;open&quot;)) {</b>
+<b class="fc">&nbsp;                System.out.print(clanRepository.findById(i).getClanType().toLowerCase());</b>
+<b class="fc">&nbsp;                openClans.add(clanRepository.findById(i));</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return openClans;</b>
+&nbsp;    }
+&nbsp;
 &nbsp;    @GetMapping(path = &quot;/clans/{clan_id}&quot;)
 &nbsp;    Clan getClan(@PathVariable int clan_id) {
 <b class="fc">&nbsp;        return clanRepository.findById(clan_id);</b>
@@ -115,19 +128,122 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    //could possibly be replaced with a findByClanName JPA method (just learned about these)
 &nbsp;    @PostMapping(path = &quot;clans/{clan_name}/{user_id}&quot;)
 &nbsp;    String newClan(@PathVariable int user_id, @PathVariable String clan_name) {
-<b class="fc">&nbsp;        for (int i = 1; i &lt; clanRepository.count(); i++) {</b>
+<b class="fc">&nbsp;        for (int i = 1; i &lt; clanRepository.count() + 1; i++) {</b>
 <b class="fc">&nbsp;            if (clan_name.equals(clanRepository.findById(i).getClanName())) {</b>
-<b class="fc">&nbsp;                return failure;</b>
+<b class="nc">&nbsp;                return failure;</b>
 &nbsp;            }
 &nbsp;        }
-<b class="nc">&nbsp;        Clan clan1 = new Clan(clan_name, user_id);</b>
+<b class="fc">&nbsp;        Clan clan1 = new Clan(clan_name, user_id, userRepository);</b>
+<b class="fc">&nbsp;        clanRepository.save(clan1);</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        int userOC = user.getClan();</b>
+<b class="fc">&nbsp;        Clan pc = clanRepository.findById(userOC);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; pcarray = pc.toIntList(pc.getMembers());</b>
+<b class="fc">&nbsp;        pcarray.remove(Integer.valueOf(user.getId()));</b>
+<b class="fc">&nbsp;        pc.setMember(pcarray);</b>
+<b class="fc">&nbsp;        clanRepository.save(pc);</b>
+<b class="fc">&nbsp;        user.setClan(clan1);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+&nbsp;
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;clans/{clan_name}/{user_id}/{type}/{max_members}&quot;)
+&nbsp;    String newClanPlus(@PathVariable int user_id, @PathVariable String clan_name,
+&nbsp;                       @PathVariable String type, @PathVariable int max_members) {
+<b class="fc">&nbsp;        for (int i = 1; i &lt; clanRepository.count() + 1; i++) {</b>
+<b class="fc">&nbsp;            if (clan_name.equals(clanRepository.findById(i).getClanName())) {</b>
+<b class="nc">&nbsp;                return failure;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        Clan clan1 = new Clan(clan_name, user_id, userRepository);</b>
+<b class="fc">&nbsp;        clan1.setMax_members(max_members);</b>
+<b class="fc">&nbsp;        clan1.setClanType(type);</b>
+<b class="fc">&nbsp;        clanRepository.save(clan1);</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        int userOC = user.getClan();</b>
+<b class="fc">&nbsp;        Clan pc = clanRepository.findById(userOC);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; pcarray = pc.toIntList(pc.getMembers());</b>
+<b class="fc">&nbsp;        pcarray.remove(Integer.valueOf(user.getId()));</b>
+<b class="fc">&nbsp;        pc.setMember(pcarray);</b>
+<b class="fc">&nbsp;        clanRepository.save(pc);</b>
+<b class="fc">&nbsp;        user.setClan(clan1);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+&nbsp;
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;member/{clan_name}/{user_id}&quot;)
+&nbsp;    String AddMemberClan(@PathVariable int user_id, @PathVariable String clan_name) {
+<b class="fc">&nbsp;        System.out.print(clan_name);</b>
+<b class="fc">&nbsp;        System.out.print(clanRepository.findById(1).getClanName());</b>
+&nbsp;        //delete user from previous clan
+<b class="fc">&nbsp;        User poorSap = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        int previous_clan = userRepository.findById(user_id).getClan();</b>
+<b class="fc">&nbsp;        Clan pc = clanRepository.findById(previous_clan);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; pcarray = pc.toIntList(pc.getMembers());</b>
+<b class="fc">&nbsp;        pcarray.remove(Integer.valueOf(poorSap.getId()));</b>
+<b class="fc">&nbsp;        pc.setMember(pcarray);</b>
+<b class="fc">&nbsp;        clanRepository.save(pc);</b>
+&nbsp;        //if this fails add them back to noClan
+<b class="fc">&nbsp;        for (int i = 1; i &lt; clanRepository.count() + 1; i++) {</b>
+<b class="fc">&nbsp;            if (clan_name.equals(clanRepository.findById(i).getClanName())) {</b>
+<b class="fc">&nbsp;                Clan clan1 = clanRepository.findById(i);</b>
+<b class="fc">&nbsp;                ArrayList&lt;Integer&gt; la = clan1.toIntList(clan1.getMembers());</b>
+<b class="fc">&nbsp;                la.add(user_id);</b>
+<b class="fc">&nbsp;                clan1.setMember(la);</b>
+<b class="fc">&nbsp;                clanRepository.save(clan1);</b>
+<b class="fc">&nbsp;                User user = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;                user.setClan(clan1);</b>
+<b class="fc">&nbsp;                userRepository.save(user);</b>
+<b class="fc">&nbsp;                return success;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        Clan clan1 = clanRepository.findById(1);</b>
+<b class="nc">&nbsp;        ArrayList&lt;Integer&gt; la = clan1.toIntList(clan1.getMembers());</b>
+<b class="nc">&nbsp;        la.add(user_id);</b>
+<b class="nc">&nbsp;        clan1.setMember(la);</b>
 <b class="nc">&nbsp;        clanRepository.save(clan1);</b>
 <b class="nc">&nbsp;        User user = userRepository.findById(user_id);</b>
-<b class="nc">&nbsp;        System.out.println(user);</b>
 <b class="nc">&nbsp;        user.setClan(clan1);</b>
 <b class="nc">&nbsp;        userRepository.save(user);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="nc">&nbsp;        return failure;</b>
 &nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;clan/Clan/cLAN/CLAM/CLam/cLAM&quot;)
+&nbsp;    void initNoClan() {
+<b class="fc">&nbsp;        Clan noClan = new Clan(&quot;noClan&quot;, -2, userRepository);</b>
+<b class="fc">&nbsp;        noClan.setMax_members(100000);</b>
+<b class="fc">&nbsp;        clanRepository.save(noClan);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    //essentially
+&nbsp;    @PostMapping(path = &quot;member/{user_id}&quot;)
+&nbsp;    String kickLeaveClan(@PathVariable int user_id) {
+<b class="fc">&nbsp;        User poorSap = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        int previous_clan = userRepository.findById(user_id).getClan();</b>
+<b class="fc">&nbsp;        Clan pc = clanRepository.findById(previous_clan);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; pcarray = pc.toIntList(pc.getMembers());</b>
+<b class="fc">&nbsp;        pcarray.remove(Integer.valueOf(poorSap.getId()));</b>
+<b class="fc">&nbsp;        pc.setMember(pcarray);</b>
+<b class="fc">&nbsp;        clanRepository.save(pc);</b>
+<b class="fc">&nbsp;        Clan clan1 = clanRepository.findById(1);</b>
+<b class="fc">&nbsp;        ArrayList&lt;Integer&gt; la = clan1.toIntList(clan1.getMembers());</b>
+<b class="fc">&nbsp;        la.add(user_id);</b>
+<b class="fc">&nbsp;        clan1.setMember(la);</b>
+<b class="fc">&nbsp;        clanRepository.save(clan1);</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(user_id);</b>
+<b class="fc">&nbsp;        user.setClan(clan1);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+&nbsp;
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -152,7 +268,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

@@ -2,7 +2,6 @@ package com.example.androidapp.MainAuth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +13,11 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.androidapp.R;
-import com.example.androidapp.Game.User;
 import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Game.User;
+import com.example.androidapp.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,7 +36,7 @@ public class SignupActivity extends AppCompatActivity {
     private String username;
 
     private String password;
-    private int userID = 0;
+    private final int userID = 0;
 
     private EditText passwordEntry;
 

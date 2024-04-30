@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    20%
+    100%
   </span>
   <span class="absValue">
-    (1/5)
+    (6/6)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    13.6%
+    100%
   </span>
   <span class="absValue">
-    (3/22)
+    (27/27)
   </span>
 </td>
 </tr>
@@ -101,42 +101,54 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
 <b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
 &nbsp;
-&nbsp;    //return all cosmetics in the game (in the DB)
+&nbsp;    //return all cosmetics in the game (in the DB) ???
+&nbsp;    // ?
+&nbsp;    // ?
+&nbsp;    // ?
 &nbsp;    @GetMapping(path = &quot;/inventory&quot;)
-<b class="nc">&nbsp;    List&lt;Inventory&gt; getInventory() { return inventoryRepository.findAll(); }</b>
+<b class="fc">&nbsp;    List&lt;Inventory&gt; getInventory() { return inventoryRepository.findAll(); }</b>
 &nbsp;
 &nbsp;    //@GetMapping(path = &quot;/inventory/shop&quot;)
 &nbsp;
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/inventory/{uid}&quot;)
 &nbsp;    List&lt;ShopItem&gt; getAllItemsUser(@PathVariable int uid){
-<b class="nc">&nbsp;        User u = userRepository.findById(uid);</b>
-<b class="nc">&nbsp;        Inventory i = u.getInventory();</b>
-<b class="nc">&nbsp;        List&lt;ShopItem&gt; tmp = i.getShopItems();</b>
-<b class="nc">&nbsp;        return tmp;</b>
+<b class="fc">&nbsp;        User u = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        Inventory i = u.getInventory();</b>
+<b class="fc">&nbsp;        List&lt;ShopItem&gt; tmp = i.getShopItems();</b>
+<b class="fc">&nbsp;        return tmp;</b>
 &nbsp;    }
 &nbsp;    @GetMapping(path = &quot;/inventory/shop&quot;)
 &nbsp;    List&lt;ShopItem&gt; getAllItems(){
-<b class="nc">&nbsp;        return shopItemsRepository.findAll();</b>
+<b class="fc">&nbsp;        return shopItemsRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/inventory/{uid}&quot;)
+&nbsp;    void newInv(@PathVariable int uid) {
+<b class="fc">&nbsp;        Inventory i = new Inventory();</b>
+<b class="fc">&nbsp;        inventoryRepository.save(i);</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        user.setInventory(i);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @PostMapping(path = &quot;/inventory/shop/buy&quot;)
 &nbsp;    String buyItem(@RequestHeader(&quot;item&quot;) String iiid, @RequestHeader(&quot;username&quot;) String username){
-<b class="nc">&nbsp;        int iid = Integer.parseInt(iiid);</b>
-<b class="nc">&nbsp;        System.out.println(iid);</b>
-<b class="nc">&nbsp;        List&lt;User&gt; users = userRepository.findAll();</b>
-<b class="nc">&nbsp;        int uid = 1;</b>
-<b class="nc">&nbsp;        for (int i = 0; i &lt; users.size(); i++) {</b>
-<b class="nc">&nbsp;            if (users.get(i).getUsername().equals(username)) {</b>
-<b class="nc">&nbsp;                uid = users.get(i).getId();</b>
-<b class="nc">&nbsp;                break;</b>
+<b class="fc">&nbsp;        int iid = Integer.parseInt(iiid);</b>
+<b class="fc">&nbsp;        System.out.println(iid);</b>
+<b class="fc">&nbsp;        List&lt;User&gt; users = userRepository.findAll();</b>
+<b class="fc">&nbsp;        int uid = 1;</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; users.size(); i++) {</b>
+<b class="fc">&nbsp;            if (users.get(i).getUsername().equals(username)) {</b>
+<b class="fc">&nbsp;                uid = users.get(i).getId();</b>
+<b class="fc">&nbsp;                break;</b>
 &nbsp;            }
 &nbsp;        }
-<b class="nc">&nbsp;        User user = userRepository.findById(uid);</b>
-<b class="nc">&nbsp;        ShopItem item = shopItemsRepository.findById(iid);</b>
-<b class="nc">&nbsp;        user.setItems(item);</b>
-<b class="nc">&nbsp;        userRepository.save(user);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(uid);</b>
+<b class="fc">&nbsp;        ShopItem item = shopItemsRepository.findById(iid);</b>
+<b class="fc">&nbsp;        user.setItems(item);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+<b class="fc">&nbsp;        return success;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;
@@ -164,7 +176,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-26 13:52</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>
