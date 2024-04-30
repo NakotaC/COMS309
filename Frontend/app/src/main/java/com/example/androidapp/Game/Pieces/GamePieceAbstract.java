@@ -69,8 +69,9 @@ abstract class GamePieceAbstract {
     public boolean onCorner(){
         boolean result = false;
         for(int i = 0; i < corners.length; i++){
-            if(this.location == corners[i]){
+            if (this.location == corners[i]) {
                 result = true;
+                break;
             }
         }
         return result;

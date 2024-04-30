@@ -105,6 +105,7 @@ public class NakotaTests {
         }
 
         onView(withId(R.id.equip_unequip_txt)).check(matches(withText(endsWith("Unequipped"))));
+        onView(withId(R.id.inventoryBtn)).perform(click());
 
     }
     @Test
@@ -130,6 +131,7 @@ public class NakotaTests {
 
 
         onView(withId(R.id.respondText)).check(matches(withText("success")));
+        onView(withId(R.id.shopBackBtn)).perform(click());
     }
 
 
@@ -174,10 +176,7 @@ public class NakotaTests {
         }
         onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
         onView(withId(R.id.turnBtn)).perform(click());
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
+
     }
     onView(withId(R.id.checkBoxPiece2)).perform(click());
     for(int i = 0; i < 25; i ++) {
@@ -188,10 +187,7 @@ public class NakotaTests {
         }
         onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
         onView(withId(R.id.turnBtn)).perform(click());
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
+
     }
     onView(withId(R.id.checkBoxPiece3)).perform(click());
     for(int i = 0; i < 25; i ++) {
@@ -202,10 +198,7 @@ public class NakotaTests {
         }
         onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
         onView(withId(R.id.turnBtn)).perform(click());
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
+
     }
     onView(withId(R.id.checkBoxPiece4)).perform(click());
     for(int i = 0; i < 25; i ++) {
@@ -222,13 +215,11 @@ public class NakotaTests {
         }
         onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
         onView(withId(R.id.turnBtn)).perform(click());
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
+
 
     }
     onView(withId(R.id.playerNumTxt)).check(matches(withText(endsWith("1"))));
+    onView(withId(R.id.gameBackBtn)).perform(click());
 }
 
 

@@ -101,10 +101,10 @@ private TextView shopHeader;
         @Override
     public void onClick(View v) {
 <span class="fc" id="L103">        int id = v.getId();</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if(id == R.id.shopBackBtn){</span>
-<span class="nc" id="L105">            Intent intent = new Intent(ShopActivity.this, HomeActivity.class);</span>
-<span class="nc" id="L106">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
-<span class="nc" id="L107">            startActivity(intent);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(id == R.id.shopBackBtn){</span>
+<span class="fc" id="L105">            Intent intent = new Intent(ShopActivity.this, HomeActivity.class);</span>
+<span class="fc" id="L106">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L107">            startActivity(intent);</span>
 <span class="pc bpc" id="L108" title="1 of 2 branches missed.">        } else if(id == R.id.shopInventoryBtn) {</span>
 <span class="fc" id="L109">            Intent intent = new Intent(ShopActivity.this, InventoryActivity.class);</span>
 <span class="fc" id="L110">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
@@ -198,37 +198,36 @@ private TextView shopHeader;
 <span class="nc" id="L198">                        } catch (JSONException e) {</span>
 <span class="nc" id="L199">                            throw new RuntimeException(e);</span>
 <span class="fc" id="L200">                        }</span>
-
-<span class="fc" id="L202">                        respondText.setText(msg);</span>
-<span class="fc" id="L203">                        respondText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);</span>
-<span class="fc" id="L204">                        respondText.setVisibility(TextView.VISIBLE);</span>
-<span class="fc" id="L205">                    }</span>
+<span class="fc" id="L201">                        respondText.setText(msg);</span>
+<span class="fc" id="L202">                        respondText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);</span>
+<span class="fc" id="L203">                        respondText.setVisibility(TextView.VISIBLE);</span>
+<span class="fc" id="L204">                    }</span>
                 },
-<span class="fc" id="L207">                new Response.ErrorListener() {</span>
+<span class="fc" id="L206">                new Response.ErrorListener() {</span>
                     @Override
                     public void onErrorResponse(VolleyError error) {
-<span class="nc" id="L210">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
-<span class="nc" id="L211">                        error.printStackTrace();</span>
-<span class="nc" id="L212">                    }</span>
+<span class="nc" id="L209">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L210">                        error.printStackTrace();</span>
+<span class="nc" id="L211">                    }</span>
                 }
-<span class="fc" id="L214">        ){</span>
+<span class="fc" id="L213">        ){</span>
 
 
             @Override
             public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
-<span class="fc" id="L219">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L220">                String temp = String.valueOf(buyNum);</span>
-<span class="fc" id="L221">                headers.put(&quot;item&quot;, String.valueOf(buyNum));</span>
-<span class="fc" id="L222">                headers.put(&quot;username&quot;, user.getUsername());</span>
-<span class="fc" id="L223">                return headers;</span>
+<span class="fc" id="L218">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L219">                String temp = String.valueOf(buyNum);</span>
+<span class="fc" id="L220">                headers.put(&quot;item&quot;, String.valueOf(buyNum));</span>
+<span class="fc" id="L221">                headers.put(&quot;username&quot;, user.getUsername());</span>
+<span class="fc" id="L222">                return headers;</span>
             }
 
             @Override
             protected Map&lt;String, String&gt; getParams() {
-<span class="nc" id="L228">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L227">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
                 //                params.put(&quot;param1&quot;, &quot;value1&quot;);
                 //                params.put(&quot;param2&quot;, &quot;value2&quot;);
-<span class="nc" id="L231">                return params;</span>
+<span class="nc" id="L230">                return params;</span>
             }
         };
 //        request.setRetryPolicy(new DefaultRetryPolicy(
@@ -236,7 +235,7 @@ private TextView shopHeader;
 //                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
 //                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         // Adding request to request queue
-<span class="fc" id="L239">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
-<span class="fc" id="L240">    }</span>
+<span class="fc" id="L238">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="fc" id="L239">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

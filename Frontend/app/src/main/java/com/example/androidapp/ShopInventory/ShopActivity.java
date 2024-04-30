@@ -198,7 +198,6 @@ private TextView shopHeader;
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-
                         respondText.setText(msg);
                         respondText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         respondText.setVisibility(TextView.VISIBLE);

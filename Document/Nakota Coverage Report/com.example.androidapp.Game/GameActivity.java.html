@@ -136,73 +136,74 @@ import java.util.Map;
 
 <span class="fc" id="L137">        turnBtn.setVisibility(INVISIBLE);</span>
 <span class="fc" id="L138">        drawBtn.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L139">        pieceNum1.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L140">        pieceNum2.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L141">        pieceNum3.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L142">        pieceNum4.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L139">        drawnText.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L140">        pieceNum1.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L141">        pieceNum2.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L142">        pieceNum3.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L143">        pieceNum4.setVisibility(View.INVISIBLE);</span>
 
         /* connect this activity to the websocket instance */
-<span class="fc" id="L145">        WebSocketManager.getInstance().connectWebSocket(serverUrl);</span>
-<span class="fc" id="L146">        WebSocketManager.getInstance().setWebSocketListener(GameActivity.this);</span>
+<span class="fc" id="L146">        WebSocketManager.getInstance().connectWebSocket(serverUrl);</span>
+<span class="fc" id="L147">        WebSocketManager.getInstance().setWebSocketListener(GameActivity.this);</span>
 
 //        addMatchButton.setOnClickListener(v -&gt; {
 //        postRequest();
 //        });
-<span class="fc" id="L151">        piece1.setOnClickListener(v -&gt; {</span>
-<span class="fc" id="L152">            selectedPiece = 1;</span>
-<span class="fc" id="L153">            piece1.setChecked(true);</span>
-<span class="fc" id="L154">            piece2.setChecked(false);</span>
-<span class="fc" id="L155">            piece3.setChecked(false);</span>
-<span class="fc" id="L156">            piece4.setChecked(false);</span>
-<span class="fc" id="L157">        });</span>
-<span class="fc" id="L158">        piece2.setOnClickListener(v -&gt; {</span>
-<span class="fc" id="L159">            selectedPiece = 2;</span>
-<span class="fc" id="L160">            piece2.setChecked(true);</span>
-<span class="fc" id="L161">            piece1.setChecked(false);</span>
-<span class="fc" id="L162">            piece3.setChecked(false);</span>
-<span class="fc" id="L163">            piece4.setChecked(false);</span>
-<span class="fc" id="L164">        });</span>
-<span class="fc" id="L165">        piece3.setOnClickListener(v -&gt; {</span>
-<span class="fc" id="L166">            selectedPiece = 3;</span>
-<span class="fc" id="L167">            piece3.setChecked(true);</span>
-<span class="fc" id="L168">            piece1.setChecked(false);</span>
-<span class="fc" id="L169">            piece2.setChecked(false);</span>
-<span class="fc" id="L170">            piece4.setChecked(false);</span>
-<span class="fc" id="L171">        });</span>
-<span class="fc" id="L172">        piece4.setOnClickListener(v -&gt; {</span>
-<span class="fc" id="L173">            selectedPiece = 4;</span>
-<span class="fc" id="L174">            piece4.setChecked(true);</span>
-<span class="fc" id="L175">            piece1.setChecked(false);</span>
-<span class="fc" id="L176">            piece2.setChecked(false);</span>
-<span class="fc" id="L177">            piece3.setChecked(false);</span>
-<span class="fc" id="L178">        });</span>
-<span class="fc" id="L179">        backBtn.setOnClickListener(v -&gt; {</span>
-<span class="nc" id="L180">            user.setGameId(0);</span>
-<span class="nc" id="L181">            user.setPlayerNum(0);</span>
-<span class="nc" id="L182">            Intent intent = new Intent(GameActivity.this, HomeActivity.class);</span>
-<span class="nc" id="L183">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
-<span class="nc" id="L184">            startActivity(intent);</span>
-<span class="nc" id="L185">        });</span>
+<span class="fc" id="L152">        piece1.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L153">            selectedPiece = 1;</span>
+<span class="fc" id="L154">            piece1.setChecked(true);</span>
+<span class="fc" id="L155">            piece2.setChecked(false);</span>
+<span class="fc" id="L156">            piece3.setChecked(false);</span>
+<span class="fc" id="L157">            piece4.setChecked(false);</span>
+<span class="fc" id="L158">        });</span>
+<span class="fc" id="L159">        piece2.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L160">            selectedPiece = 2;</span>
+<span class="fc" id="L161">            piece2.setChecked(true);</span>
+<span class="fc" id="L162">            piece1.setChecked(false);</span>
+<span class="fc" id="L163">            piece3.setChecked(false);</span>
+<span class="fc" id="L164">            piece4.setChecked(false);</span>
+<span class="fc" id="L165">        });</span>
+<span class="fc" id="L166">        piece3.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L167">            selectedPiece = 3;</span>
+<span class="fc" id="L168">            piece3.setChecked(true);</span>
+<span class="fc" id="L169">            piece1.setChecked(false);</span>
+<span class="fc" id="L170">            piece2.setChecked(false);</span>
+<span class="fc" id="L171">            piece4.setChecked(false);</span>
+<span class="fc" id="L172">        });</span>
+<span class="fc" id="L173">        piece4.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L174">            selectedPiece = 4;</span>
+<span class="fc" id="L175">            piece4.setChecked(true);</span>
+<span class="fc" id="L176">            piece1.setChecked(false);</span>
+<span class="fc" id="L177">            piece2.setChecked(false);</span>
+<span class="fc" id="L178">            piece3.setChecked(false);</span>
+<span class="fc" id="L179">        });</span>
+<span class="fc" id="L180">        backBtn.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L181">            user.setGameId(0);</span>
+<span class="fc" id="L182">            user.setPlayerNum(0);</span>
+<span class="fc" id="L183">            Intent intent = new Intent(GameActivity.this, HomeActivity.class);</span>
+<span class="fc" id="L184">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L185">            startActivity(intent);</span>
+<span class="fc" id="L186">        });</span>
         /* send button listener */
-<span class="fc" id="L187">        drawBtn.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L188">        drawBtn.setOnClickListener(v -&gt; {</span>
             try {
-<span class="fc" id="L189">                drawCard();</span>
-<span class="nc" id="L190">            } catch (Exception e) {</span>
-<span class="nc" id="L191">                Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
-<span class="fc" id="L192">            }</span>
-<span class="fc" id="L193">        });</span>
-<span class="fc" id="L194">        turnBtn.setOnClickListener(v -&gt; {</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">            if(selectedPiece != 0){</span>
-<span class="fc" id="L196">                sendMessage();</span>
-<span class="fc" id="L197">                turnBtn.setVisibility(INVISIBLE);</span>
-<span class="fc" id="L198">                drawnText.setVisibility(INVISIBLE);</span>
-<span class="fc" id="L199">                pieceNum1.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L200">                pieceNum2.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L201">                pieceNum3.setVisibility(View.INVISIBLE);</span>
-<span class="fc" id="L202">                pieceNum4.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L190">                drawCard();</span>
+<span class="nc" id="L191">            } catch (Exception e) {</span>
+<span class="nc" id="L192">                Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
+<span class="fc" id="L193">            }</span>
+<span class="fc" id="L194">        });</span>
+<span class="fc" id="L195">        turnBtn.setOnClickListener(v -&gt; {</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">            if(selectedPiece != 0){</span>
+<span class="fc" id="L197">                sendMessage();</span>
+<span class="fc" id="L198">                turnBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L199">                drawnText.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L200">                pieceNum1.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L201">                pieceNum2.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L202">                pieceNum3.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L203">                pieceNum4.setVisibility(View.INVISIBLE);</span>
             }
-<span class="fc" id="L204">        });</span>
-<span class="fc" id="L205">    }</span>
+<span class="fc" id="L205">        });</span>
+<span class="fc" id="L206">    }</span>
 
     /**
      * Handles what to do when a websocket message is received
@@ -219,89 +220,89 @@ import java.util.Map;
          */
         JSONObject obj;
         try {
-<span class="fc" id="L222">            obj = new JSONObject(message);</span>
-<span class="nc" id="L223">        } catch (JSONException e) {</span>
-<span class="nc" id="L224">            throw new RuntimeException(e);</span>
-<span class="fc" id="L225">        }</span>
+<span class="fc" id="L223">            obj = new JSONObject(message);</span>
+<span class="nc" id="L224">        } catch (JSONException e) {</span>
+<span class="nc" id="L225">            throw new RuntimeException(e);</span>
+<span class="fc" id="L226">        }</span>
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (user.getPlayerNum() == 0) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (user.getPlayerNum() == 0) {</span>
             int gameId;
             try {
-<span class="fc" id="L230">                 gameId = obj.getInt(&quot;gameid&quot;);</span>
-<span class="nc" id="L231">            } catch (JSONException e) {</span>
-<span class="nc" id="L232">                throw new RuntimeException(e);</span>
-<span class="fc" id="L233">            }</span>
+<span class="fc" id="L231">                 gameId = obj.getInt(&quot;gameid&quot;);</span>
+<span class="nc" id="L232">            } catch (JSONException e) {</span>
+<span class="nc" id="L233">                throw new RuntimeException(e);</span>
+<span class="fc" id="L234">            }</span>
 
-<span class="pc bpc" id="L235" title="1 of 2 branches missed.">            if(gameId != 1){</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">                if(user.getGameId() == 0) {</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            if(gameId != 1){</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">                if(user.getGameId() == 0) {</span>
 
                     try {
-<span class="fc" id="L239">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
-<span class="nc" id="L240">                    } catch (JSONException e) {</span>
-<span class="nc" id="L241">                        throw new RuntimeException(e);</span>
-<span class="fc" id="L242">                    }</span>
+<span class="fc" id="L240">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L241">                    } catch (JSONException e) {</span>
+<span class="nc" id="L242">                        throw new RuntimeException(e);</span>
+<span class="fc" id="L243">                    }</span>
 
-<span class="fc" id="L244">                    Intent intent = new Intent(GameActivity.this, GameActivity.class);</span>
-<span class="fc" id="L245">                    intent.putExtra(&quot;USEROBJ&quot;, user);</span>
-<span class="fc" id="L246">                    startActivity(intent);</span>
+<span class="fc" id="L245">                    Intent intent = new Intent(GameActivity.this, GameActivity.class);</span>
+<span class="fc" id="L246">                    intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L247">                    startActivity(intent);</span>
 
-<span class="fc" id="L248">                }else{</span>
+<span class="fc" id="L249">                }else{</span>
                     try {
-<span class="fc" id="L250">                        user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
-<span class="fc" id="L251">                        numPlayers = obj.getInt(&quot;playernum&quot;);</span>
-<span class="fc" id="L252">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
-<span class="nc" id="L253">                    } catch (JSONException e) {</span>
-<span class="nc" id="L254">                        throw new RuntimeException(e);</span>
-<span class="fc" id="L255">                    }</span>
+<span class="fc" id="L251">                        user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
+<span class="fc" id="L252">                        numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="fc" id="L253">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L254">                    } catch (JSONException e) {</span>
+<span class="nc" id="L255">                        throw new RuntimeException(e);</span>
+<span class="fc" id="L256">                    }</span>
                 }
-<span class="fc" id="L257">                runOnUiThread(() -&gt; {</span>
-<span class="fc" id="L258">                    playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
-<span class="fc" id="L259">                });</span>
+<span class="fc" id="L258">                runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L259">                    playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
+<span class="fc" id="L260">                });</span>
             }else{
             try {
-<span class="nc" id="L262">                user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
-<span class="nc" id="L263">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
-<span class="nc" id="L264">                user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
-<span class="nc" id="L265">            } catch (JSONException e) {</span>
-<span class="nc" id="L266">                throw new RuntimeException(e);</span>
-<span class="nc" id="L267">            }</span>
+<span class="nc" id="L263">                user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
+<span class="nc" id="L264">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="nc" id="L265">                user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L266">            } catch (JSONException e) {</span>
+<span class="nc" id="L267">                throw new RuntimeException(e);</span>
+<span class="nc" id="L268">            }</span>
             }
-<span class="fc" id="L269">            turnmgr = new TurnManager(numPlayers);</span>
+<span class="fc" id="L270">            turnmgr = new TurnManager(numPlayers);</span>
 
-<span class="fc" id="L271">            runOnUiThread(() -&gt; {</span>
-<span class="fc" id="L272">                playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
-<span class="fc" id="L273">            });</span>
+<span class="fc" id="L272">            runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L273">                playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
+<span class="fc" id="L274">            });</span>
 
-<span class="fc bfc" id="L275" title="All 2 branches covered.">            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {</span>
-<span class="fc" id="L276">                 runOnUiThread(() -&gt; {</span>
-<span class="fc" id="L277">                drawBtn.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L278">            });</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {</span>
+<span class="fc" id="L277">                 runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L278">                drawBtn.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L279">            });</span>
             }
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        } else if (obj.has(&quot;gameid&quot;)) {</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        } else if (obj.has(&quot;gameid&quot;)) {</span>
 
             try {
-<span class="nc" id="L283">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
-<span class="nc" id="L284">            } catch (JSONException e) {</span>
-<span class="nc" id="L285">                throw new RuntimeException(e);</span>
-<span class="nc" id="L286">            }</span>
+<span class="nc" id="L284">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="nc" id="L285">            } catch (JSONException e) {</span>
+<span class="nc" id="L286">                throw new RuntimeException(e);</span>
+<span class="nc" id="L287">            }</span>
 
-<span class="nc" id="L288">            turnmgr = new TurnManager(numPlayers);</span>
+<span class="nc" id="L289">            turnmgr = new TurnManager(numPlayers);</span>
 
         } else{
 
             try {
-<span class="fc" id="L293">                performTurn(obj.getInt(&quot;player&quot;), obj.getInt(&quot;pieceNum&quot;), obj.getInt(&quot;Card&quot;));</span>
-<span class="nc" id="L294">            } catch (JSONException e) {</span>
-<span class="nc" id="L295">                throw new RuntimeException(e);</span>
-<span class="fc" id="L296">            }</span>
-<span class="pc bpc" id="L297" title="1 of 4 branches missed.">            if (user.getPlayerNum() == turnmgr.getCurrTurn() &amp;&amp; checkWin() == 0) {</span>
-<span class="fc" id="L298">                runOnUiThread(() -&gt; {</span>
-<span class="fc" id="L299">                    drawBtn.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L300">                });</span>
+<span class="fc" id="L294">                performTurn(obj.getInt(&quot;player&quot;), obj.getInt(&quot;pieceNum&quot;), obj.getInt(&quot;Card&quot;));</span>
+<span class="nc" id="L295">            } catch (JSONException e) {</span>
+<span class="nc" id="L296">                throw new RuntimeException(e);</span>
+<span class="fc" id="L297">            }</span>
+<span class="pc bpc" id="L298" title="1 of 4 branches missed.">            if (user.getPlayerNum() == turnmgr.getCurrTurn() &amp;&amp; checkWin() == 0) {</span>
+<span class="fc" id="L299">                runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L300">                    drawBtn.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L301">                });</span>
             }
         }
 
-<span class="fc" id="L304">    }</span>
+<span class="fc" id="L305">    }</span>
 
     /**
      * Handles what to do when a websocket connection is closed
@@ -312,12 +313,12 @@ import java.util.Map;
      */
     @Override
     public void onWebSocketClose(int code, String reason, boolean remote) {
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        String closedBy = remote ? &quot;server&quot; : &quot;local&quot;;</span>
-<span class="fc" id="L316">        runOnUiThread(() -&gt; {</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">        String closedBy = remote ? &quot;server&quot; : &quot;local&quot;;</span>
+<span class="fc" id="L317">        runOnUiThread(() -&gt; {</span>
            // String s = turnText.getText().toString();
        //     turnText.setText(s + &quot;---\nconnection closed by &quot; + closedBy + &quot;\nreason: &quot; + reason);
-<span class="fc" id="L319">        });</span>
-<span class="fc" id="L320">    }</span>
+<span class="fc" id="L320">        });</span>
+<span class="fc" id="L321">    }</span>
 
     /**
      * Handles what to do when a Websocket is opened
@@ -326,7 +327,7 @@ import java.util.Map;
      */
     @Override
     public void onWebSocketOpen(ServerHandshake handshakedata) {
-<span class="fc" id="L329">    }</span>
+<span class="fc" id="L330">    }</span>
 
     /**
      * Handles what to do when an error is received
@@ -335,315 +336,315 @@ import java.util.Map;
      */
     @Override
     public void onWebSocketError(Exception ex) {
-<span class="nc" id="L338">    }</span>
+<span class="nc" id="L339">    }</span>
 
     private void drawCard() {
 
-<span class="fc" id="L342">        JsonObjectRequest objectRequest = new JsonObjectRequest(</span>
+<span class="fc" id="L343">        JsonObjectRequest objectRequest = new JsonObjectRequest(</span>
                 Request.Method.GET,
                 &quot;http://coms-309-033.class.las.iastate.edu:8080/draw/str&quot;,
                 //&quot;https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2&quot;,
                 null,
-<span class="fc" id="L347">                new Response.Listener&lt;JSONObject&gt;() {</span>
+<span class="fc" id="L348">                new Response.Listener&lt;JSONObject&gt;() {</span>
                     @Override
                     public void onResponse(JSONObject response) {
-<span class="fc" id="L350">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="fc" id="L351">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
 
                         try {
-<span class="fc" id="L353">                            cardNum = response.getInt(&quot;Card&quot;);</span>
-<span class="nc" id="L354">                        } catch (JSONException e) {</span>
-<span class="nc" id="L355">                            throw new RuntimeException(e);</span>
-<span class="fc" id="L356">                        }</span>
-<span class="fc" id="L357">                        drawnText.setText(&quot;You Drew A &quot; + cardNum);</span>
-<span class="fc" id="L358">                        drawnText.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L359">                        drawBtn.setVisibility(INVISIBLE);</span>
-<span class="fc" id="L360">                        turnBtn.setVisibility(View.VISIBLE);</span>
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">                        if (user.getPlayerNum() == 1) {</span>
-<span class="fc" id="L362">                            pieceNum1.setTranslationX(yellowPiece1.getX() + 80);</span>
-<span class="fc" id="L363">                            pieceNum1.setTranslationY(yellowPiece1.getY());</span>
-<span class="fc" id="L364">                            pieceNum2.setTranslationX(yellowPiece2.getX() + 80);</span>
-<span class="fc" id="L365">                            pieceNum2.setTranslationY(yellowPiece2.getY());</span>
-<span class="fc" id="L366">                            pieceNum3.setTranslationX(yellowPiece3.getX() + 80);</span>
-<span class="fc" id="L367">                            pieceNum3.setTranslationY(yellowPiece3.getY());</span>
-<span class="fc" id="L368">                            pieceNum4.setTranslationX(yellowPiece4.getX() + 80);</span>
-<span class="fc" id="L369">                            pieceNum4.setTranslationY(yellowPiece4.getY());</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 2) {</span>
-<span class="nc" id="L371">                            pieceNum1.setTranslationX(greenPiece1.getX() + 80);</span>
-<span class="nc" id="L372">                            pieceNum1.setTranslationY(greenPiece1.getY());</span>
-<span class="nc" id="L373">                            pieceNum2.setTranslationX(greenPiece2.getX() + 80);</span>
-<span class="nc" id="L374">                            pieceNum2.setTranslationY(greenPiece2.getY());</span>
-<span class="nc" id="L375">                            pieceNum3.setTranslationX(greenPiece3.getX() + 80);</span>
-<span class="nc" id="L376">                            pieceNum3.setTranslationY(greenPiece3.getY());</span>
-<span class="nc" id="L377">                            pieceNum4.setTranslationX(greenPiece4.getX() + 80);</span>
-<span class="nc" id="L378">                            pieceNum4.setTranslationY(greenPiece4.getY());</span>
-<span class="nc bnc" id="L379" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 3) {</span>
-<span class="nc" id="L380">                            pieceNum1.setTranslationX(redPiece1.getX() + 80);</span>
-<span class="nc" id="L381">                            pieceNum1.setTranslationY(redPiece1.getY());</span>
-<span class="nc" id="L382">                            pieceNum2.setTranslationX(redPiece2.getX() + 80);</span>
-<span class="nc" id="L383">                            pieceNum2.setTranslationY(redPiece2.getY());</span>
-<span class="nc" id="L384">                            pieceNum3.setTranslationX(redPiece3.getX() + 80);</span>
-<span class="nc" id="L385">                            pieceNum3.setTranslationY(redPiece3.getY());</span>
-<span class="nc" id="L386">                            pieceNum4.setTranslationX(redPiece4.getX() + 80);</span>
-<span class="nc" id="L387">                            pieceNum4.setTranslationY(redPiece4.getY());</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 4) {</span>
-<span class="nc" id="L389">                            pieceNum1.setTranslationX(bluePiece1.getX() + 80);</span>
-<span class="nc" id="L390">                            pieceNum1.setTranslationY(bluePiece1.getY());</span>
-<span class="nc" id="L391">                            pieceNum2.setTranslationX(bluePiece2.getX() + 80);</span>
-<span class="nc" id="L392">                            pieceNum2.setTranslationY(bluePiece2.getY());</span>
-<span class="nc" id="L393">                            pieceNum3.setTranslationX(bluePiece3.getX() + 80);</span>
-<span class="nc" id="L394">                            pieceNum3.setTranslationY(bluePiece3.getY());</span>
-<span class="nc" id="L395">                            pieceNum4.setTranslationX(bluePiece4.getX() + 80);</span>
-<span class="nc" id="L396">                            pieceNum4.setTranslationY(bluePiece4.getY());</span>
+<span class="fc" id="L354">                            cardNum = response.getInt(&quot;Card&quot;);</span>
+<span class="nc" id="L355">                        } catch (JSONException e) {</span>
+<span class="nc" id="L356">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L357">                        }</span>
+<span class="fc" id="L358">                        drawnText.setText(&quot;You Drew A &quot; + cardNum);</span>
+<span class="fc" id="L359">                        drawnText.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L360">                        drawBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L361">                        turnBtn.setVisibility(View.VISIBLE);</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">                        if (user.getPlayerNum() == 1) {</span>
+<span class="fc" id="L363">                            pieceNum1.setTranslationX(yellowPiece1.getX() + 80);</span>
+<span class="fc" id="L364">                            pieceNum1.setTranslationY(yellowPiece1.getY() + 50);</span>
+<span class="fc" id="L365">                            pieceNum2.setTranslationX(yellowPiece2.getX() + 80);</span>
+<span class="fc" id="L366">                            pieceNum2.setTranslationY(yellowPiece2.getY()+ 50);</span>
+<span class="fc" id="L367">                            pieceNum3.setTranslationX(yellowPiece3.getX() + 80);</span>
+<span class="fc" id="L368">                            pieceNum3.setTranslationY(yellowPiece3.getY()+ 50);</span>
+<span class="fc" id="L369">                            pieceNum4.setTranslationX(yellowPiece4.getX() + 80);</span>
+<span class="fc" id="L370">                            pieceNum4.setTranslationY(yellowPiece4.getY()+ 50);</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 2) {</span>
+<span class="nc" id="L372">                            pieceNum1.setTranslationX(greenPiece1.getX() + 80);</span>
+<span class="nc" id="L373">                            pieceNum1.setTranslationY(greenPiece1.getY()+ 10);</span>
+<span class="nc" id="L374">                            pieceNum2.setTranslationX(greenPiece2.getX() + 80);</span>
+<span class="nc" id="L375">                            pieceNum2.setTranslationY(greenPiece2.getY()+ 10);</span>
+<span class="nc" id="L376">                            pieceNum3.setTranslationX(greenPiece3.getX() + 80);</span>
+<span class="nc" id="L377">                            pieceNum3.setTranslationY(greenPiece3.getY()+ 10);</span>
+<span class="nc" id="L378">                            pieceNum4.setTranslationX(greenPiece4.getX() + 80);</span>
+<span class="nc" id="L379">                            pieceNum4.setTranslationY(greenPiece4.getY()+ 10);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 3) {</span>
+<span class="nc" id="L381">                            pieceNum1.setTranslationX(redPiece1.getX() + 80);</span>
+<span class="nc" id="L382">                            pieceNum1.setTranslationY(redPiece1.getY()+ 10);</span>
+<span class="nc" id="L383">                            pieceNum2.setTranslationX(redPiece2.getX() + 80);</span>
+<span class="nc" id="L384">                            pieceNum2.setTranslationY(redPiece2.getY()+ 10);</span>
+<span class="nc" id="L385">                            pieceNum3.setTranslationX(redPiece3.getX() + 80);</span>
+<span class="nc" id="L386">                            pieceNum3.setTranslationY(redPiece3.getY()+ 10);</span>
+<span class="nc" id="L387">                            pieceNum4.setTranslationX(redPiece4.getX() + 80);</span>
+<span class="nc" id="L388">                            pieceNum4.setTranslationY(redPiece4.getY()+ 10);</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 4) {</span>
+<span class="nc" id="L390">                            pieceNum1.setTranslationX(bluePiece1.getX() + 80);</span>
+<span class="nc" id="L391">                            pieceNum1.setTranslationY(bluePiece1.getY()+ 10);</span>
+<span class="nc" id="L392">                            pieceNum2.setTranslationX(bluePiece2.getX() + 80);</span>
+<span class="nc" id="L393">                            pieceNum2.setTranslationY(bluePiece2.getY()+ 10);</span>
+<span class="nc" id="L394">                            pieceNum3.setTranslationX(bluePiece3.getX() + 80);</span>
+<span class="nc" id="L395">                            pieceNum3.setTranslationY(bluePiece3.getY()+ 10);</span>
+<span class="nc" id="L396">                            pieceNum4.setTranslationX(bluePiece4.getX() + 80);</span>
+<span class="nc" id="L397">                            pieceNum4.setTranslationY(bluePiece4.getY()+ 10);</span>
                         }
 
 
-<span class="fc" id="L400">                        pieceNum1.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L401">                        pieceNum2.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L402">                        pieceNum3.setVisibility(View.VISIBLE);</span>
-<span class="fc" id="L403">                        pieceNum4.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L401">                        pieceNum1.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L402">                        pieceNum2.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L403">                        pieceNum3.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L404">                        pieceNum4.setVisibility(View.VISIBLE);</span>
 
-<span class="fc" id="L405">                    }</span>
+<span class="fc" id="L406">                    }</span>
                 },
-<span class="fc" id="L407">                new Response.ErrorListener() {</span>
+<span class="fc" id="L408">                new Response.ErrorListener() {</span>
                     @Override
                     public void onErrorResponse(VolleyError error) {
-<span class="nc" id="L410">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
-<span class="nc" id="L411">                    }</span>
-<span class="fc" id="L412">                }) {</span>
+<span class="nc" id="L411">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L412">                    }</span>
+<span class="fc" id="L413">                }) {</span>
             @Override
             public Map&lt;String, String&gt; getHeaders() {
-<span class="fc" id="L415">                Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L416">                headers.put(&quot;gameid&quot;, String.valueOf(user.getGameId()));</span>
+<span class="fc" id="L416">                Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L417">                headers.put(&quot;gameid&quot;, String.valueOf(user.getGameId()));</span>
 //                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
-<span class="fc" id="L418">                return headers;</span>
+<span class="fc" id="L419">                return headers;</span>
             }
 
             @Override
             protected Map&lt;String, String&gt; getParams() {
-<span class="nc" id="L423">                Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L424">                Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
 //                params.put(&quot;param1&quot;, &quot;value1&quot;);
 //                params.put(&quot;param2&quot;, &quot;value2&quot;);
-<span class="nc" id="L426">                return params;</span>
+<span class="nc" id="L427">                return params;</span>
             }
         };
 
         // Adding request to request queue
-<span class="fc" id="L431">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);</span>
-<span class="fc" id="L432">    }</span>
+<span class="fc" id="L432">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);</span>
+<span class="fc" id="L433">    }</span>
 
     private void postRequest() {
-<span class="fc" id="L435">        int winner = user.getId() + 1;</span>
+<span class="fc" id="L436">        int winner = user.getId() + 1;</span>
         // Convert input to JSONObject
-<span class="fc" id="L437">        JSONObject postBody = null;</span>
+<span class="fc" id="L438">        JSONObject postBody = null;</span>
 
-<span class="fc" id="L439">        JsonObjectRequest request = new JsonObjectRequest(</span>
+<span class="fc" id="L440">        JsonObjectRequest request = new JsonObjectRequest(</span>
                 Request.Method.POST,
-<span class="fc" id="L441">                &quot;http://coms-309-033.class.las.iastate.edu:8080/history/&quot; + user.getId() + &quot;/&quot; +</span>
+<span class="fc" id="L442">                &quot;http://coms-309-033.class.las.iastate.edu:8080/history/&quot; + user.getId() + &quot;/&quot; +</span>
                         winner + &quot;/&quot;,
                 //url,
                 postBody,
-<span class="fc" id="L445">                new Response.Listener&lt;JSONObject&gt;() {</span>
+<span class="fc" id="L446">                new Response.Listener&lt;JSONObject&gt;() {</span>
                     @Override
                     public void onResponse(JSONObject response) {
 
                         String responseString;
 
                         try {
-<span class="nc" id="L452">                            Log.d(&quot;Volley Response&quot;, response.toString());</span>
-<span class="nc" id="L453">                            responseString = response.getString(&quot;message&quot;).replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</span>
-<span class="nc" id="L454">                        } catch (JSONException e) {</span>
-<span class="nc" id="L455">                            throw new RuntimeException(e);</span>
-<span class="nc" id="L456">                        }</span>
+<span class="nc" id="L453">                            Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L454">                            responseString = response.getString(&quot;message&quot;).replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L455">                        } catch (JSONException e) {</span>
+<span class="nc" id="L456">                            throw new RuntimeException(e);</span>
+<span class="nc" id="L457">                        }</span>
 
-<span class="nc" id="L458">                        Toast.makeText(GameActivity.this, &quot;Match added&quot;,</span>
-<span class="nc" id="L459">                                Toast.LENGTH_SHORT).show();</span>
+<span class="nc" id="L459">                        Toast.makeText(GameActivity.this, &quot;Match added&quot;,</span>
+<span class="nc" id="L460">                                Toast.LENGTH_SHORT).show();</span>
 
-<span class="nc" id="L461">                    }</span>
+<span class="nc" id="L462">                    }</span>
                 },
-<span class="fc" id="L463">                new Response.ErrorListener() {</span>
+<span class="fc" id="L464">                new Response.ErrorListener() {</span>
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //  usernameTakenTxt.setText(error.getMessage());
-<span class="fc" id="L467">                    }</span>
+<span class="fc" id="L468">                    }</span>
                 }
-<span class="fc" id="L469">        ) {</span>
+<span class="fc" id="L470">        ) {</span>
             @Override
             public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
-<span class="fc" id="L472">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L473">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
                 //    headers.put(&quot;username&quot;, username);
                 //    headers.put(&quot;password&quot;, password);
-<span class="fc" id="L475">                return headers;</span>
+<span class="fc" id="L476">                return headers;</span>
             }
 
             @Override
             protected Map&lt;String, String&gt; getParams() {
-<span class="nc" id="L480">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L481">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
                 //                params.put(&quot;param1&quot;, &quot;value1&quot;);
                 //                params.put(&quot;param2&quot;, &quot;value2&quot;);
-<span class="nc" id="L483">                return params;</span>
+<span class="nc" id="L484">                return params;</span>
             }
         };
 
         // Adding request to request queue
-<span class="fc" id="L488">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
-<span class="fc" id="L489">    }</span>
+<span class="fc" id="L489">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="fc" id="L490">    }</span>
 
     private int Card() {
-<span class="nc" id="L492">        drawCard();</span>
-<span class="nc" id="L493">        return 1;</span>
+<span class="nc" id="L493">        drawCard();</span>
+<span class="nc" id="L494">        return 1;</span>
     }
 
     private void sendMessage() {
         try {
-<span class="fc" id="L498">            String msg = &quot;{\&quot;player\&quot;:\&quot;&quot; + user.getPlayerNum() + &quot;\&quot;, \&quot;Card\&quot;:\&quot;&quot; + cardNum + &quot;\&quot;, \&quot;pieceNum\&quot;: \&quot;&quot; + selectedPiece +&quot;\&quot;}&quot;;</span>
+<span class="fc" id="L499">            String msg = &quot;{\&quot;player\&quot;:\&quot;&quot; + user.getPlayerNum() + &quot;\&quot;, \&quot;Card\&quot;:\&quot;&quot; + cardNum + &quot;\&quot;, \&quot;pieceNum\&quot;: \&quot;&quot; + selectedPiece +&quot;\&quot;}&quot;;</span>
             // send message
-<span class="fc" id="L500">            WebSocketManager.getInstance().sendMessage(msg);</span>
-<span class="nc" id="L501">        } catch (Exception e) {</span>
-<span class="nc" id="L502">            Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
-<span class="fc" id="L503">        }</span>
-<span class="fc" id="L504">    }</span>
+<span class="fc" id="L501">            WebSocketManager.getInstance().sendMessage(msg);</span>
+<span class="nc" id="L502">        } catch (Exception e) {</span>
+<span class="nc" id="L503">            Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
+<span class="fc" id="L504">        }</span>
+<span class="fc" id="L505">    }</span>
 
     private void performTurn(int playerNum, int PieceNum, int numToMove) {
-<span class="pc bpc" id="L507" title="1 of 2 branches missed.">        if (playerNum == 1) {</span>
-<span class="fc" id="L508">            yellowPieces[PieceNum - 1].move(numToMove);</span>
-<span class="fc bfc" id="L509" title="All 2 branches covered.">            if(PieceNum == 1) {</span>
-<span class="fc" id="L510">                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="fc" id="L511">                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="fc" id="L512">                yellowPiece1.setTranslationX(transX);</span>
-<span class="fc" id="L513">                yellowPiece1.setTranslationY(transY);</span>
-<span class="fc bfc" id="L514" title="All 2 branches covered.">            } else if(PieceNum == 2) {</span>
-<span class="fc" id="L515">                float transX = yellowPiece2.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="fc" id="L516">                float transY = yellowPiece2.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="fc" id="L517">                yellowPiece2.setTranslationX(transX);</span>
-<span class="fc" id="L518">                yellowPiece2.setTranslationY(transY);</span>
-<span class="fc bfc" id="L519" title="All 2 branches covered.">            }else if(PieceNum == 3) {</span>
-<span class="fc" id="L520">                float transX = yellowPiece3.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="fc" id="L521">                float transY = yellowPiece3.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="fc" id="L522">                yellowPiece3.setTranslationX(transX);</span>
-<span class="fc" id="L523">                yellowPiece3.setTranslationY(transY);</span>
-<span class="pc bpc" id="L524" title="1 of 2 branches missed.">            }else if(PieceNum == 4) {</span>
-<span class="fc" id="L525">                float transX = yellowPiece4.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="fc" id="L526">                float transY = yellowPiece4.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="fc" id="L527">                yellowPiece4.setTranslationX(transX);</span>
-<span class="fc" id="L528">                yellowPiece4.setTranslationY(transY);</span>
-<span class="fc" id="L529">            }</span>
-<span class="nc bnc" id="L530" title="All 2 branches missed.">        } else if (playerNum == 2) {</span>
-<span class="nc" id="L531">            greenPieces[PieceNum - 1].move(numToMove);</span>
-<span class="nc bnc" id="L532" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
-<span class="nc" id="L533">                float transX = greenPiece1.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L534">                float transY = greenPiece1.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L535">                greenPiece1.setTranslationX(transX);</span>
-<span class="nc" id="L536">                greenPiece1.setTranslationY(transY);</span>
-<span class="nc bnc" id="L537" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
-<span class="nc" id="L538">                float transX = greenPiece2.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L539">                float transY = greenPiece2.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L540">                greenPiece2.setTranslationX(transX);</span>
-<span class="nc" id="L541">                greenPiece2.setTranslationY(transY);</span>
-<span class="nc bnc" id="L542" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
-<span class="nc" id="L543">                float transX = greenPiece3.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L544">                float transY = greenPiece3.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L545">                greenPiece3.setTranslationX(transX);</span>
-<span class="nc" id="L546">                greenPiece3.setTranslationY(transY);</span>
-<span class="nc bnc" id="L547" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
-<span class="nc" id="L548">                float transX = greenPiece4.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L549">                float transY = greenPiece4.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L550">                greenPiece4.setTranslationX(transX);</span>
-<span class="nc" id="L551">                greenPiece4.setTranslationY(transY);</span>
-<span class="nc" id="L552">            }</span>
-<span class="nc bnc" id="L553" title="All 2 branches missed.">        } else if (playerNum == 3) {</span>
-<span class="nc" id="L554">            redPieces[PieceNum - 1].move(numToMove);</span>
-<span class="nc bnc" id="L555" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
-<span class="nc" id="L556">                float transX = redPiece1.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L557">                float transY = redPiece1.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L558">                redPiece1.setTranslationX(transX);</span>
-<span class="nc" id="L559">                redPiece1.setTranslationY(transY);</span>
-<span class="nc bnc" id="L560" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
-<span class="nc" id="L561">                float transX = redPiece2.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L562">                float transY = redPiece2.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L563">                redPiece2.setTranslationX(transX);</span>
-<span class="nc" id="L564">                redPiece2.setTranslationY(transY);</span>
-<span class="nc bnc" id="L565" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
-<span class="nc" id="L566">                float transX = redPiece3.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L567">                float transY = redPiece3.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L568">                redPiece3.setTranslationX(transX);</span>
-<span class="nc" id="L569">                redPiece3.setTranslationY(transY);</span>
-<span class="nc bnc" id="L570" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
-<span class="nc" id="L571">                float transX = redPiece4.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L572">                float transY = redPiece4.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L573">                redPiece4.setTranslationX(transX);</span>
-<span class="nc" id="L574">                redPiece4.setTranslationY(transY);</span>
-<span class="nc" id="L575">            }</span>
-<span class="nc bnc" id="L576" title="All 2 branches missed.">        } else if (playerNum == 4) {</span>
-<span class="nc" id="L577">            bluePieces[PieceNum - 1].move(numToMove);</span>
-<span class="nc bnc" id="L578" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
-<span class="nc" id="L579">                float transX = bluePiece1.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L580">                float transY = bluePiece1.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L581">                bluePiece1.setTranslationX(transX);</span>
-<span class="nc" id="L582">                bluePiece1.setTranslationY(transY);</span>
-<span class="nc bnc" id="L583" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
-<span class="nc" id="L584">                float transX = bluePiece2.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L585">                float transY = bluePiece2.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L586">                bluePiece2.setTranslationX(transX);</span>
-<span class="nc" id="L587">                bluePiece2.setTranslationY(transY);</span>
-<span class="nc bnc" id="L588" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
-<span class="nc" id="L589">                float transX = bluePiece3.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L590">                float transY = bluePiece3.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L591">                bluePiece3.setTranslationX(transX);</span>
-<span class="nc" id="L592">                bluePiece3.setTranslationY(transY);</span>
-<span class="nc bnc" id="L593" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
-<span class="nc" id="L594">                float transX = bluePiece4.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
-<span class="nc" id="L595">                float transY = bluePiece4.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
-<span class="nc" id="L596">                bluePiece4.setTranslationX(transX);</span>
-<span class="nc" id="L597">                bluePiece4.setTranslationY(transY);</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">        if (playerNum == 1) {</span>
+<span class="fc" id="L509">            yellowPieces[PieceNum - 1].move(numToMove);</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">            if(PieceNum == 1) {</span>
+<span class="fc" id="L511">                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L512">                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L513">                yellowPiece1.setTranslationX(transX);</span>
+<span class="fc" id="L514">                yellowPiece1.setTranslationY(transY);</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">            } else if(PieceNum == 2) {</span>
+<span class="fc" id="L516">                float transX = yellowPiece2.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L517">                float transY = yellowPiece2.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L518">                yellowPiece2.setTranslationX(transX);</span>
+<span class="fc" id="L519">                yellowPiece2.setTranslationY(transY);</span>
+<span class="fc bfc" id="L520" title="All 2 branches covered.">            }else if(PieceNum == 3) {</span>
+<span class="fc" id="L521">                float transX = yellowPiece3.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L522">                float transY = yellowPiece3.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L523">                yellowPiece3.setTranslationX(transX);</span>
+<span class="fc" id="L524">                yellowPiece3.setTranslationY(transY);</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="fc" id="L526">                float transX = yellowPiece4.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L527">                float transY = yellowPiece4.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L528">                yellowPiece4.setTranslationX(transX);</span>
+<span class="fc" id="L529">                yellowPiece4.setTranslationY(transY);</span>
+<span class="fc" id="L530">            }</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">        } else if (playerNum == 2) {</span>
+<span class="nc" id="L532">            greenPieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L534">                float transX = greenPiece1.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L535">                float transY = greenPiece1.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L536">                greenPiece1.setTranslationX(transX);</span>
+<span class="nc" id="L537">                greenPiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L539">                float transX = greenPiece2.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L540">                float transY = greenPiece2.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L541">                greenPiece2.setTranslationX(transX);</span>
+<span class="nc" id="L542">                greenPiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L544">                float transX = greenPiece3.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L545">                float transY = greenPiece3.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L546">                greenPiece3.setTranslationX(transX);</span>
+<span class="nc" id="L547">                greenPiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L549">                float transX = greenPiece4.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L550">                float transY = greenPiece4.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L551">                greenPiece4.setTranslationX(transX);</span>
+<span class="nc" id="L552">                greenPiece4.setTranslationY(transY);</span>
+<span class="nc" id="L553">            }</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">        } else if (playerNum == 3) {</span>
+<span class="nc" id="L555">            redPieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L556" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L557">                float transX = redPiece1.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L558">                float transY = redPiece1.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L559">                redPiece1.setTranslationX(transX);</span>
+<span class="nc" id="L560">                redPiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L562">                float transX = redPiece2.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L563">                float transY = redPiece2.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L564">                redPiece2.setTranslationX(transX);</span>
+<span class="nc" id="L565">                redPiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L567">                float transX = redPiece3.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L568">                float transY = redPiece3.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L569">                redPiece3.setTranslationX(transX);</span>
+<span class="nc" id="L570">                redPiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L572">                float transX = redPiece4.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L573">                float transY = redPiece4.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L574">                redPiece4.setTranslationX(transX);</span>
+<span class="nc" id="L575">                redPiece4.setTranslationY(transY);</span>
+<span class="nc" id="L576">            }</span>
+<span class="nc bnc" id="L577" title="All 2 branches missed.">        } else if (playerNum == 4) {</span>
+<span class="nc" id="L578">            bluePieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L579" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L580">                float transX = bluePiece1.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L581">                float transY = bluePiece1.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L582">                bluePiece1.setTranslationX(transX);</span>
+<span class="nc" id="L583">                bluePiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L584" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L585">                float transX = bluePiece2.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L586">                float transY = bluePiece2.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L587">                bluePiece2.setTranslationX(transX);</span>
+<span class="nc" id="L588">                bluePiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L589" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L590">                float transX = bluePiece3.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L591">                float transY = bluePiece3.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L592">                bluePiece3.setTranslationX(transX);</span>
+<span class="nc" id="L593">                bluePiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L594" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L595">                float transX = bluePiece4.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L596">                float transY = bluePiece4.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L597">                bluePiece4.setTranslationX(transX);</span>
+<span class="nc" id="L598">                bluePiece4.setTranslationY(transY);</span>
             }
         }
-<span class="fc" id="L600">        turnmgr.takeTurn();</span>
-<span class="fc" id="L601">        int winner = checkWin();</span>
-<span class="fc bfc" id="L602" title="All 2 branches covered.">        if(winner != 0){</span>
-<span class="fc" id="L603">            runOnUiThread(() -&gt; {</span>
-<span class="fc" id="L604">                playerText.setText(&quot;The Winner is Player &quot; + winner);</span>
-<span class="fc" id="L605">                drawBtn.setVisibility(INVISIBLE);</span>
-<span class="fc" id="L606">            });</span>
-<span class="fc" id="L607">            postRequest();</span>
+<span class="fc" id="L601">        turnmgr.takeTurn();</span>
+<span class="fc" id="L602">        int winner = checkWin();</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">        if(winner != 0){</span>
+<span class="fc" id="L604">            runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L605">                playerText.setText(&quot;The Winner is Player &quot; + winner);</span>
+<span class="fc" id="L606">                drawBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L607">            });</span>
+<span class="fc" id="L608">            postRequest();</span>
         }
 
-<span class="fc" id="L610">    }</span>
+<span class="fc" id="L611">    }</span>
 
 
     public static int convertDpIntoPx(Context mContext, float yourdpmeasure) {
-<span class="pc bpc" id="L614" title="1 of 2 branches missed.">        if (mContext == null) {</span>
-<span class="nc" id="L615">            return 0;</span>
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">        if (mContext == null) {</span>
+<span class="nc" id="L616">            return 0;</span>
         }
-<span class="fc" id="L617">        Resources r = mContext.getResources();</span>
-<span class="fc" id="L618">        int px = (int) TypedValue</span>
-<span class="fc" id="L619">                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, yourdpmeasure, r.getDisplayMetrics());</span>
-<span class="fc" id="L620">        return px;</span>
+<span class="fc" id="L618">        Resources r = mContext.getResources();</span>
+<span class="fc" id="L619">        int px = (int) TypedValue</span>
+<span class="fc" id="L620">                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, yourdpmeasure, r.getDisplayMetrics());</span>
+<span class="fc" id="L621">        return px;</span>
     }
 
     public int checkWin(){
-<span class="fc" id="L624">        int yellowCount = 0, greenCount = 0, blueCount = 0, redCount = 0;</span>
-<span class="fc" id="L625">        int result = 0;</span>
-<span class="fc bfc" id="L626" title="All 2 branches covered.">        for(int i = 0; i &lt; 4; i++){</span>
-<span class="fc bfc" id="L627" title="All 2 branches covered.">            if(yellowPieces[i].getCurrArea() == 3){</span>
-<span class="fc" id="L628">                yellowCount++;</span>
-<span class="pc bpc" id="L629" title="1 of 2 branches missed.">            }else  if(greenPieces[i].getCurrArea() == 3){</span>
-<span class="nc" id="L630">                greenCount++;</span>
-<span class="pc bpc" id="L631" title="1 of 2 branches missed.">            }else  if(redPieces[i].getCurrArea() == 3){</span>
-<span class="nc" id="L632">                redCount++;</span>
-<span class="pc bpc" id="L633" title="1 of 2 branches missed.">            }else  if(bluePieces[i].getCurrArea() == 3){</span>
-<span class="nc" id="L634">                blueCount++;</span>
+<span class="fc" id="L625">        int yellowCount = 0, greenCount = 0, blueCount = 0, redCount = 0;</span>
+<span class="fc" id="L626">        int result = 0;</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">        for(int i = 0; i &lt; 4; i++){</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">            if(yellowPieces[i].getCurrArea() == 3){</span>
+<span class="fc" id="L629">                yellowCount++;</span>
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">            }else  if(greenPieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L631">                greenCount++;</span>
+<span class="pc bpc" id="L632" title="1 of 2 branches missed.">            }else  if(redPieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L633">                redCount++;</span>
+<span class="pc bpc" id="L634" title="1 of 2 branches missed.">            }else  if(bluePieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L635">                blueCount++;</span>
             }
         }
-<span class="fc bfc" id="L637" title="All 2 branches covered.">        if(yellowCount == 4){</span>
-<span class="fc" id="L638">            result = 1;</span>
-<span class="pc bpc" id="L639" title="1 of 2 branches missed.">        }else if(redCount == 4){</span>
-<span class="nc" id="L640">            result = 2;</span>
-<span class="pc bpc" id="L641" title="1 of 2 branches missed.">        }else if(greenCount == 4){</span>
-<span class="nc" id="L642">            result = 3;</span>
-<span class="pc bpc" id="L643" title="1 of 2 branches missed.">        }else if(blueCount == 4){</span>
-<span class="nc" id="L644">            result = 4;</span>
+<span class="fc bfc" id="L638" title="All 2 branches covered.">        if(yellowCount == 4){</span>
+<span class="fc" id="L639">            result = 1;</span>
+<span class="pc bpc" id="L640" title="1 of 2 branches missed.">        }else if(redCount == 4){</span>
+<span class="nc" id="L641">            result = 2;</span>
+<span class="pc bpc" id="L642" title="1 of 2 branches missed.">        }else if(greenCount == 4){</span>
+<span class="nc" id="L643">            result = 3;</span>
+<span class="pc bpc" id="L644" title="1 of 2 branches missed.">        }else if(blueCount == 4){</span>
+<span class="nc" id="L645">            result = 4;</span>
         }
-<span class="fc" id="L646">        return result;</span>
+<span class="fc" id="L647">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>
