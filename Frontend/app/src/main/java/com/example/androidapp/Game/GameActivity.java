@@ -294,7 +294,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            if (user.getPlayerNum() == turnmgr.getCurrTurn() && checkWin() != 0) {
+            if (user.getPlayerNum() == turnmgr.getCurrTurn() && checkWin() == 0) {
                 runOnUiThread(() -> {
                     drawBtn.setVisibility(View.VISIBLE);
                 });
