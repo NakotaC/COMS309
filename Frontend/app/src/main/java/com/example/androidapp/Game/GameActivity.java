@@ -136,6 +136,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
 
         turnBtn.setVisibility(INVISIBLE);
         drawBtn.setVisibility(View.INVISIBLE);
+        drawnText.setVisibility(INVISIBLE);
         pieceNum1.setVisibility(View.INVISIBLE);
         pieceNum2.setVisibility(View.INVISIBLE);
         pieceNum3.setVisibility(View.INVISIBLE);
@@ -360,40 +361,40 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                         turnBtn.setVisibility(View.VISIBLE);
                         if (user.getPlayerNum() == 1) {
                             pieceNum1.setTranslationX(yellowPiece1.getX() + 80);
-                            pieceNum1.setTranslationY(yellowPiece1.getY());
+                            pieceNum1.setTranslationY(yellowPiece1.getY() + 50);
                             pieceNum2.setTranslationX(yellowPiece2.getX() + 80);
-                            pieceNum2.setTranslationY(yellowPiece2.getY());
+                            pieceNum2.setTranslationY(yellowPiece2.getY()+ 50);
                             pieceNum3.setTranslationX(yellowPiece3.getX() + 80);
-                            pieceNum3.setTranslationY(yellowPiece3.getY());
+                            pieceNum3.setTranslationY(yellowPiece3.getY()+ 50);
                             pieceNum4.setTranslationX(yellowPiece4.getX() + 80);
-                            pieceNum4.setTranslationY(yellowPiece4.getY());
+                            pieceNum4.setTranslationY(yellowPiece4.getY()+ 50);
                         }else if (user.getPlayerNum() == 2) {
                             pieceNum1.setTranslationX(greenPiece1.getX() + 80);
-                            pieceNum1.setTranslationY(greenPiece1.getY());
+                            pieceNum1.setTranslationY(greenPiece1.getY()+ 10);
                             pieceNum2.setTranslationX(greenPiece2.getX() + 80);
-                            pieceNum2.setTranslationY(greenPiece2.getY());
+                            pieceNum2.setTranslationY(greenPiece2.getY()+ 10);
                             pieceNum3.setTranslationX(greenPiece3.getX() + 80);
-                            pieceNum3.setTranslationY(greenPiece3.getY());
+                            pieceNum3.setTranslationY(greenPiece3.getY()+ 10);
                             pieceNum4.setTranslationX(greenPiece4.getX() + 80);
-                            pieceNum4.setTranslationY(greenPiece4.getY());
+                            pieceNum4.setTranslationY(greenPiece4.getY()+ 10);
                         }else if (user.getPlayerNum() == 3) {
                             pieceNum1.setTranslationX(redPiece1.getX() + 80);
-                            pieceNum1.setTranslationY(redPiece1.getY());
+                            pieceNum1.setTranslationY(redPiece1.getY()+ 10);
                             pieceNum2.setTranslationX(redPiece2.getX() + 80);
-                            pieceNum2.setTranslationY(redPiece2.getY());
+                            pieceNum2.setTranslationY(redPiece2.getY()+ 10);
                             pieceNum3.setTranslationX(redPiece3.getX() + 80);
-                            pieceNum3.setTranslationY(redPiece3.getY());
+                            pieceNum3.setTranslationY(redPiece3.getY()+ 10);
                             pieceNum4.setTranslationX(redPiece4.getX() + 80);
-                            pieceNum4.setTranslationY(redPiece4.getY());
+                            pieceNum4.setTranslationY(redPiece4.getY()+ 10);
                         }else if (user.getPlayerNum() == 4) {
                             pieceNum1.setTranslationX(bluePiece1.getX() + 80);
-                            pieceNum1.setTranslationY(bluePiece1.getY());
+                            pieceNum1.setTranslationY(bluePiece1.getY()+ 10);
                             pieceNum2.setTranslationX(bluePiece2.getX() + 80);
-                            pieceNum2.setTranslationY(bluePiece2.getY());
+                            pieceNum2.setTranslationY(bluePiece2.getY()+ 10);
                             pieceNum3.setTranslationX(bluePiece3.getX() + 80);
-                            pieceNum3.setTranslationY(bluePiece3.getY());
+                            pieceNum3.setTranslationY(bluePiece3.getY()+ 10);
                             pieceNum4.setTranslationX(bluePiece4.getX() + 80);
-                            pieceNum4.setTranslationY(bluePiece4.getY());
+                            pieceNum4.setTranslationY(bluePiece4.getY()+ 10);
                         }
 
 
