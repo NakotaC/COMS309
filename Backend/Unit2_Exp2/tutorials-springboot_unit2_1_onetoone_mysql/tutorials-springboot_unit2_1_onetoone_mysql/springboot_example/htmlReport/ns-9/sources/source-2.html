@@ -60,10 +60,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    83.3%
+    93.3%
   </span>
   <span class="absValue">
-    (25/30)
+    (28/30)
   </span>
 </td>
 </tr>
@@ -145,9 +145,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        String url = &quot;http://localhost:8080/&quot;;</b>
 <b class="fc">&nbsp;        String requestBody = null;</b>
 <b class="fc">&nbsp;        restTemplate.postForObject(url + &quot;/inventory/&quot; + Integer.toString(user.getId()), requestBody, String.class);</b>
-<b class="nc">&nbsp;        restTemplate.postForObject(url + &quot;/newEquip/&quot; + Integer.toString(user.getId()), requestBody, String.class);</b>
-<b class="nc">&nbsp;        userRepository.save(user);</b>
-<b class="nc">&nbsp;        return success;</b>
+<b class="fc">&nbsp;        restTemplate.postForObject(url + &quot;/newEquip/&quot; + Integer.toString(user.getId()), requestBody, String.class);</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+<b class="fc">&nbsp;        return success;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @GetMapping(path = &quot;/users/login&quot;)
@@ -219,7 +219,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-29 22:11</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

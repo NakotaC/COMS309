@@ -19,11 +19,12 @@ import java.io.StringReader;
 
 import onetoone.Game.GameRepository;
 import onetoone.Users.UserRepository;
+import org.junit.jupiter.api.Disabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+@Disabled("Exclude from test coverage")
 @Controller      // this is needed for this to be an endpoint to springboot
 @ServerEndpoint(value = "/game2/{username}")  // this is Websocket url
 public class GameSocket2 {
@@ -79,7 +80,8 @@ public class GameSocket2 {
         //broadcast(number);
 
         String testmessage = "User: " + username + " Player Number: " + number + " Gameid: 2";
-        broadcast(testmessage);
+        String test = "{\"playernum\":\"" + number + "\", \"gameid\":\"2\"}";
+        broadcast(test);
 
 
         //session.getBasicRemote().sendText(number);

@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > GameSocket</title>
+  <title>Coverage Report > GameSocketConfig</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,15 +22,12 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">onetoone.Game</a>
 </div>
 
-<h1>Coverage Summary for Class: GameSocket (onetoone.Game)</h1>
+<h1>Coverage Summary for Class: GameSocketConfig (onetoone.Game)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -41,33 +38,52 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">GameSocket</td>
+  <td class="name">GameSocketConfig</td>
 <td class="coverageStat">
   <span class="percent">
     100%
   </span>
   <span class="absValue">
-    (1/1)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    36.4%
+    100%
   </span>
   <span class="absValue">
-    (4/11)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    11.8%
-  </span>
-  <span class="absValue">
-    (6/51)
+    (2/2)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">GameSocketConfig$$EnhancerBySpringCGLIB$$de08c2b9</td>
+  </tr>
+  <tr>
+    <td class="name">GameSocketConfig$$EnhancerBySpringCGLIB$$de08c2b9$$FastClassBySpringCGLIB$$d11ecb6e</td>
+  </tr>
+  <tr>
+    <td class="name">GameSocketConfig$$FastClassBySpringCGLIB$$8b7e6a5a</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -77,201 +93,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
 &nbsp;
-&nbsp;import java.io.IOException;
-&nbsp;import java.net.URI;
-&nbsp;import java.util.Hashtable;
-&nbsp;import java.util.List;
-&nbsp;import java.util.Map;
-&nbsp;
-&nbsp;import javax.websocket.OnClose;
-&nbsp;import javax.websocket.OnError;
-&nbsp;import javax.websocket.OnMessage;
-&nbsp;import javax.websocket.OnOpen;
-&nbsp;import javax.websocket.Session;
-&nbsp;import javax.websocket.server.PathParam;
-&nbsp;import javax.websocket.server.ServerEndpoint;
-&nbsp;import javax.json.Json;
-&nbsp;import javax.json.JsonObject;
-&nbsp;import javax.json.JsonReader;
-&nbsp;import java.io.StringReader;
-&nbsp;
-&nbsp;import onetoone.Game.GameRepository;
-&nbsp;import onetoone.Users.UserRepository;
-&nbsp;import org.slf4j.Logger;
-&nbsp;import org.slf4j.LoggerFactory;
-&nbsp;import org.springframework.beans.factory.annotation.Autowired;
-&nbsp;import org.springframework.stereotype.Controller;
-&nbsp;
-&nbsp;@Controller      // this is needed for this to be an endpoint to springboot
-&nbsp;@ServerEndpoint(value = &quot;/game/{username}&quot;)  // this is Websocket url
-<b class="fc">&nbsp;public class GameSocket {</b>
-&nbsp;
-&nbsp;    // cannot autowire static directly (instead we do it by the below
-&nbsp;    // method
-&nbsp;    private static GameRepository gameRepo;
-&nbsp;
-&nbsp;    private static UserRepository userRepo;
-&nbsp;
-&nbsp;    /*
-&nbsp;     * Grabs the MessageRepository singleton from the Spring Application
-&nbsp;     * Context.  This works because of the @Controller annotation on this
-&nbsp;     * class and because the variable is declared as static.
-&nbsp;     * There are other ways to set this. However, this approach is
-&nbsp;     * easiest.
-&nbsp;     */
-&nbsp;    @Autowired
-&nbsp;    public void setGameRepository(GameRepository repo) {
-<b class="fc">&nbsp;        gameRepo = repo;  // we are setting the static variable</b>
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+&nbsp;@Configuration
+<b class="fc">&nbsp;public class GameSocketConfig {</b>
+&nbsp;    @Bean
+&nbsp;    public ServerEndpointExporter serverEndpointExporter2() {
+<b class="fc">&nbsp;        return new ServerEndpointExporter();</b>
 &nbsp;    }
-&nbsp;
-&nbsp;    @Autowired
-&nbsp;    public void setUserRepository(UserRepository repo) {
-<b class="fc">&nbsp;        userRepo = repo;  // we are setting the static variable</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    // Store all socket session and their corresponding username.
-<b class="fc">&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();</b>
-<b class="fc">&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();</b>
-&nbsp;
-<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(GameSocket.class);</b>
-&nbsp;
-&nbsp;    @OnOpen
-&nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username)
-&nbsp;            throws IOException {
-&nbsp;
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Open&quot;);</b>
-&nbsp;
-&nbsp;        // store connecting user information
-<b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
-<b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
-<b class="nc">&nbsp;        int idk = usernameSessionMap.size();</b>
-<b class="nc">&nbsp;        if(idk &gt; 4) {</b>
-<b class="nc">&nbsp;            URI uri = session.getRequestURI();</b>
-<b class="nc">&nbsp;            String newEndpoint = uri.getScheme() + &quot;://&quot; + uri.getHost() + &quot;:&quot; + uri.getPort() + &quot;/game2/&quot; + username;</b>
-<b class="nc">&nbsp;            session.getUserProperties().put(&quot;redirected&quot;, true);</b>
-<b class="nc">&nbsp;            session.getUserProperties().put(&quot;newEndpoint&quot;, newEndpoint);</b>
-<b class="nc">&nbsp;            session.getBasicRemote().sendText(newEndpoint);</b>
-<b class="nc">&nbsp;            session.close();</b>
-&nbsp;            return;
-&nbsp;        }
-<b class="nc">&nbsp;        String number = Integer.toString(idk);</b>
-&nbsp;
-&nbsp;        //Send chat history to the newly connected user
-&nbsp;        //sendMessageToPArticularUser(username, getChatHistory());
-&nbsp;
-&nbsp;        // broadcast that new user joined
-&nbsp;        //String message = &quot;User:&quot; + username + &quot; has Joined the game&quot;;
-&nbsp;
-&nbsp;        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
-&nbsp;        //broadcast(number);
-&nbsp;
-<b class="nc">&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 1&quot;;</b>
-<b class="nc">&nbsp;        broadcast(testmessage);</b>
-&nbsp;
-&nbsp;
-&nbsp;        //session.getBasicRemote().sendText(number);
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    @OnMessage
-&nbsp;    public void onMessage(Session session, String message) throws IOException {
-&nbsp;
-<b class="nc">&nbsp;        JsonReader reader = Json.createReader(new StringReader(message));</b>
-<b class="nc">&nbsp;        JsonObject jsonObject = reader.readObject();</b>
-<b class="nc">&nbsp;        reader.close();</b>
-&nbsp;
-<b class="nc">&nbsp;        String player = jsonObject.getString(&quot;player&quot;);</b>
-<b class="nc">&nbsp;        String card = jsonObject.getString(&quot;Card&quot;);</b>
-&nbsp;
-&nbsp;        // Handle new messages
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Message: Got Message:&quot; + message);</b>
-<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
-<b class="nc">&nbsp;        String www = &quot;Player &quot;;</b>
-<b class="nc">&nbsp;        www = www.concat(player);</b>
-<b class="nc">&nbsp;        www = www.concat(&quot; drew a &quot;);</b>
-<b class="nc">&nbsp;        www = www.concat(card);</b>
-&nbsp;        //Change message to www if you want to send &quot;Player _ drew a _&quot; !!???????
-<b class="nc">&nbsp;        broadcast(message);</b>
-&nbsp;
-&nbsp;        // Direct message to a user using the format &quot;@username &lt;message&gt;&quot;
-&nbsp;//        if (message.startsWith(&quot;@&quot;)) {
-&nbsp;//            String destUsername = message.split(&quot; &quot;)[0].substring(1);
-&nbsp;//
-&nbsp;//            // send the message to the sender and receiver
-&nbsp;//            sendMessageToPArticularUser(destUsername, &quot;[DM] &quot; + username + &quot;: &quot; + message);
-&nbsp;//            sendMessageToPArticularUser(username, &quot;[DM] &quot; + username + &quot;: &quot; + message);
-&nbsp;//
-&nbsp;//        }
-&nbsp;//        else { // broadcast
-&nbsp;//            broadcast(username + &quot;: &quot; + message);
-&nbsp;//        }
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    @OnClose
-&nbsp;    public void onClose(Session session) throws IOException {
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Close&quot;);</b>
-&nbsp;
-&nbsp;        // remove the user connection information
-<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
-<b class="nc">&nbsp;        sessionUsernameMap.remove(session);</b>
-<b class="nc">&nbsp;        usernameSessionMap.remove(username);</b>
-&nbsp;
-&nbsp;        // broadcase that the user disconnected
-<b class="nc">&nbsp;        String message = username + &quot; disconnected&quot;;</b>
-<b class="nc">&nbsp;        broadcast(message);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    @OnError
-&nbsp;    public void onError(Session session, Throwable throwable) {
-&nbsp;        // Do error handling here
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Error&quot;);</b>
-<b class="nc">&nbsp;        throwable.printStackTrace();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    private void sendMessageToPArticularUser(String username, String message) {
-&nbsp;        try {
-<b class="nc">&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        catch (IOException e) {</b>
-<b class="nc">&nbsp;            logger.info(&quot;Exception: &quot; + e.getMessage().toString());</b>
-<b class="nc">&nbsp;            e.printStackTrace();</b>
-<b class="nc">&nbsp;        }</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    private void broadcast(String message) {
-<b class="nc">&nbsp;        sessionUsernameMap.forEach((session, username) -&gt; {</b>
-&nbsp;            try {
-<b class="nc">&nbsp;                session.getBasicRemote().sendText(message);</b>
-&nbsp;            }
-<b class="nc">&nbsp;            catch (IOException e) {</b>
-<b class="nc">&nbsp;                logger.info(&quot;Exception: &quot; + e.getMessage().toString());</b>
-<b class="nc">&nbsp;                e.printStackTrace();</b>
-<b class="nc">&nbsp;            }</b>
-&nbsp;
-&nbsp;        });
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    // Gets the Chat history from the repository
-&nbsp;//    private String getChatHistory() {
-&nbsp;//        List&lt;Message&gt; messages = msgRepo.findAll();
-&nbsp;//
-&nbsp;//        // convert the list to a string
-&nbsp;//        StringBuilder sb = new StringBuilder();
-&nbsp;//        if(messages != null &amp;&amp; messages.size() != 0) {
-&nbsp;//            for (Message message : messages) {
-&nbsp;//                sb.append(message.getUserName() + &quot;: &quot; + message.getContent() + &quot;\n&quot;);
-&nbsp;//            }
-&nbsp;//        }
-&nbsp;//        return sb.toString();
-&nbsp;//    }
-&nbsp;
-&nbsp;} // end of Class
+&nbsp;}
 </code>
 </pre>
 </div>
@@ -295,7 +126,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-29 22:11</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

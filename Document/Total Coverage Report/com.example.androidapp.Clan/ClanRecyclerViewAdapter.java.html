@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClanRecyclerViewAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Clan</a> &gt; <span class="el_source">ClanRecyclerViewAdapter.java</span></div><h1>ClanRecyclerViewAdapter.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Clan;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+/**
+ * The following class is the adapter used to create one full list of clans from many separate
+ * individual clan items.
+ */
+public class ClanRecyclerViewAdapter extends RecyclerView.Adapter&lt;ClanRecyclerViewAdapter.ViewHolder&gt; {
+
+
+
+
+   // variable declaration
+    private final LinkedList&lt;ClanItemObject&gt; clanItemList;
+    private final Context context;
+
+
+    /**
+     * The following method is used initialize the adapter.
+     * @param clanItemList
+     * @param context
+     */
+<span class="fc" id="L51">    public ClanRecyclerViewAdapter(LinkedList&lt;ClanItemObject&gt; clanItemList, Context context) {</span>
+<span class="fc" id="L52">        this.clanItemList = clanItemList;</span>
+<span class="fc" id="L53">        this.context = context;</span>
+
+<span class="fc" id="L55">    }</span>
+
+
+    /**
+     * The following method returns the complete list of clans.
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     *
+     * @return
+     */
+    @NonNull
+    @Override
+    public ClanRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+
+<span class="nc" id="L72">        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item, parent, false);</span>
+<span class="nc" id="L73">        return new ViewHolder(view);</span>
+
+    }
+
+
+    /**
+     * The following method is used to set clan's name and level of each individual clan item in the
+     * list.
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
+    @Override
+    public void onBindViewHolder(@NonNull ClanRecyclerViewAdapter.ViewHolder holder, int position) {
+
+
+
+<span class="nc" id="L90">        ClanItemObject item = clanItemList.get(position);</span>
+<span class="nc" id="L91">        holder.clanNameLabel.setText(item.getClanName());</span>
+<span class="nc" id="L92">        holder.clanAvailability.setText(item.getClanLevel());</span>
+
+<span class="nc" id="L94">    }</span>
+
+
+    /**
+     * The following method returns the number of clans in the list.
+     * @return
+     */
+    @Override
+
+    public int getItemCount() {
+<span class="fc" id="L104">        return clanItemList.size();</span>
+
+    }
+
+
+    /**
+     * The following class is used to initialize the layout and items of a clan item.
+     */
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+        //variable declaration
+
+        private final TextView clanNameLabel;
+        private final TextView clanAvailability;
+        private final TextView clanLevel;
+        private final Button joinButton;
+
+        private static final String CLANS_URL = &quot;http://coms-309-033.class.las.iastate.edu:8080/clans&quot;;
+
+
+
+<span class="nc" id="L126">        public ViewHolder(@NonNull View itemView) {</span>
+
+<span class="nc" id="L128">            super(itemView);</span>
+
+<span class="nc" id="L130">            clanNameLabel = itemView.findViewById(R.id.clanNameLabel);</span>
+<span class="nc" id="L131">            clanAvailability = itemView.findViewById(R.id.clanAvailability);</span>
+<span class="nc" id="L132">            clanLevel = itemView.findViewById(R.id.clanLevel);</span>
+<span class="nc" id="L133">            joinButton = itemView.findViewById(R.id.joinButton);</span>
+
+<span class="nc" id="L135">            joinButton.setOnClickListener(this);</span>
+
+<span class="nc" id="L137">        }</span>
+
+        @Override
+        public void onClick(View v)
+        {
+<span class="nc" id="L142">        joinClanPostRequest();</span>
+<span class="nc" id="L143">        }</span>
+
+        public void joinClanPostRequest()
+        {
+<span class="nc" id="L147">            JSONObject postBody = null;</span>
+<span class="nc" id="L148">            String postRequestUrl = &quot;&quot;;</span>
+            try {
+                // etRequest should contain a JSON object string as your POST body
+                // similar to what you would have in POSTMAN-body field
+                // and the fields should match with the object structure of @RequestBody on sb
+<span class="nc" id="L153">                postRequestUrl = CLANS_URL;</span>
+<span class="nc" id="L154">            } catch (Exception e) {</span>
+<span class="nc" id="L155">                e.printStackTrace();</span>
+<span class="nc" id="L156">            }</span>
+<span class="nc" id="L157">            JsonObjectRequest request = new JsonObjectRequest(</span>
+                    Request.Method.POST,
+                    postRequestUrl,
+                    postBody,
+<span class="nc" id="L161">                    new Response.Listener&lt;JSONObject&gt;() {</span>
+                        @Override
+                        public void onResponse(JSONObject response) {
+<span class="nc" id="L164">                            Log.d(&quot;Volley Response to POST&quot;, response.toString());</span>
+<span class="nc" id="L165">                            String responseString = &quot;&quot;;</span>
+                            try {
+<span class="nc" id="L167">                                responseString = response.getString(&quot;message&quot;);</span>
+<span class="nc" id="L168">                            } catch (JSONException e) {</span>
+<span class="nc" id="L169">                                throw new RuntimeException(e);</span>
+<span class="nc" id="L170">                            }</span>
+
+<span class="nc" id="L172">                        }</span>
+                    },
+<span class="nc" id="L174">                    new Response.ErrorListener() {</span>
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L177">                            Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L178">                        }</span>
+                    }
+<span class="nc" id="L180">            ) {</span>
+                @Override
+                public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L183">                    HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+                    //                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+                    //                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L186">                    return headers;</span>
+                }
+
+                @Override
+                protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L191">                    Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                    //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                    //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L194">                    return params;</span>
+                }
+            };
+
+            // Adding request to request queue
+<span class="nc" id="L199">            VolleySingleton.getInstance(context.getApplicationContext()).addToRequestQueue(request);</span>
+<span class="nc" id="L200">        }</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

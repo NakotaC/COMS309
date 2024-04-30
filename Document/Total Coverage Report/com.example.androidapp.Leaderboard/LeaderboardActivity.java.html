@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LeaderboardActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Leaderboard</a> &gt; <span class="el_source">LeaderboardActivity.java</span></div><h1>LeaderboardActivity.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Leaderboard;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.MainAuth.HomeActivity;
+import com.example.androidapp.R;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+/**
+ * The following method is the main method. It is invoked whenever the leadeboard screen starts up.
+ */
+<span class="nc" id="L38">public class LeaderboardActivity extends AppCompatActivity implements View.OnClickListener</span>
+{
+
+    //variable declaration
+    public Button button1;
+    public TextView text1;
+    public Button button2;
+    public Button button3;
+    private MaterialToolbar toolbar1;
+    private MaterialButton addWins;
+    private EditText textInput1;
+    private EditText textInput2;
+    private ListAdapterLeaderboard adapter1;
+    private ListView list1;
+    private LinkedList clanListRandom;
+    private static final String URL_LEADERBOARD_JSON_ARRAY =
+            &quot;http://coms-309-033.class.las.iastate.edu:8080/users&quot;;
+    private static final String URL_WINS_JSON_ARRAY =
+            &quot;http://coms-309-033.class.las.iastate.edu:8080/wins&quot;;
+    private static final String URL_POST_REQUEST =
+            &quot;http://coms-309-033.class.las.iastate.edu:8080/wins/&quot;;
+
+    /**
+     * The following method is used to initialize all the elements of the screen. Also, it is used
+     * to invoke a layout on a screen.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     *
+     */
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+<span class="nc" id="L70">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L71">        setContentView(R.layout.activity_leaderboard);</span>
+
+<span class="nc" id="L73">        toolbar1 = findViewById(R.id.toolbar1);</span>
+<span class="nc" id="L74">        addWins = findViewById(R.id.addWinsButton);</span>
+<span class="nc" id="L75">        textInput1 = findViewById(R.id.editTextUserId);</span>
+<span class="nc" id="L76">        textInput2 = findViewById(R.id.editTextAmount);</span>
+<span class="nc" id="L77">        list1 = findViewById(R.id.list1);</span>
+
+
+<span class="nc" id="L80">        toolbar1.setOnClickListener(this);</span>
+<span class="nc" id="L81">        addWins.setOnClickListener(this);</span>
+
+
+<span class="nc" id="L84">        adapter1 = new ListAdapterLeaderboard(this, new LinkedList&lt;&gt;());</span>
+<span class="nc" id="L85">        list1.setAdapter(adapter1);</span>
+
+<span class="nc" id="L87">        makeLeaderboardJsonArrayReq();</span>
+
+
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * The following method is used whenever a user clicks the back button or the add wins button.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+<span class="nc" id="L98">        int id1 = v.getId();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (id1 == R.id.toolbar1) {</span>
+<span class="nc" id="L100">            startActivity(new Intent(LeaderboardActivity.this, HomeActivity.class));</span>
+        }
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        else if (id1 == R.id.addWinsButton)</span>
+        {
+<span class="nc" id="L104">        postRequest();</span>
+        }
+<span class="nc" id="L106">    }</span>
+
+    /**
+     * The following method is used to parse user information from backend to fill up the
+     * stats(leaderboard) table. It uses Volley library for such purposes.
+     */
+    private void makeLeaderboardJsonArrayReq() {
+<span class="nc" id="L113">        LinkedList&lt;String&gt; names = new LinkedList();</span>
+<span class="nc" id="L114">        LinkedList&lt;String&gt; wins = new LinkedList();</span>
+<span class="nc" id="L115">        JsonArrayRequest jsonArrReq1 = new JsonArrayRequest(</span>
+                Request.Method.GET,
+                URL_LEADERBOARD_JSON_ARRAY,
+                null, // Pass null as the request body since it's a GET request
+<span class="nc" id="L119">                new Response.Listener&lt;JSONArray&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONArray response) {
+<span class="nc" id="L122">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L123">                        System.out.println(response);</span>
+
+                        // Parse the JSON array and add data to the adapter
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                        for (int i = 0; i &lt; response.length(); i++) {</span>
+                            try {
+<span class="nc" id="L128">                                JSONObject jsonObject = response.getJSONObject(i);</span>
+<span class="nc" id="L129">                                names.add(i, jsonObject.getString(&quot;username&quot;));</span>
+
+
+<span class="nc" id="L132">                            } catch (JSONException e) {</span>
+<span class="nc" id="L133">                                e.printStackTrace();</span>
+<span class="nc" id="L134">                            }</span>
+                        }
+<span class="nc" id="L136">                    }</span>
+                },
+<span class="nc" id="L138">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L141">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L142">                    }</span>
+<span class="nc" id="L143">                }) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() {
+<span class="nc" id="L146">                Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L149">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L154">                Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L157">                return params;</span>
+            }
+        };
+
+<span class="nc" id="L161">        JsonArrayRequest jsonArrReq2 = new JsonArrayRequest(</span>
+                Request.Method.GET,
+                URL_WINS_JSON_ARRAY,
+                null, // Pass null as the request body since it's a GET request
+<span class="nc" id="L165">                new Response.Listener&lt;JSONArray&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONArray response) {
+<span class="nc" id="L168">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L169">                        System.out.println(response);</span>
+
+                        // Parse the JSON array and add data to the adapter
+<span class="nc bnc" id="L172" title="All 2 branches missed.">                        for (int i = 0; i &lt; response.length(); i++) {</span>
+                            try {
+<span class="nc" id="L174">                                JSONObject jsonObject = response.getJSONObject(i);</span>
+<span class="nc" id="L175">                                wins.add(i, jsonObject.getString(&quot;wins&quot;));</span>
+
+                                // Create a ListItemObject and add it to the adapter
+<span class="nc" id="L178">                                LeaderboardItemObject item = new LeaderboardItemObject(names.get(i),</span>
+<span class="nc" id="L179">                                        wins.get(i));</span>
+<span class="nc" id="L180">                                adapter1.add(item);</span>
+
+<span class="nc" id="L182">                            } catch (JSONException e) {</span>
+<span class="nc" id="L183">                                e.printStackTrace();</span>
+<span class="nc" id="L184">                            }</span>
+                        }
+<span class="nc" id="L186">                    }</span>
+                },
+<span class="nc" id="L188">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L191">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L192">                    }</span>
+                });
+
+        // Adding request to request queue
+<span class="nc" id="L196">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq1);</span>
+<span class="nc" id="L197">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq2);</span>
+<span class="nc" id="L198">    }</span>
+
+
+    /**
+     * The following method is used to add a user to the leaderboard screen. It sends a post request
+     * to the backend server.
+     */
+    private void postRequest() {
+
+        // Convert input to JSONObject
+<span class="nc" id="L208">        JSONObject postBody = null;</span>
+<span class="nc" id="L209">        String finalUrlPostRequest = &quot;&quot;;</span>
+        try {
+            // etRequest should contain a JSON object string as your POST body
+            // similar to what you would have in POSTMAN-body field
+            // and the fields should match with the object structure of @RequestBody on sb
+<span class="nc" id="L214">            finalUrlPostRequest = URL_POST_REQUEST + textInput1.getText().toString() + &quot;/&quot;;</span>
+<span class="nc" id="L215">            finalUrlPostRequest = finalUrlPostRequest + textInput2.getText().toString();</span>
+<span class="nc" id="L216">        } catch (Exception e) {</span>
+<span class="nc" id="L217">            e.printStackTrace();</span>
+<span class="nc" id="L218">        }</span>
+
+<span class="nc" id="L220">        JsonObjectRequest request = new JsonObjectRequest(</span>
+                Request.Method.POST,
+                finalUrlPostRequest,
+                postBody,
+<span class="nc" id="L224">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L227">                        Log.d(&quot;Volley Response to POST&quot;, response.toString());</span>
+<span class="nc" id="L228">                    }</span>
+                },
+<span class="nc" id="L230">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L233">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L234">                    }</span>
+                }
+<span class="nc" id="L236">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L239">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+                //                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+                //                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L242">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L247">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L250">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="nc" id="L255">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="nc" id="L256">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

@@ -46,14 +46,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/newClanButton"
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
-                android:text="Add a new clan" />
+                android:text="Add a clan (old way)" />
 
             <EditText
                 android:id="@+id/clanNameInput"
@@ -72,6 +72,19 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text="Id" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/createAClanButton"
+                android:layout_width="186dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create a clan (new way)" />
         </LinearLayout>
 
     </LinearLayout>

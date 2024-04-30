@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidapp.Game</a> &gt; <span class="el_source">GameActivity.java</span></div><h1>GameActivity.java</h1><pre class="source lang-java linenums">package com.example.androidapp.Game;
+
+import static android.view.View.INVISIBLE;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Connectivity.WebSocketListener;
+import com.example.androidapp.Connectivity.WebSocketManager;
+import com.example.androidapp.Game.Pieces.BluePiece;
+import com.example.androidapp.Game.Pieces.GreenPiece;
+import com.example.androidapp.Game.Pieces.RedPiece;
+import com.example.androidapp.Game.Pieces.YellowPiece;
+import com.example.androidapp.MainAuth.HomeActivity;
+import com.example.androidapp.R;
+
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Class to handle and represent the Game screen
+ */
+<span class="fc" id="L46">public class GameActivity extends AppCompatActivity implements WebSocketListener {</span>
+
+    private Button turnBtn, backBtn, drawBtn;
+    private Button addMatchButton;
+    private TextView turnText, playerText, headerText, drawnText;
+    private  TextView pieceNum1, pieceNum2, pieceNum3, pieceNum4;
+    private int numPlayers;
+    private TurnManager turnmgr;
+    private FrameLayout gameFrame;
+    private ImageView gameBoard, yellowPiece1, yellowPiece2, yellowPiece3, yellowPiece4;
+    private ImageView greenPiece1, greenPiece2, greenPiece3, greenPiece4;
+    private ImageView redPiece1, redPiece2, redPiece3, redPiece4;
+    private ImageView bluePiece1, bluePiece2, bluePiece3, bluePiece4;
+    private User user;
+    private CheckBox piece1, piece2, piece3, piece4;
+    int cardNum;
+    private String serverUrl;
+    int selectedPiece;
+
+<span class="fc" id="L65">    private final YellowPiece[] yellowPieces = {new YellowPiece(1),</span>
+            new YellowPiece(2),
+            new YellowPiece(3),
+            new YellowPiece(4)};
+
+<span class="fc" id="L70">    private final GreenPiece[] greenPieces = {new GreenPiece(1),</span>
+            new GreenPiece(2),
+            new GreenPiece(3),
+            new GreenPiece(4)};
+<span class="fc" id="L74">    private final RedPiece[] redPieces = new RedPiece[]{new RedPiece(1),</span>
+            new RedPiece(2),
+            new RedPiece(3),
+            new RedPiece(4)};
+<span class="fc" id="L78">    private final BluePiece[] bluePieces = {new BluePiece(1),</span>
+            new BluePiece(2),
+            new BluePiece(3),
+            new BluePiece(4)};
+    /**
+     * Handles the creation and functionality of screen elements when the screen is created
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  &lt;b&gt;&lt;i&gt;Note: Otherwise it is null.&lt;/i&gt;&lt;/b&gt;
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L91">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L92">        setContentView(R.layout.activity_game);</span>
+
+<span class="fc" id="L94">        Bundle extras = getIntent().getExtras();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        assert extras != null;</span>
+<span class="fc" id="L96">        user = (User) extras.getSerializable(&quot;USEROBJ&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if(user.getGameId() != 0) {</span>
+<span class="fc" id="L98">            serverUrl = &quot;ws://coms-309-033.class.las.iastate.edu:8080/game&quot; + user.getGameId() +&quot;/&quot; + user.getUsername();</span>
+        }else{
+<span class="fc" id="L100">            serverUrl = &quot;ws://coms-309-033.class.las.iastate.edu:8080/game/&quot; + user.getUsername();</span>
+        }
+        /* initialize UI elements */
+<span class="fc" id="L103">        turnBtn = (Button) findViewById(R.id.turnBtn);</span>
+<span class="fc" id="L104">        drawBtn = findViewById(R.id.drawBtn);</span>
+<span class="fc" id="L105">        playerText = (TextView) findViewById(R.id.playerNumTxt);</span>
+<span class="fc" id="L106">        headerText = findViewById(R.id.inGameHeader);</span>
+<span class="fc" id="L107">        backBtn = findViewById(R.id.gameBackBtn);</span>
+<span class="fc" id="L108">        gameFrame = findViewById(R.id.frameLayoutGame);</span>
+<span class="fc" id="L109">        drawnText = findViewById(R.id.drawnValText);</span>
+<span class="fc" id="L110">        gameBoard = findViewById(R.id.gameBoard);</span>
+<span class="fc" id="L111">        pieceNum1 = findViewById(R.id.pieceNum1);</span>
+<span class="fc" id="L112">        pieceNum2 = findViewById(R.id.pieceNum2);</span>
+<span class="fc" id="L113">        pieceNum3 = findViewById(R.id.pieceNum3);</span>
+<span class="fc" id="L114">        pieceNum4 = findViewById(R.id.pieceNum4);</span>
+<span class="fc" id="L115">        yellowPiece1 = findViewById(R.id.yellowPiece1);</span>
+<span class="fc" id="L116">        yellowPiece2 = findViewById(R.id.yellowPiece2);</span>
+<span class="fc" id="L117">        yellowPiece3 = findViewById(R.id.yellowPiece3);</span>
+<span class="fc" id="L118">        yellowPiece4 = findViewById(R.id.yellowPiece4);</span>
+<span class="fc" id="L119">        redPiece1 = findViewById(R.id.redPiece1);</span>
+<span class="fc" id="L120">        redPiece2 = findViewById(R.id.redPiece2);</span>
+<span class="fc" id="L121">        redPiece3 = findViewById(R.id.redPiece3);</span>
+<span class="fc" id="L122">        redPiece4 = findViewById(R.id.redPiece4);</span>
+<span class="fc" id="L123">        bluePiece1 = findViewById(R.id.bluePiece1);</span>
+<span class="fc" id="L124">        bluePiece2 = findViewById(R.id.bluePiece2);</span>
+<span class="fc" id="L125">        bluePiece3 = findViewById(R.id.bluePiece3);</span>
+<span class="fc" id="L126">        bluePiece4 = findViewById(R.id.bluePiece4);</span>
+<span class="fc" id="L127">        greenPiece1 = findViewById(R.id.greenPiece1);</span>
+<span class="fc" id="L128">        greenPiece2 = findViewById(R.id.greenPiece2);</span>
+<span class="fc" id="L129">        greenPiece3 = findViewById(R.id.greenPiece3);</span>
+<span class="fc" id="L130">        greenPiece4 = findViewById(R.id.greenPiece4);</span>
+
+<span class="fc" id="L132">        piece1 = findViewById(R.id.checkBoxPiece1);</span>
+<span class="fc" id="L133">        piece2 = findViewById(R.id.checkBoxPiece2);</span>
+<span class="fc" id="L134">        piece3 = findViewById(R.id.checkBoxPiece3);</span>
+<span class="fc" id="L135">        piece4 = findViewById(R.id.checkBoxPiece4);</span>
+
+<span class="fc" id="L137">        turnBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L138">        drawBtn.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L139">        pieceNum1.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L140">        pieceNum2.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L141">        pieceNum3.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L142">        pieceNum4.setVisibility(View.INVISIBLE);</span>
+
+        /* connect this activity to the websocket instance */
+<span class="fc" id="L145">        WebSocketManager.getInstance().connectWebSocket(serverUrl);</span>
+<span class="fc" id="L146">        WebSocketManager.getInstance().setWebSocketListener(GameActivity.this);</span>
+
+//        addMatchButton.setOnClickListener(v -&gt; {
+//        postRequest();
+//        });
+<span class="fc" id="L151">        piece1.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L152">            selectedPiece = 1;</span>
+<span class="fc" id="L153">            piece1.setChecked(true);</span>
+<span class="fc" id="L154">            piece2.setChecked(false);</span>
+<span class="fc" id="L155">            piece3.setChecked(false);</span>
+<span class="fc" id="L156">            piece4.setChecked(false);</span>
+<span class="fc" id="L157">        });</span>
+<span class="fc" id="L158">        piece2.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L159">            selectedPiece = 2;</span>
+<span class="fc" id="L160">            piece2.setChecked(true);</span>
+<span class="fc" id="L161">            piece1.setChecked(false);</span>
+<span class="fc" id="L162">            piece3.setChecked(false);</span>
+<span class="fc" id="L163">            piece4.setChecked(false);</span>
+<span class="fc" id="L164">        });</span>
+<span class="fc" id="L165">        piece3.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L166">            selectedPiece = 3;</span>
+<span class="fc" id="L167">            piece3.setChecked(true);</span>
+<span class="fc" id="L168">            piece1.setChecked(false);</span>
+<span class="fc" id="L169">            piece2.setChecked(false);</span>
+<span class="fc" id="L170">            piece4.setChecked(false);</span>
+<span class="fc" id="L171">        });</span>
+<span class="fc" id="L172">        piece4.setOnClickListener(v -&gt; {</span>
+<span class="fc" id="L173">            selectedPiece = 4;</span>
+<span class="fc" id="L174">            piece4.setChecked(true);</span>
+<span class="fc" id="L175">            piece1.setChecked(false);</span>
+<span class="fc" id="L176">            piece2.setChecked(false);</span>
+<span class="fc" id="L177">            piece3.setChecked(false);</span>
+<span class="fc" id="L178">        });</span>
+<span class="fc" id="L179">        backBtn.setOnClickListener(v -&gt; {</span>
+<span class="nc" id="L180">            user.setGameId(0);</span>
+<span class="nc" id="L181">            user.setPlayerNum(0);</span>
+<span class="nc" id="L182">            Intent intent = new Intent(GameActivity.this, HomeActivity.class);</span>
+<span class="nc" id="L183">            intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="nc" id="L184">            startActivity(intent);</span>
+<span class="nc" id="L185">        });</span>
+        /* send button listener */
+<span class="fc" id="L187">        drawBtn.setOnClickListener(v -&gt; {</span>
+            try {
+<span class="fc" id="L189">                drawCard();</span>
+<span class="nc" id="L190">            } catch (Exception e) {</span>
+<span class="nc" id="L191">                Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
+<span class="fc" id="L192">            }</span>
+<span class="fc" id="L193">        });</span>
+<span class="fc" id="L194">        turnBtn.setOnClickListener(v -&gt; {</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">            if(selectedPiece != 0){</span>
+<span class="fc" id="L196">                sendMessage();</span>
+<span class="fc" id="L197">                turnBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L198">                drawnText.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L199">                pieceNum1.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L200">                pieceNum2.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L201">                pieceNum3.setVisibility(View.INVISIBLE);</span>
+<span class="fc" id="L202">                pieceNum4.setVisibility(View.INVISIBLE);</span>
+            }
+<span class="fc" id="L204">        });</span>
+<span class="fc" id="L205">    }</span>
+
+    /**
+     * Handles what to do when a websocket message is received
+     *
+     * @param message The received WebSocket message.
+     */
+    @Override
+    public void onWebSocketMessage(String message) {
+        /**
+         * In Android, all UI-related operations must be performed on the main UI thread
+         * to ensure smooth and responsive user interfaces. The 'runOnUiThread' method
+         * is used to post a runnable to the UI thread's message queue, allowing UI updates
+         * to occur safely from a background or non-UI thread.
+         */
+        JSONObject obj;
+        try {
+<span class="fc" id="L222">            obj = new JSONObject(message);</span>
+<span class="nc" id="L223">        } catch (JSONException e) {</span>
+<span class="nc" id="L224">            throw new RuntimeException(e);</span>
+<span class="fc" id="L225">        }</span>
+
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (user.getPlayerNum() == 0) {</span>
+            int gameId;
+            try {
+<span class="fc" id="L230">                 gameId = obj.getInt(&quot;gameid&quot;);</span>
+<span class="nc" id="L231">            } catch (JSONException e) {</span>
+<span class="nc" id="L232">                throw new RuntimeException(e);</span>
+<span class="fc" id="L233">            }</span>
+
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">            if(gameId != 1){</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">                if(user.getGameId() == 0) {</span>
+
+                    try {
+<span class="fc" id="L239">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L240">                    } catch (JSONException e) {</span>
+<span class="nc" id="L241">                        throw new RuntimeException(e);</span>
+<span class="fc" id="L242">                    }</span>
+
+<span class="fc" id="L244">                    Intent intent = new Intent(GameActivity.this, GameActivity.class);</span>
+<span class="fc" id="L245">                    intent.putExtra(&quot;USEROBJ&quot;, user);</span>
+<span class="fc" id="L246">                    startActivity(intent);</span>
+
+<span class="fc" id="L248">                }else{</span>
+                    try {
+<span class="fc" id="L250">                        user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
+<span class="fc" id="L251">                        numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="fc" id="L252">                        user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L253">                    } catch (JSONException e) {</span>
+<span class="nc" id="L254">                        throw new RuntimeException(e);</span>
+<span class="fc" id="L255">                    }</span>
+                }
+<span class="fc" id="L257">                runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L258">                    playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
+<span class="fc" id="L259">                });</span>
+            }else{
+            try {
+<span class="nc" id="L262">                user.setPlayerNum(obj.getInt(&quot;playernum&quot;));</span>
+<span class="nc" id="L263">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="nc" id="L264">                user.setGameId(obj.getInt(&quot;gameid&quot;));</span>
+<span class="nc" id="L265">            } catch (JSONException e) {</span>
+<span class="nc" id="L266">                throw new RuntimeException(e);</span>
+<span class="nc" id="L267">            }</span>
+            }
+<span class="fc" id="L269">            turnmgr = new TurnManager(numPlayers);</span>
+
+<span class="fc" id="L271">            runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L272">                playerText.setText(&quot;You are player &quot; + user.getPlayerNum());</span>
+<span class="fc" id="L273">            });</span>
+
+<span class="fc bfc" id="L275" title="All 2 branches covered.">            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {</span>
+<span class="fc" id="L276">                 runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L277">                drawBtn.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L278">            });</span>
+            }
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        } else if (obj.has(&quot;gameid&quot;)) {</span>
+
+            try {
+<span class="nc" id="L283">                numPlayers = obj.getInt(&quot;playernum&quot;);</span>
+<span class="nc" id="L284">            } catch (JSONException e) {</span>
+<span class="nc" id="L285">                throw new RuntimeException(e);</span>
+<span class="nc" id="L286">            }</span>
+
+<span class="nc" id="L288">            turnmgr = new TurnManager(numPlayers);</span>
+
+        } else{
+
+            try {
+<span class="fc" id="L293">                performTurn(obj.getInt(&quot;player&quot;), obj.getInt(&quot;pieceNum&quot;), obj.getInt(&quot;Card&quot;));</span>
+<span class="nc" id="L294">            } catch (JSONException e) {</span>
+<span class="nc" id="L295">                throw new RuntimeException(e);</span>
+<span class="fc" id="L296">            }</span>
+<span class="pc bpc" id="L297" title="1 of 4 branches missed.">            if (user.getPlayerNum() == turnmgr.getCurrTurn() &amp;&amp; checkWin() == 0) {</span>
+<span class="fc" id="L298">                runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L299">                    drawBtn.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L300">                });</span>
+            }
+        }
+
+<span class="fc" id="L304">    }</span>
+
+    /**
+     * Handles what to do when a websocket connection is closed
+     *
+     * @param code   The status code indicating the reason for closure.
+     * @param reason A human-readable explanation for the closure.
+     * @param remote Indicates whether the closure was initiated by the remote endpoint.
+     */
+    @Override
+    public void onWebSocketClose(int code, String reason, boolean remote) {
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        String closedBy = remote ? &quot;server&quot; : &quot;local&quot;;</span>
+<span class="fc" id="L316">        runOnUiThread(() -&gt; {</span>
+           // String s = turnText.getText().toString();
+       //     turnText.setText(s + &quot;---\nconnection closed by &quot; + closedBy + &quot;\nreason: &quot; + reason);
+<span class="fc" id="L319">        });</span>
+<span class="fc" id="L320">    }</span>
+
+    /**
+     * Handles what to do when a Websocket is opened
+     *
+     * @param handshakedata Information about the server handshake.
+     */
+    @Override
+    public void onWebSocketOpen(ServerHandshake handshakedata) {
+<span class="fc" id="L329">    }</span>
+
+    /**
+     * Handles what to do when an error is received
+     *
+     * @param ex The exception that describes the error.
+     */
+    @Override
+    public void onWebSocketError(Exception ex) {
+<span class="nc" id="L338">    }</span>
+
+    private void drawCard() {
+
+<span class="fc" id="L342">        JsonObjectRequest objectRequest = new JsonObjectRequest(</span>
+                Request.Method.GET,
+                &quot;http://coms-309-033.class.las.iastate.edu:8080/draw/str&quot;,
+                //&quot;https://1c9efe9d-cfe0-43f4-b7e3-dac1af491ecf.mock.pstmn.io/draw2&quot;,
+                null,
+<span class="fc" id="L347">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="fc" id="L350">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+
+                        try {
+<span class="fc" id="L353">                            cardNum = response.getInt(&quot;Card&quot;);</span>
+<span class="nc" id="L354">                        } catch (JSONException e) {</span>
+<span class="nc" id="L355">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L356">                        }</span>
+<span class="fc" id="L357">                        drawnText.setText(&quot;You Drew A &quot; + cardNum);</span>
+<span class="fc" id="L358">                        drawnText.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L359">                        drawBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L360">                        turnBtn.setVisibility(View.VISIBLE);</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">                        if (user.getPlayerNum() == 1) {</span>
+<span class="fc" id="L362">                            pieceNum1.setTranslationX(yellowPiece1.getX() + 80);</span>
+<span class="fc" id="L363">                            pieceNum1.setTranslationY(yellowPiece1.getY());</span>
+<span class="fc" id="L364">                            pieceNum2.setTranslationX(yellowPiece2.getX() + 80);</span>
+<span class="fc" id="L365">                            pieceNum2.setTranslationY(yellowPiece2.getY());</span>
+<span class="fc" id="L366">                            pieceNum3.setTranslationX(yellowPiece3.getX() + 80);</span>
+<span class="fc" id="L367">                            pieceNum3.setTranslationY(yellowPiece3.getY());</span>
+<span class="fc" id="L368">                            pieceNum4.setTranslationX(yellowPiece4.getX() + 80);</span>
+<span class="fc" id="L369">                            pieceNum4.setTranslationY(yellowPiece4.getY());</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 2) {</span>
+<span class="nc" id="L371">                            pieceNum1.setTranslationX(greenPiece1.getX() + 80);</span>
+<span class="nc" id="L372">                            pieceNum1.setTranslationY(greenPiece1.getY());</span>
+<span class="nc" id="L373">                            pieceNum2.setTranslationX(greenPiece2.getX() + 80);</span>
+<span class="nc" id="L374">                            pieceNum2.setTranslationY(greenPiece2.getY());</span>
+<span class="nc" id="L375">                            pieceNum3.setTranslationX(greenPiece3.getX() + 80);</span>
+<span class="nc" id="L376">                            pieceNum3.setTranslationY(greenPiece3.getY());</span>
+<span class="nc" id="L377">                            pieceNum4.setTranslationX(greenPiece4.getX() + 80);</span>
+<span class="nc" id="L378">                            pieceNum4.setTranslationY(greenPiece4.getY());</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 3) {</span>
+<span class="nc" id="L380">                            pieceNum1.setTranslationX(redPiece1.getX() + 80);</span>
+<span class="nc" id="L381">                            pieceNum1.setTranslationY(redPiece1.getY());</span>
+<span class="nc" id="L382">                            pieceNum2.setTranslationX(redPiece2.getX() + 80);</span>
+<span class="nc" id="L383">                            pieceNum2.setTranslationY(redPiece2.getY());</span>
+<span class="nc" id="L384">                            pieceNum3.setTranslationX(redPiece3.getX() + 80);</span>
+<span class="nc" id="L385">                            pieceNum3.setTranslationY(redPiece3.getY());</span>
+<span class="nc" id="L386">                            pieceNum4.setTranslationX(redPiece4.getX() + 80);</span>
+<span class="nc" id="L387">                            pieceNum4.setTranslationY(redPiece4.getY());</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">                        }else if (user.getPlayerNum() == 4) {</span>
+<span class="nc" id="L389">                            pieceNum1.setTranslationX(bluePiece1.getX() + 80);</span>
+<span class="nc" id="L390">                            pieceNum1.setTranslationY(bluePiece1.getY());</span>
+<span class="nc" id="L391">                            pieceNum2.setTranslationX(bluePiece2.getX() + 80);</span>
+<span class="nc" id="L392">                            pieceNum2.setTranslationY(bluePiece2.getY());</span>
+<span class="nc" id="L393">                            pieceNum3.setTranslationX(bluePiece3.getX() + 80);</span>
+<span class="nc" id="L394">                            pieceNum3.setTranslationY(bluePiece3.getY());</span>
+<span class="nc" id="L395">                            pieceNum4.setTranslationX(bluePiece4.getX() + 80);</span>
+<span class="nc" id="L396">                            pieceNum4.setTranslationY(bluePiece4.getY());</span>
+                        }
+
+
+<span class="fc" id="L400">                        pieceNum1.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L401">                        pieceNum2.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L402">                        pieceNum3.setVisibility(View.VISIBLE);</span>
+<span class="fc" id="L403">                        pieceNum4.setVisibility(View.VISIBLE);</span>
+
+<span class="fc" id="L405">                    }</span>
+                },
+<span class="fc" id="L407">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L410">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L411">                    }</span>
+<span class="fc" id="L412">                }) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() {
+<span class="fc" id="L415">                Map&lt;String, String&gt; headers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L416">                headers.put(&quot;gameid&quot;, String.valueOf(user.getGameId()));</span>
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="fc" id="L418">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L423">                Map&lt;String, String&gt; params = new HashMap&lt;&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L426">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="fc" id="L431">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(objectRequest);</span>
+<span class="fc" id="L432">    }</span>
+
+    private void postRequest() {
+<span class="fc" id="L435">        int winner = user.getId() + 1;</span>
+        // Convert input to JSONObject
+<span class="fc" id="L437">        JSONObject postBody = null;</span>
+
+<span class="fc" id="L439">        JsonObjectRequest request = new JsonObjectRequest(</span>
+                Request.Method.POST,
+<span class="fc" id="L441">                &quot;http://coms-309-033.class.las.iastate.edu:8080/history/&quot; + user.getId() + &quot;/&quot; +</span>
+                        winner + &quot;/&quot;,
+                //url,
+                postBody,
+<span class="fc" id="L445">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        String responseString;
+
+                        try {
+<span class="nc" id="L452">                            Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L453">                            responseString = response.getString(&quot;message&quot;).replaceAll(&quot;\&quot;&quot;, &quot;&quot;);</span>
+<span class="nc" id="L454">                        } catch (JSONException e) {</span>
+<span class="nc" id="L455">                            throw new RuntimeException(e);</span>
+<span class="nc" id="L456">                        }</span>
+
+<span class="nc" id="L458">                        Toast.makeText(GameActivity.this, &quot;Match added&quot;,</span>
+<span class="nc" id="L459">                                Toast.LENGTH_SHORT).show();</span>
+
+<span class="nc" id="L461">                    }</span>
+                },
+<span class="fc" id="L463">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //  usernameTakenTxt.setText(error.getMessage());
+<span class="fc" id="L467">                    }</span>
+                }
+<span class="fc" id="L469">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="fc" id="L472">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+                //    headers.put(&quot;username&quot;, username);
+                //    headers.put(&quot;password&quot;, password);
+<span class="fc" id="L475">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L480">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+                //                params.put(&quot;param1&quot;, &quot;value1&quot;);
+                //                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L483">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="fc" id="L488">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);</span>
+<span class="fc" id="L489">    }</span>
+
+    private int Card() {
+<span class="nc" id="L492">        drawCard();</span>
+<span class="nc" id="L493">        return 1;</span>
+    }
+
+    private void sendMessage() {
+        try {
+<span class="fc" id="L498">            String msg = &quot;{\&quot;player\&quot;:\&quot;&quot; + user.getPlayerNum() + &quot;\&quot;, \&quot;Card\&quot;:\&quot;&quot; + cardNum + &quot;\&quot;, \&quot;pieceNum\&quot;: \&quot;&quot; + selectedPiece +&quot;\&quot;}&quot;;</span>
+            // send message
+<span class="fc" id="L500">            WebSocketManager.getInstance().sendMessage(msg);</span>
+<span class="nc" id="L501">        } catch (Exception e) {</span>
+<span class="nc" id="L502">            Log.d(&quot;ExceptionSendMessage:&quot;, e.getMessage());</span>
+<span class="fc" id="L503">        }</span>
+<span class="fc" id="L504">    }</span>
+
+    private void performTurn(int playerNum, int PieceNum, int numToMove) {
+<span class="pc bpc" id="L507" title="1 of 2 branches missed.">        if (playerNum == 1) {</span>
+<span class="fc" id="L508">            yellowPieces[PieceNum - 1].move(numToMove);</span>
+<span class="fc bfc" id="L509" title="All 2 branches covered.">            if(PieceNum == 1) {</span>
+<span class="fc" id="L510">                float transX = yellowPiece1.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L511">                float transY = yellowPiece1.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L512">                yellowPiece1.setTranslationX(transX);</span>
+<span class="fc" id="L513">                yellowPiece1.setTranslationY(transY);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">            } else if(PieceNum == 2) {</span>
+<span class="fc" id="L515">                float transX = yellowPiece2.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L516">                float transY = yellowPiece2.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L517">                yellowPiece2.setTranslationX(transX);</span>
+<span class="fc" id="L518">                yellowPiece2.setTranslationY(transY);</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">            }else if(PieceNum == 3) {</span>
+<span class="fc" id="L520">                float transX = yellowPiece3.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L521">                float transY = yellowPiece3.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L522">                yellowPiece3.setTranslationX(transX);</span>
+<span class="fc" id="L523">                yellowPiece3.setTranslationY(transY);</span>
+<span class="pc bpc" id="L524" title="1 of 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="fc" id="L525">                float transX = yellowPiece4.getX() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="fc" id="L526">                float transY = yellowPiece4.getY() + convertDpIntoPx(this, yellowPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="fc" id="L527">                yellowPiece4.setTranslationX(transX);</span>
+<span class="fc" id="L528">                yellowPiece4.setTranslationY(transY);</span>
+<span class="fc" id="L529">            }</span>
+<span class="nc bnc" id="L530" title="All 2 branches missed.">        } else if (playerNum == 2) {</span>
+<span class="nc" id="L531">            greenPieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L532" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L533">                float transX = greenPiece1.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L534">                float transY = greenPiece1.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L535">                greenPiece1.setTranslationX(transX);</span>
+<span class="nc" id="L536">                greenPiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L538">                float transX = greenPiece2.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L539">                float transY = greenPiece2.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L540">                greenPiece2.setTranslationX(transX);</span>
+<span class="nc" id="L541">                greenPiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L542" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L543">                float transX = greenPiece3.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L544">                float transY = greenPiece3.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L545">                greenPiece3.setTranslationX(transX);</span>
+<span class="nc" id="L546">                greenPiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L548">                float transX = greenPiece4.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L549">                float transY = greenPiece4.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L550">                greenPiece4.setTranslationX(transX);</span>
+<span class="nc" id="L551">                greenPiece4.setTranslationY(transY);</span>
+<span class="nc" id="L552">            }</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">        } else if (playerNum == 3) {</span>
+<span class="nc" id="L554">            redPieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L555" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L556">                float transX = redPiece1.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L557">                float transY = redPiece1.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L558">                redPiece1.setTranslationX(transX);</span>
+<span class="nc" id="L559">                redPiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L561">                float transX = redPiece2.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L562">                float transY = redPiece2.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L563">                redPiece2.setTranslationX(transX);</span>
+<span class="nc" id="L564">                redPiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L566">                float transX = redPiece3.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L567">                float transY = redPiece3.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L568">                redPiece3.setTranslationX(transX);</span>
+<span class="nc" id="L569">                redPiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L571">                float transX = redPiece4.getX() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L572">                float transY = redPiece4.getY() + convertDpIntoPx(this, redPieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L573">                redPiece4.setTranslationX(transX);</span>
+<span class="nc" id="L574">                redPiece4.setTranslationY(transY);</span>
+<span class="nc" id="L575">            }</span>
+<span class="nc bnc" id="L576" title="All 2 branches missed.">        } else if (playerNum == 4) {</span>
+<span class="nc" id="L577">            bluePieces[PieceNum - 1].move(numToMove);</span>
+<span class="nc bnc" id="L578" title="All 2 branches missed.">            if(PieceNum == 1) {</span>
+<span class="nc" id="L579">                float transX = bluePiece1.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L580">                float transY = bluePiece1.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L581">                bluePiece1.setTranslationX(transX);</span>
+<span class="nc" id="L582">                bluePiece1.setTranslationY(transY);</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">            } else if(PieceNum == 2) {</span>
+<span class="nc" id="L584">                float transX = bluePiece2.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L585">                float transY = bluePiece2.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L586">                bluePiece2.setTranslationX(transX);</span>
+<span class="nc" id="L587">                bluePiece2.setTranslationY(transY);</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">            }else if(PieceNum == 3) {</span>
+<span class="nc" id="L589">                float transX = bluePiece3.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L590">                float transY = bluePiece3.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L591">                bluePiece3.setTranslationX(transX);</span>
+<span class="nc" id="L592">                bluePiece3.setTranslationY(transY);</span>
+<span class="nc bnc" id="L593" title="All 2 branches missed.">            }else if(PieceNum == 4) {</span>
+<span class="nc" id="L594">                float transX = bluePiece4.getX() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaXFromLastMove());</span>
+<span class="nc" id="L595">                float transY = bluePiece4.getY() + convertDpIntoPx(this, bluePieces[PieceNum - 1].getDeltaYFromLastMove());</span>
+<span class="nc" id="L596">                bluePiece4.setTranslationX(transX);</span>
+<span class="nc" id="L597">                bluePiece4.setTranslationY(transY);</span>
+            }
+        }
+<span class="fc" id="L600">        turnmgr.takeTurn();</span>
+<span class="fc" id="L601">        int winner = checkWin();</span>
+<span class="fc bfc" id="L602" title="All 2 branches covered.">        if(winner != 0){</span>
+<span class="fc" id="L603">            runOnUiThread(() -&gt; {</span>
+<span class="fc" id="L604">                playerText.setText(&quot;The Winner is Player &quot; + winner);</span>
+<span class="fc" id="L605">                drawBtn.setVisibility(INVISIBLE);</span>
+<span class="fc" id="L606">            });</span>
+<span class="fc" id="L607">            postRequest();</span>
+        }
+
+<span class="fc" id="L610">    }</span>
+
+
+    public static int convertDpIntoPx(Context mContext, float yourdpmeasure) {
+<span class="pc bpc" id="L614" title="1 of 2 branches missed.">        if (mContext == null) {</span>
+<span class="nc" id="L615">            return 0;</span>
+        }
+<span class="fc" id="L617">        Resources r = mContext.getResources();</span>
+<span class="fc" id="L618">        int px = (int) TypedValue</span>
+<span class="fc" id="L619">                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, yourdpmeasure, r.getDisplayMetrics());</span>
+<span class="fc" id="L620">        return px;</span>
+    }
+
+    public int checkWin(){
+<span class="fc" id="L624">        int yellowCount = 0, greenCount = 0, blueCount = 0, redCount = 0;</span>
+<span class="fc" id="L625">        int result = 0;</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">        for(int i = 0; i &lt; 4; i++){</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">            if(yellowPieces[i].getCurrArea() == 3){</span>
+<span class="fc" id="L628">                yellowCount++;</span>
+<span class="pc bpc" id="L629" title="1 of 2 branches missed.">            }else  if(greenPieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L630">                greenCount++;</span>
+<span class="pc bpc" id="L631" title="1 of 2 branches missed.">            }else  if(redPieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L632">                redCount++;</span>
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">            }else  if(bluePieces[i].getCurrArea() == 3){</span>
+<span class="nc" id="L634">                blueCount++;</span>
+            }
+        }
+<span class="fc bfc" id="L637" title="All 2 branches covered.">        if(yellowCount == 4){</span>
+<span class="fc" id="L638">            result = 1;</span>
+<span class="pc bpc" id="L639" title="1 of 2 branches missed.">        }else if(redCount == 4){</span>
+<span class="nc" id="L640">            result = 2;</span>
+<span class="pc bpc" id="L641" title="1 of 2 branches missed.">        }else if(greenCount == 4){</span>
+<span class="nc" id="L642">            result = 3;</span>
+<span class="pc bpc" id="L643" title="1 of 2 branches missed.">        }else if(blueCount == 4){</span>
+<span class="nc" id="L644">            result = 4;</span>
+        }
+<span class="fc" id="L646">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 7.4.2</div></body></html>

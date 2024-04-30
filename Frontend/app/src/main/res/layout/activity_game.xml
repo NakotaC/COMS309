@@ -57,9 +57,163 @@
             android:id="@+id/yellowPiece1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:translationX="356dp"
-            android:translationY="332dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
             app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/yellowPiece4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="260dp"
+            android:translationY="356dp"
+            app:srcCompat="@drawable/yellowpiece" />
+
+        <ImageView
+            android:id="@+id/greenPiece1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="20dp"
+            android:translationY="284dp"
+            app:srcCompat="@drawable/greenpiece" />
+
+        <ImageView
+            android:id="@+id/greenPiece2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="20dp"
+            android:translationY="284dp"
+            app:srcCompat="@drawable/greenpiece" />
+
+        <ImageView
+            android:id="@+id/greenPiece3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="20dp"
+            android:translationY="284dp"
+            app:srcCompat="@drawable/greenpiece" />
+
+        <ImageView
+            android:id="@+id/greenPiece4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="20dp"
+            android:translationY="284dp"
+            app:srcCompat="@drawable/greenpiece" />
+
+        <ImageView
+            android:id="@+id/redPiece1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="92dp"
+            android:translationY="44dp"
+            app:srcCompat="@drawable/redpiece" />
+
+        <ImageView
+            android:id="@+id/redPiece2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="92dp"
+            android:translationY="44dp"
+            app:srcCompat="@drawable/redpiece" />
+
+        <ImageView
+            android:id="@+id/redPiece3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="92dp"
+            android:translationY="44dp"
+            app:srcCompat="@drawable/redpiece" />
+
+        <ImageView
+            android:id="@+id/redPiece4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="92dp"
+            android:translationY="44dp"
+            app:srcCompat="@drawable/redpiece" />
+
+        <ImageView
+            android:id="@+id/bluePiece1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="332dp"
+            android:translationY="116dp"
+            app:srcCompat="@drawable/bluepiece" />
+
+        <ImageView
+            android:id="@+id/bluePiece2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="332dp"
+            android:translationY="116dp"
+            app:srcCompat="@drawable/bluepiece" />
+
+        <ImageView
+            android:id="@+id/bluePiece3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="332dp"
+            android:translationY="116dp"
+            app:srcCompat="@drawable/bluepiece" />
+
+        <ImageView
+            android:id="@+id/bluePiece4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationX="332dp"
+            android:translationY="116dp"
+            app:srcCompat="@drawable/bluepiece" />
+
+        <TextView
+            android:id="@+id/pieceNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:translationX="35dp"
+            android:translationY="60dp" />
+
+        <TextView
+            android:id="@+id/pieceNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/pieceNum3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/pieceNum4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:textStyle="bold"
+            android:textSize="24sp" />
 
     </FrameLayout>
 
@@ -117,6 +271,17 @@
         android:layout_marginTop="44dp"
         android:text="Piece 4"
         app:layout_constraintStart_toEndOf="@+id/checkBoxPiece3"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutGame" />
+
+    <TextView
+        android:id="@+id/drawnValText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
+        android:text="You Drew A (Num)"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayoutGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > GameSocket2</title>
+  <title>Coverage Report > GameSocket</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,50 +22,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">onetoone.Game</a>
 </div>
 
-<h1>Coverage Summary for Class: GameSocket2 (onetoone.Game)</h1>
+<h1>Coverage Summary for Class: GameSocket (onetoone.Game)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
-<th class="coverageStat 
-">
-  Method, %
-</th>
-<th class="coverageStat 
-">
-  Line, %
-</th>
 </tr>
 <tr>
-  <td class="name">GameSocket2</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    36.4%
-  </span>
-  <span class="absValue">
-    (4/11)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    13.6%
-  </span>
-  <span class="absValue">
-    (6/44)
-  </span>
-</td>
+  <td class="name">GameSocket</td>
 </tr>
 
 </table>
@@ -78,6 +42,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package onetoone.Game;
 &nbsp;
 &nbsp;import java.io.IOException;
+&nbsp;import java.net.URI;
 &nbsp;import java.util.Hashtable;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Map;
@@ -96,14 +61,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import onetoone.Game.GameRepository;
 &nbsp;import onetoone.Users.UserRepository;
+&nbsp;import org.junit.jupiter.api.Disabled;
 &nbsp;import org.slf4j.Logger;
 &nbsp;import org.slf4j.LoggerFactory;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Controller;
-&nbsp;
+&nbsp;@Disabled(&quot;Exclude from test coverage&quot;)
 &nbsp;@Controller      // this is needed for this to be an endpoint to springboot
-&nbsp;@ServerEndpoint(value = &quot;/game2/{username}&quot;)  // this is Websocket url
-<b class="fc">&nbsp;public class GameSocket2 {</b>
+&nbsp;@ServerEndpoint(value = &quot;/game/{username}&quot;)  // this is Websocket url
+&nbsp;public class GameSocket {
 &nbsp;
 &nbsp;    // cannot autowire static directly (instead we do it by the below
 &nbsp;    // method
@@ -120,31 +86,40 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    @Autowired
 &nbsp;    public void setGameRepository(GameRepository repo) {
-<b class="fc">&nbsp;        gameRepo = repo;  // we are setting the static variable</b>
+&nbsp;        gameRepo = repo;  // we are setting the static variable
 &nbsp;    }
 &nbsp;
 &nbsp;    @Autowired
 &nbsp;    public void setUserRepository(UserRepository repo) {
-<b class="fc">&nbsp;        userRepo = repo;  // we are setting the static variable</b>
+&nbsp;        userRepo = repo;  // we are setting the static variable
 &nbsp;    }
 &nbsp;
 &nbsp;    // Store all socket session and their corresponding username.
-<b class="fc">&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();</b>
-<b class="fc">&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();</b>
+&nbsp;    private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();
+&nbsp;    private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();
 &nbsp;
-<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(GameSocket.class);</b>
+&nbsp;    private final Logger logger = LoggerFactory.getLogger(GameSocket.class);
 &nbsp;
 &nbsp;    @OnOpen
 &nbsp;    public void onOpen(Session session, @PathParam(&quot;username&quot;) String username)
 &nbsp;            throws IOException {
 &nbsp;
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Open&quot;);</b>
+&nbsp;        logger.info(&quot;Entered into Open&quot;);
 &nbsp;
 &nbsp;        // store connecting user information
-<b class="nc">&nbsp;        sessionUsernameMap.put(session, username);</b>
-<b class="nc">&nbsp;        usernameSessionMap.put(username, session);</b>
-<b class="nc">&nbsp;        int idk = usernameSessionMap.size();</b>
-<b class="nc">&nbsp;        String number = Integer.toString(idk);</b>
+&nbsp;        sessionUsernameMap.put(session, username);
+&nbsp;        usernameSessionMap.put(username, session);
+&nbsp;        int idk = usernameSessionMap.size();
+&nbsp;        String number = Integer.toString(idk);
+&nbsp;        if(idk &gt; 4) {
+&nbsp;            URI uri = session.getRequestURI();
+&nbsp;            String newEndpoint = uri.getScheme() + &quot;://&quot; + uri.getHost() + &quot;:&quot; + uri.getPort() + &quot;/game2/&quot; + username;
+&nbsp;            session.getUserProperties().put(&quot;redirected&quot;, true);
+&nbsp;            session.getUserProperties().put(&quot;newEndpoint&quot;, newEndpoint);
+&nbsp;            session.getBasicRemote().sendText(&quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;2\&quot;}&quot;);
+&nbsp;            session.close();
+&nbsp;            return;
+&nbsp;        }
 &nbsp;
 &nbsp;        //Send chat history to the newly connected user
 &nbsp;        //sendMessageToPArticularUser(username, getChatHistory());
@@ -155,8 +130,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        //UNCOMMENT FOR JUST PLAYER NUMBER AND COMMENT BELOW
 &nbsp;        //broadcast(number);
 &nbsp;
-<b class="nc">&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 2&quot;;</b>
-<b class="nc">&nbsp;        broadcast(testmessage);</b>
+&nbsp;        String testmessage = &quot;User: &quot; + username + &quot; Player Number: &quot; + number + &quot; Gameid: 1&quot;;
+&nbsp;        String test = &quot;{\&quot;playernum\&quot;:\&quot;&quot; + number + &quot;\&quot;, \&quot;gameid\&quot;:\&quot;1\&quot;}&quot;;
+&nbsp;        broadcast(test);
 &nbsp;
 &nbsp;
 &nbsp;        //session.getBasicRemote().sendText(number);
@@ -166,22 +142,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @OnMessage
 &nbsp;    public void onMessage(Session session, String message) throws IOException {
 &nbsp;
-<b class="nc">&nbsp;        JsonReader reader = Json.createReader(new StringReader(message));</b>
-<b class="nc">&nbsp;        JsonObject jsonObject = reader.readObject();</b>
-<b class="nc">&nbsp;        reader.close();</b>
+&nbsp;        JsonReader reader = Json.createReader(new StringReader(message));
+&nbsp;        JsonObject jsonObject = reader.readObject();
+&nbsp;        reader.close();
 &nbsp;
-<b class="nc">&nbsp;        String player = jsonObject.getString(&quot;player&quot;);</b>
-<b class="nc">&nbsp;        String card = jsonObject.getString(&quot;Card&quot;);</b>
+&nbsp;        String player = jsonObject.getString(&quot;player&quot;);
+&nbsp;        String card = jsonObject.getString(&quot;Card&quot;);
 &nbsp;
 &nbsp;        // Handle new messages
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Message: Got Message:&quot; + message);</b>
-<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
-<b class="nc">&nbsp;        String www = &quot;Player &quot;;</b>
-<b class="nc">&nbsp;        www = www.concat(player);</b>
-<b class="nc">&nbsp;        www = www.concat(&quot; drew a &quot;);</b>
-<b class="nc">&nbsp;        www = www.concat(card);</b>
+&nbsp;        logger.info(&quot;Entered into Message: Got Message:&quot; + message);
+&nbsp;        String username = sessionUsernameMap.get(session);
+&nbsp;        String www = &quot;Player &quot;;
+&nbsp;        www = www.concat(player);
+&nbsp;        www = www.concat(&quot; drew a &quot;);
+&nbsp;        www = www.concat(card);
 &nbsp;        //Change message to www if you want to send &quot;Player _ drew a _&quot; !!???????
-<b class="nc">&nbsp;        broadcast(message);</b>
+&nbsp;        broadcast(message);
 &nbsp;
 &nbsp;        // Direct message to a user using the format &quot;@username &lt;message&gt;&quot;
 &nbsp;//        if (message.startsWith(&quot;@&quot;)) {
@@ -200,47 +176,45 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @OnClose
 &nbsp;    public void onClose(Session session) throws IOException {
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Close&quot;);</b>
+&nbsp;        logger.info(&quot;Entered into Close&quot;);
 &nbsp;
 &nbsp;        // remove the user connection information
-<b class="nc">&nbsp;        String username = sessionUsernameMap.get(session);</b>
-<b class="nc">&nbsp;        sessionUsernameMap.remove(session);</b>
-<b class="nc">&nbsp;        usernameSessionMap.remove(username);</b>
+&nbsp;        String username = sessionUsernameMap.get(session);
+&nbsp;        sessionUsernameMap.remove(session);
+&nbsp;        usernameSessionMap.remove(username);
 &nbsp;
 &nbsp;        // broadcase that the user disconnected
-<b class="nc">&nbsp;        String message = username + &quot; disconnected&quot;;</b>
-<b class="nc">&nbsp;        broadcast(message);</b>
+&nbsp;        String message = username + &quot; disconnected&quot;;
+&nbsp;        broadcast(message);
 &nbsp;    }
 &nbsp;
 &nbsp;
 &nbsp;    @OnError
 &nbsp;    public void onError(Session session, Throwable throwable) {
 &nbsp;        // Do error handling here
-<b class="nc">&nbsp;        logger.info(&quot;Entered into Error&quot;);</b>
-<b class="nc">&nbsp;        throwable.printStackTrace();</b>
+&nbsp;        logger.info(&quot;Entered into Error&quot;);
+&nbsp;        throwable.printStackTrace();
 &nbsp;    }
-&nbsp;
 &nbsp;
 &nbsp;    private void sendMessageToPArticularUser(String username, String message) {
 &nbsp;        try {
-<b class="nc">&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);</b>
+&nbsp;            usernameSessionMap.get(username).getBasicRemote().sendText(message);
 &nbsp;        }
-<b class="nc">&nbsp;        catch (IOException e) {</b>
-<b class="nc">&nbsp;            logger.info(&quot;Exception: &quot; + e.getMessage().toString());</b>
-<b class="nc">&nbsp;            e.printStackTrace();</b>
-<b class="nc">&nbsp;        }</b>
+&nbsp;        catch (IOException e) {
+&nbsp;            logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;            e.printStackTrace();
+&nbsp;        }
 &nbsp;    }
 &nbsp;
-&nbsp;
 &nbsp;    private void broadcast(String message) {
-<b class="nc">&nbsp;        sessionUsernameMap.forEach((session, username) -&gt; {</b>
+&nbsp;        sessionUsernameMap.forEach((session, username) -&gt; {
 &nbsp;            try {
-<b class="nc">&nbsp;                session.getBasicRemote().sendText(message);</b>
+&nbsp;                session.getBasicRemote().sendText(message);
 &nbsp;            }
-<b class="nc">&nbsp;            catch (IOException e) {</b>
-<b class="nc">&nbsp;                logger.info(&quot;Exception: &quot; + e.getMessage().toString());</b>
-<b class="nc">&nbsp;                e.printStackTrace();</b>
-<b class="nc">&nbsp;            }</b>
+&nbsp;            catch (IOException e) {
+&nbsp;                logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;                e.printStackTrace();
+&nbsp;            }
 &nbsp;
 &nbsp;        });
 &nbsp;
@@ -285,7 +259,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-29 22:11</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

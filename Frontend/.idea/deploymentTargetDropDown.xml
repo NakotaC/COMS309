@@ -2,20 +2,53 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="NakotaTests">
-        <State />
-      </entry>
       <entry key="app">
-        <State />
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Nakot\.android\avd\Pixel_7_Pro_Edited_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T06:13:41.471427200Z" />
+        </State>
       </entry>
-      <entry key="inventoryTest()">
-        <State />
+      <entry key="checkClans()">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Nakot\.android\avd\Pixel_7_Pro_Edited_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T06:02:14.963441400Z" />
+        </State>
       </entry>
-      <entry key="loginTest()">
-        <State />
-      </entry>
-      <entry key="shopTest()">
-        <State />
+      <entry key="gameplayTest()">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Nakot\.android\avd\Pixel_7_Pro_Edited_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-30T06:00:59.449665Z" />
+        </State>
       </entry>
     </value>
   </component>

@@ -2,6 +2,7 @@ package onetoone.Game;
 
 import antlr.GrammarAnalyzer;
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.swagger.models.auth.In;
 import onetoone.Users.User;
 
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class Game {
 
     private void initdeck() throws JsonProcessingException {
         ArrayList<Integer> deck = this.getDeck();
+        if (!deck.isEmpty()){
+            deck = new ArrayList<>();
+        }
         for (int i = 0; i < 5; i++) {
             deck.add(1);
         }

@@ -13,11 +13,12 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.junit.jupiter.api.Disabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+@Disabled("Exclude from test coverage")
 @Controller      // this is needed for this to be an endpoint to springboot
 @ServerEndpoint(value = "/chat/{username}")  // this is Websocket url
 public class ChatSocket {

@@ -23,6 +23,8 @@ import com.example.androidapp.ShopInventory.EquippedItemInventory;
 import com.example.androidapp.ShopInventory.ListItemObjectInventory;
 import com.example.androidapp.ShopInventory.ListItemObjectShop;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,7 +76,6 @@ public class NakotaTests {
         loginTest();
         onView(withId(R.id.shopButton)).perform(click());
 
-        //onView(withId(R.id.bankValTxt)).check(matches(withText(endsWith())));
         // Put thread to sleep to allow volley to handle the request
         try {
             Thread.sleep(SIMULATED_DELAY_MS);
@@ -91,7 +92,6 @@ public class NakotaTests {
             Thread.sleep(SIMULATED_DELAY_MS);
         } catch (InterruptedException e) {
         }
-        String str = onView(withId(R.id.equip_unequip_txt)).toString();
         onView(withId(R.id.equip_unequip_txt)).check(matches(withText("Equipped")));
 
         onData(instanceOf(EquippedItemInventory.class))
@@ -121,7 +121,7 @@ public class NakotaTests {
         onData(instanceOf(ListItemObjectShop.class))
                 .inAdapterView(withId(R.id.shopList))
                 .atPosition(0)
-                .check(matches(hasDescendant(withText("Item1"))));
+                .check(matches(hasDescendant(withText("Red"))));
 
         onData(instanceOf(ListItemObjectShop.class))
                 .inAdapterView(withId(R.id.shopList))
@@ -134,6 +134,102 @@ public class NakotaTests {
 
 
 
+//    @Test
+//    public void playerNumTest(){
+//        loginTest();
+//
+//
+//        onView(withId(R.id.button)).perform(click());
+//        try {
+//            Thread.sleep(SIMULATED_DELAY_MS);
+//        } catch (InterruptedException e) {
+//        }
+//
+//        onView(withId(R.id.playerNumTxt)).check(matches(isDisplayed()));
+//        onView(withId(R.id.yellowPiece1)).check(matches(isDisplayed()));
+//        onView(withId(R.id.yellowPiece2)).check(matches(isDisplayed()));
+//
+//    }
+@Test
+    public void gameplayTest(){
+    loginTest();
+
+
+    onView(withId(R.id.button)).perform(click());
+    try {
+        Thread.sleep(SIMULATED_DELAY_MS);
+    } catch (InterruptedException e) {
+    }
+
+    onView(withId(R.id.playerNumTxt)).check(matches(isDisplayed()));
+    onView(withId(R.id.yellowPiece1)).check(matches(isDisplayed()));
+    onView(withId(R.id.yellowPiece2)).check(matches(isDisplayed()));
+       // playerNumTest();
+    onView(withId(R.id.checkBoxPiece1)).perform(click());
+    for(int i = 0; i < 25; i ++) {
+        onView(withId(R.id.drawBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
+        onView(withId(R.id.turnBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+    }
+    onView(withId(R.id.checkBoxPiece2)).perform(click());
+    for(int i = 0; i < 25; i ++) {
+        onView(withId(R.id.drawBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
+        onView(withId(R.id.turnBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+    }
+    onView(withId(R.id.checkBoxPiece3)).perform(click());
+    for(int i = 0; i < 25; i ++) {
+        onView(withId(R.id.drawBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
+        onView(withId(R.id.turnBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+    }
+    onView(withId(R.id.checkBoxPiece4)).perform(click());
+    for(int i = 0; i < 25; i ++) {
+        try {
+            onView(withId(R.id.drawBtn)).check(matches(isDisplayed()));
+            //view is displayed logic
+        } catch (AssertionFailedError e) {
+            break;
+        }
+        onView(withId(R.id.drawBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+        onView(withId(R.id.drawnValText)).check(matches(isDisplayed()));
+        onView(withId(R.id.turnBtn)).perform(click());
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+
+    }
+    onView(withId(R.id.playerNumTxt)).check(matches(withText(endsWith("1"))));
+}
 
 
 

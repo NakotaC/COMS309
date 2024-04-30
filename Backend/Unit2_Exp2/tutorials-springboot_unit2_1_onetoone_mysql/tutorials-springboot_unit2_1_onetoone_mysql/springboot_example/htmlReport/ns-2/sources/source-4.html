@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > MessageRepository</title>
+  <title>Coverage Report > ChatSocket</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,14 +22,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">onetoone.ChatRoom</a>
 </div>
 
-<h1>Coverage Summary for Class: MessageRepository (onetoone.ChatRoom)</h1>
+<h1>Coverage Summary for Class: ChatSocket (onetoone.ChatRoom)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">MessageRepository</td>
+  <td class="name">ChatSocket</td>
 </tr>
 
 </table>
@@ -41,11 +41,159 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package onetoone.ChatRoom;
 &nbsp;
-&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Hashtable;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
 &nbsp;
-&nbsp;public interface MessageRepository extends JpaRepository&lt;Message, Long&gt;{
+&nbsp;import javax.websocket.OnClose;
+&nbsp;import javax.websocket.OnError;
+&nbsp;import javax.websocket.OnMessage;
+&nbsp;import javax.websocket.OnOpen;
+&nbsp;import javax.websocket.Session;
+&nbsp;import javax.websocket.server.PathParam;
+&nbsp;import javax.websocket.server.ServerEndpoint;
 &nbsp;
-&nbsp;}
+&nbsp;import org.junit.jupiter.api.Disabled;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;@Disabled(&quot;Exclude from test coverage&quot;)
+&nbsp;@Controller      // this is needed for this to be an endpoint to springboot
+&nbsp;@ServerEndpoint(value = &quot;/chat/{username}&quot;)  // this is Websocket url
+&nbsp;public class ChatSocket {
+&nbsp;
+&nbsp;  // cannot autowire static directly (instead we do it by the below
+&nbsp;  // method
+&nbsp;	private static MessageRepository msgRepo;
+&nbsp;
+&nbsp;	/*
+&nbsp;   * Grabs the MessageRepository singleton from the Spring Application
+&nbsp;   * Context.  This works because of the @Controller annotation on this
+&nbsp;   * class and because the variable is declared as static.
+&nbsp;   * There are other ways to set this. However, this approach is
+&nbsp;   * easiest.
+&nbsp;	 */
+&nbsp;	@Autowired
+&nbsp;	public void setMessageRepository(MessageRepository repo) {
+&nbsp;		msgRepo = repo;  // we are setting the static variable
+&nbsp;	}
+&nbsp;
+&nbsp;	// Store all socket session and their corresponding username.
+&nbsp;	private static Map&lt;Session, String&gt; sessionUsernameMap = new Hashtable&lt;&gt;();
+&nbsp;	private static Map&lt;String, Session&gt; usernameSessionMap = new Hashtable&lt;&gt;();
+&nbsp;
+&nbsp;	private final Logger logger = LoggerFactory.getLogger(ChatSocket.class);
+&nbsp;
+&nbsp;	@OnOpen
+&nbsp;	public void onOpen(Session session, @PathParam(&quot;username&quot;) String username)
+&nbsp;      throws IOException {
+&nbsp;
+&nbsp;		logger.info(&quot;Entered into Open&quot;);
+&nbsp;
+&nbsp;    // store connecting user information
+&nbsp;		sessionUsernameMap.put(session, username);
+&nbsp;		usernameSessionMap.put(username, session);
+&nbsp;
+&nbsp;		//Send chat history to the newly connected user
+&nbsp;		sendMessageToPArticularUser(username, getChatHistory());
+&nbsp;
+&nbsp;    // broadcast that new user joined
+&nbsp;		String message = &quot;User:&quot; + username + &quot; has Joined the Chat&quot;;
+&nbsp;		broadcast(message);
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	@OnMessage
+&nbsp;	public void onMessage(Session session, String message) throws IOException {
+&nbsp;
+&nbsp;		// Handle new messages
+&nbsp;		logger.info(&quot;Entered into Message: Got Message:&quot; + message);
+&nbsp;		String username = sessionUsernameMap.get(session);
+&nbsp;
+&nbsp;    // Direct message to a user using the format &quot;@username &lt;message&gt;&quot;
+&nbsp;		if (message.startsWith(&quot;@&quot;)) {
+&nbsp;			String destUsername = message.split(&quot; &quot;)[0].substring(1);
+&nbsp;
+&nbsp;      // send the message to the sender and receiver
+&nbsp;			sendMessageToPArticularUser(destUsername, &quot;[DM] &quot; + username + &quot;: &quot; + message);
+&nbsp;			sendMessageToPArticularUser(username, &quot;[DM] &quot; + username + &quot;: &quot; + message);
+&nbsp;
+&nbsp;		}
+&nbsp;    else { // broadcast
+&nbsp;			broadcast(username + &quot;: &quot; + message);
+&nbsp;		}
+&nbsp;
+&nbsp;		// Saving chat history to repository
+&nbsp;		msgRepo.save(new Message(username, message));
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	@OnClose
+&nbsp;	public void onClose(Session session) throws IOException {
+&nbsp;		logger.info(&quot;Entered into Close&quot;);
+&nbsp;
+&nbsp;    // remove the user connection information
+&nbsp;		String username = sessionUsernameMap.get(session);
+&nbsp;		sessionUsernameMap.remove(session);
+&nbsp;		usernameSessionMap.remove(username);
+&nbsp;
+&nbsp;    // broadcase that the user disconnected
+&nbsp;		String message = username + &quot; disconnected&quot;;
+&nbsp;		broadcast(message);
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	@OnError
+&nbsp;	public void onError(Session session, Throwable throwable) {
+&nbsp;		// Do error handling here
+&nbsp;		logger.info(&quot;Entered into Error&quot;);
+&nbsp;		throwable.printStackTrace();
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	private void sendMessageToPArticularUser(String username, String message) {
+&nbsp;		try {
+&nbsp;			usernameSessionMap.get(username).getBasicRemote().sendText(message);
+&nbsp;		}
+&nbsp;    catch (IOException e) {
+&nbsp;			logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;			e.printStackTrace();
+&nbsp;		}
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	private void broadcast(String message) {
+&nbsp;		sessionUsernameMap.forEach((session, username) -&gt; {
+&nbsp;			try {
+&nbsp;				session.getBasicRemote().sendText(message);
+&nbsp;			}
+&nbsp;      catch (IOException e) {
+&nbsp;				logger.info(&quot;Exception: &quot; + e.getMessage().toString());
+&nbsp;				e.printStackTrace();
+&nbsp;			}
+&nbsp;
+&nbsp;		});
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;  // Gets the Chat history from the repository
+&nbsp;	private String getChatHistory() {
+&nbsp;		List&lt;Message&gt; messages = msgRepo.findAll();
+&nbsp;
+&nbsp;    // convert the list to a string
+&nbsp;		StringBuilder sb = new StringBuilder();
+&nbsp;		if(messages != null &amp;&amp; messages.size() != 0) {
+&nbsp;			for (Message message : messages) {
+&nbsp;				sb.append(message.getUserName() + &quot;: &quot; + message.getContent() + &quot;\n&quot;);
+&nbsp;			}
+&nbsp;		}
+&nbsp;		return sb.toString();
+&nbsp;	}
+&nbsp;
+&nbsp;} // end of Class
 </code>
 </pre>
 </div>
@@ -69,7 +217,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-04-29 22:11</div>
+    <div style="float:right;">generated on 2024-04-30 04:52</div>
 </div>
 </body>
 </html>

@@ -11,7 +11,7 @@ public class TurnManager {
     /**
      * holds the number of players
      */
-    int numPlayers = 2;
+    int numPlayers;
     /**
      * Creates basic TurnManager that starts with player 1's turn
      */
@@ -22,7 +22,8 @@ public class TurnManager {
      * Creates basic TurnManager that starts with specified player's turn
      */
   public TurnManager(int playerNum){
-        currTurn = playerNum;
+        numPlayers = playerNum;
+        currTurn = 1;
     }
 
     /**
