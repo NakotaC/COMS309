@@ -83,9 +83,6 @@ public class Clan {
     public Integer getLeader() {
         return clan_leader;
     }
-    public void setLeader(Integer id) {
-        this.clan_leader = id;
-    }
 
     public String getClanName() {
         return clan_name;
@@ -99,14 +96,6 @@ public class Clan {
         this.clan_type = s;
     }
 
-    public void setClanName(String name) {
-        this.clan_name = name;
-    }
-
-    public void addClan_xp(int xp) {
-        this.clan_xp = this.clan_xp + xp;
-    }
-
     public int getClan_xp() {
         return clan_xp;
     }
@@ -118,7 +107,4 @@ public class Clan {
         this.max_members = max;
     }
 
-    public void setClanXp(int xp) {
-        this.clan_xp = xp;
-    }
 }
