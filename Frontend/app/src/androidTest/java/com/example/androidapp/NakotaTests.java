@@ -70,31 +70,6 @@ public class NakotaTests {
         onView(withId(R.id.home_welcome_text)).check(matches(withText(endsWith("John"))));
     }
     @Test
-    public void shopTest(){
-        loginTest();
-        onView(withId(R.id.shopButton)).perform(click());
-        //onView(withId(R.id.bankValTxt)).check(matches(withText(endsWith())));
-        // Put thread to sleep to allow volley to handle the request
-        try {
-            Thread.sleep(SIMULATED_DELAY_MS);
-        } catch (InterruptedException e) {
-        }
-
-        onData(instanceOf(ListItemObjectShop.class))
-                .inAdapterView(withId(R.id.shopList))
-                .atPosition(0)
-                .check(matches(hasDescendant(withText("Item1"))));
-
-        onData(instanceOf(ListItemObjectShop.class))
-                .inAdapterView(withId(R.id.shopList))
-                .atPosition(0)
-                .perform(click());
-
-
-        onView(withId(R.id.respondText)).check(matches(withText("success")));
-    }
-
-    @Test
     public void inventoryTest(){
         loginTest();
         onView(withId(R.id.shopButton)).perform(click());
@@ -131,6 +106,32 @@ public class NakotaTests {
         onView(withId(R.id.equip_unequip_txt)).check(matches(withText(endsWith("Unequipped"))));
 
     }
+    @Test
+    public void shopTest(){
+        loginTest();
+        onView(withId(R.id.shopButton)).perform(click());
+        //onView(withId(R.id.bankValTxt)).check(matches(withText(endsWith())));
+        // Put thread to sleep to allow volley to handle the request
+        try {
+            Thread.sleep(SIMULATED_DELAY_MS);
+        } catch (InterruptedException e) {
+        }
+
+        onData(instanceOf(ListItemObjectShop.class))
+                .inAdapterView(withId(R.id.shopList))
+                .atPosition(0)
+                .check(matches(hasDescendant(withText("Item1"))));
+
+        onData(instanceOf(ListItemObjectShop.class))
+                .inAdapterView(withId(R.id.shopList))
+                .atPosition(0)
+                .perform(click());
+
+
+        onView(withId(R.id.respondText)).check(matches(withText("success")));
+    }
+
+
 
 //    @Test
 //    public void playerNumTest(){

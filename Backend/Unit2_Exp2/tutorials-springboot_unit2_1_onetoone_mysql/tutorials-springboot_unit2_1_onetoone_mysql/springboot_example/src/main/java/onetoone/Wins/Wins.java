@@ -63,5 +63,14 @@ public class Wins {
 
     public void setWins(Integer wins) {
         this.wins = wins;
+        if(this.qdate == null) {
+            this.qdate = -1;
+        }
+        if(this.scalar == null) {
+            this.scalar = -1;
+        }
+        if(this.quest == null) {
+            this.quest = -1;
+        }
     }
 }

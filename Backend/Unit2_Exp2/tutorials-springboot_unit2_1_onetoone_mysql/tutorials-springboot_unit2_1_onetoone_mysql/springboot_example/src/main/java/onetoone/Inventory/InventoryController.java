@@ -24,7 +24,10 @@ public class InventoryController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    //return all cosmetics in the game (in the DB)
+    //return all cosmetics in the game (in the DB) ???
+    // ?
+    // ?
+    // ?
     @GetMapping(path = "/inventory")
     List<Inventory> getInventory() { return inventoryRepository.findAll(); }
 
@@ -41,6 +44,15 @@ public class InventoryController {
     @GetMapping(path = "/inventory/shop")
     List<ShopItem> getAllItems(){
         return shopItemsRepository.findAll();
+    }
+
+    @PostMapping(path = "/inventory/{uid}")
+    void newInv(@PathVariable int uid) {
+        Inventory i = new Inventory();
+        inventoryRepository.save(i);
+        User user = userRepository.findById(uid);
+        user.setInventory(i);
+        userRepository.save(user);
     }
 
     @PostMapping(path = "/inventory/shop/buy")

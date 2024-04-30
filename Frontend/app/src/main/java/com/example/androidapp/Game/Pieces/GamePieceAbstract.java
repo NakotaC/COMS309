@@ -2,17 +2,30 @@ package com.example.androidapp.Game.Pieces;
 
 abstract class GamePieceAbstract {
     int pieceNum;
+
+
+
     /**
      * 0 = Start
      * 1 = track
      * 2 = home row
      * 3 = home
      */
-    int currArea = 1;
+    int currArea;
     int location, locationInHome;
     short xInc = 24;
     short yInc = 24;
-    int homeLocation, startLocation;
+
+
+    public float getDeltaXFromLastMove() {
+        return deltaXFromLastMove;
+    }
+
+    public float getDeltaYFromLastMove() {
+        return deltaYFromLastMove;
+    }
+
+    float deltaXFromLastMove, deltaYFromLastMove;
 
     public float getCurrX() {
         return currX;
@@ -33,9 +46,7 @@ abstract class GamePieceAbstract {
      */
     int direction;
 
-    public int getStartLocation() {
-        return startLocation;
-    }
+
 
     public short getxInc() {
         return xInc;
@@ -44,10 +55,10 @@ abstract class GamePieceAbstract {
     public short getyInc() {
         return yInc;
     }
-
-    public boolean isHome(){
-        return location == homeLocation;
+    public int getCurrArea() {
+        return currArea;
     }
+
     public int getPieceNum(){
         return pieceNum;
     }
@@ -74,5 +85,13 @@ abstract class GamePieceAbstract {
     }
 
     abstract int move(int numToMove);
+
+    public void incLocation(){
+        if(location < 59){
+            location++;
+        }else{
+            location = 0;
+        }
+    }
 
 }
