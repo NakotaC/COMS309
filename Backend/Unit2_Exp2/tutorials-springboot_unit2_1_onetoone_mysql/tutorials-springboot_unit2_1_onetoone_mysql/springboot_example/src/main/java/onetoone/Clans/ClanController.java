@@ -165,6 +165,6 @@ public class ClanController {
         return success;
     }
 
-
+    
 
 }
