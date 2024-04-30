@@ -5,10 +5,16 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="checkClans()">
+      <entry key="checkClansListScrolls()">
         <State />
       </entry>
-      <entry key="shopTest()">
+      <entry key="checkLeaderboardWorksProperly()">
+        <State />
+      </entry>
+      <entry key="login()">
+        <State />
+      </entry>
+      <entry key="loginTest()">
         <State />
       </entry>
     </value>
