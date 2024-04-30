@@ -1,27 +1,36 @@
 package com.example.androidapp.Game.Pieces;
 
 public class BluePiece  extends GamePieceAbstract{
-    int pieceNum;
-    int location;
     int homeLocation = 17;
     int startLocation = 19;
     short startX;
     short startY;
+
     public BluePiece(int pieceNum){
+        super();
         this.pieceNum = pieceNum;
     }
+
     public boolean isHome(){
         return location == homeLocation;
     }
+
+
     public int move(int numToMove){
         int numLeftToMove = 0;
+        deltaXFromLastMove = 0;
+        deltaYFromLastMove = 0;
         if(currArea == 0){
-            if(numToMove == 1){
+            if(numToMove == 1 || numToMove == 2){
                 location = startLocation;
+                currArea = 1;
+                direction = 1;
                 currX = startX;
                 currY = startY;
+                deltaXFromLastMove += xInc;
             }
-        }else if(currArea == 1){
+        }
+        if(currArea == 1){
             for(int i = 0; i < numToMove; i++) {
                 if (this.onCorner()) {
                     turnCorner();
@@ -34,39 +43,48 @@ public class BluePiece  extends GamePieceAbstract{
                 }
 
                 if(direction == 0){
-                    location++;
+                    incLocation();
                     currX += xInc;
+                    deltaXFromLastMove += xInc;
 
                 }else if(direction == 1){
-                    location++;
+                    incLocation();
                     currY += yInc;
+                    deltaYFromLastMove += yInc;
 
                 }else if(direction == 2){
-                    location++;
+                    incLocation();
                     currX -= xInc;
+                    deltaXFromLastMove -= xInc;
 
 
                 }else if(direction == 3){
-                    location++;
+                    incLocation();
                     currY -= yInc;
+                    deltaYFromLastMove -= yInc;
 
                 }
             }
-        }else if(currArea == 2){
+        }
+        if(currArea == 2){
             if(numLeftToMove != 0){
                 for(int i = 0; i < numLeftToMove; i++){
                     locationInHome++;
                     currX -= xInc;
-                    if(locationInHome == 5){
+                    deltaXFromLastMove -= xInc;
+                    if(locationInHome >= 5){
                         currArea = 3;
+                        break;
                     }
                 }
             }else{
                 for(int i = 0; i < numToMove; i++) {
                     locationInHome++;
-                    currY -= yInc;
-                    if (locationInHome == 5){
+                    currX -= xInc;
+                    deltaXFromLastMove -= xInc;
+                    if (locationInHome >= 5){
                         currArea = 3;
+                        break;
                     }
                 }
             }

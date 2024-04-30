@@ -10,9 +10,6 @@ public class YellowPiece  extends GamePieceAbstract{
       super();
       this.pieceNum = pieceNum;
    }
-   public int getStartLocation() {
-      return startLocation;
-   }
 
    public boolean isHome(){
       return location == homeLocation;

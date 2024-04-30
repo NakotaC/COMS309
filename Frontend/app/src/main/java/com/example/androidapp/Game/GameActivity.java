@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
 import com.example.androidapp.Connectivity.WebSocketListener;
 import com.example.androidapp.Connectivity.WebSocketManager;
+import com.example.androidapp.Game.Pieces.GreenPiece;
 import com.example.androidapp.Game.Pieces.YellowPiece;
 import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
@@ -49,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
     private TurnManager turnmgr;
     private FrameLayout gameFrame;
     private ImageView gameBoard, yellowPiece1, yellowPiece2, yellowPiece3, yellowPiece4;
+    private ImageView greenPiece1, greenPiece2, greenPiece3, greenPiece4;
     private User user;
     private CheckBox piece1, piece2, piece3, piece4;
     int cardNum;
@@ -60,7 +62,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             new YellowPiece(3),
             new YellowPiece(4)};
 
-
+    private final GreenPiece[] greenPieces = {new GreenPiece(1),
+            new GreenPiece(2),
+            new GreenPiece(3),
+            new GreenPiece(4)};
     /**
      * Handles the creation and functionality of screen elements when the screen is created
      *
@@ -94,6 +99,10 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         yellowPiece2 = findViewById(R.id.yellowPiece2);
         yellowPiece3 = findViewById(R.id.yellowPiece3);
         yellowPiece4 = findViewById(R.id.yellowPiece4);
+        greenPiece1 = findViewById(R.id.greenPiece1);
+        greenPiece2 = findViewById(R.id.greenPiece2);
+        greenPiece3 = findViewById(R.id.greenPiece3);
+        greenPiece4 = findViewById(R.id.greenPiece4);
 
         piece1 = findViewById(R.id.checkBoxPiece1);
         piece2 = findViewById(R.id.checkBoxPiece2);
@@ -101,6 +110,7 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         piece4 = findViewById(R.id.checkBoxPiece4);
 
         turnBtn.setVisibility(INVISIBLE);
+        drawBtn.setVisibility(View.INVISIBLE);
 
         /* connect this activity to the websocket instance */
         WebSocketManager.getInstance().connectWebSocket(serverUrl);
@@ -211,6 +221,9 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                         throw new RuntimeException(e);
                     }
                 }
+                runOnUiThread(() -> {
+                    playerText.setText("You are player " + user.getPlayerNum());
+                });
             }else{
             try {
                 user.setPlayerNum(obj.getInt("playernum"));
@@ -222,29 +235,38 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
             }
             turnmgr = new TurnManager(numPlayers);
 
+            runOnUiThread(() -> {
+                playerText.setText("You are player " + user.getPlayerNum());
+            });
+
             if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
                  runOnUiThread(() -> {
                 drawBtn.setVisibility(View.VISIBLE);
-                playerText.setText("You are player " + user.getPlayerNum());
             });
             }
-        }else{
+        } else if (obj.has("gameid")) {
 
             try {
-                obj = new JSONObject(message);
-                performTurn(obj.getInt("player"), obj.getInt("pieceNum"), obj.getInt("Card"));
+                numPlayers = obj.getInt("playernum");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
 
-        }
+            turnmgr = new TurnManager(numPlayers);
 
-//        turnmgr.takeTurn();
-//        if(turnmgr.getCurrTurn() == user.getPlayerNum()){
-//            runOnUiThread(() -> {
-//                drawBtn.setVisibility(View.VISIBLE);
-//            });
-    //    }
+        } else{
+
+            try {
+                performTurn(obj.getInt("player"), obj.getInt("pieceNum"), obj.getInt("Card"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (user.getPlayerNum() == turnmgr.getCurrTurn()) {
+                runOnUiThread(() -> {
+                    drawBtn.setVisibility(View.VISIBLE);
+                });
+            }
+        }
 
     }
 
@@ -429,13 +451,34 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
                 yellowPiece3.setTranslationY(transY);
             }
         } else if (playerNum == 2) {
-
+            greenPieces[PieceNum - 1].move(numToMove);
+            if(PieceNum == 1) {
+                float transX = greenPiece1.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = greenPiece1.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());
+                greenPiece1.setTranslationX(transX);
+                greenPiece1.setTranslationY(transY);
+            } else if(PieceNum == 2) {
+                float transX = greenPiece2.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = greenPiece2.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());
+                greenPiece2.setTranslationX(transX);
+                greenPiece2.setTranslationY(transY);
+            }else if(PieceNum == 3) {
+                float transX = greenPiece3.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = greenPiece3.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());
+                greenPiece3.setTranslationX(transX);
+                greenPiece3.setTranslationY(transY);
+            }else if(PieceNum == 4) {
+                float transX = greenPiece4.getX() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaXFromLastMove());
+                float transY = greenPiece4.getY() + convertDpIntoPx(this, greenPieces[PieceNum - 1].getDeltaYFromLastMove());
+                greenPiece4.setTranslationX(transX);
+                greenPiece4.setTranslationY(transY);
+            }
         } else if (playerNum == 3) {
 
         } else if (playerNum == 4) {
 
         }
-
+        turnmgr.takeTurn();
         return;
     }
 
