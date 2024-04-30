@@ -1,5 +1,7 @@
 package com.example.androidapp.Clan;
 
+import com.example.androidapp.Game.User;
+
 /**
  * The following class is used to store clan data.
  */
@@ -10,6 +12,8 @@ public class ClanItemObject
     private String clanName;
     private String clanLevel;
     private String clanAvailability;
+    private User user;
+    private String members;
 
 
     /**
@@ -17,10 +21,11 @@ public class ClanItemObject
      * @param clanName
      * @param clanLevel
      */
-    public ClanItemObject(String clanName, String clanLevel) {
+    public ClanItemObject(String clanName, String clanLevel, User user, String members) {
         this.clanName = clanName;
         this.clanLevel = clanLevel;
-
+        this.user = user;
+        this.members = members;
     }
 
 
@@ -90,6 +95,26 @@ public class ClanItemObject
 
         this.clanLevel = random;
 
+    }
+
+    public User getUser()
+    {
+    return user;
+    }
+
+    public void setUser(User user)
+    {
+    this.user = user;
+    }
+
+    public String getMembers()
+    {
+    return members;
+    }
+
+    public void setMembers(String members)
+    {
+    this.members = members;
     }
 
 }

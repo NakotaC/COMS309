@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.androidapp.Game.User;
 import com.example.androidapp.MainAuth.HomeActivity;
 import com.example.androidapp.R;
 import com.example.androidapp.Connectivity.VolleySingleton;
@@ -54,10 +55,11 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     private ClanRecyclerViewAdapter adapter;
     private LinkedList<ClanItemObject> clanItemList;
     private MaterialToolbar materialToolbar;
-    private Button newClanButton;
+    private Button addMemberButton;
     private Button createAClanButton;
     private TextView textView1;
     private TextView textView2;
+    private User user;
 
 
 
@@ -67,7 +69,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
 
   //  String url = "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/clans";
     String url = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
-    private final String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
+    private final String URL_POST_REQUEST = "http://coms-309-033.class.las.iastate.edu:8080/member/";
     private ProgressBar progressBar;
 
 
@@ -82,18 +84,21 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clan);
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        user = (User) extras.getSerializable("USEROBJ");
 
 
         // initialization of different screen elements
         courseRV = findViewById(R.id.idRVCourses);
         materialToolbar = findViewById(R.id.materialToolbar);
-        newClanButton = findViewById(R.id.newClanButton);
+        addMemberButton = findViewById(R.id.newClanButton);
         textView1 = findViewById(R.id.clanNameInput);
         textView2 = findViewById(R.id.UserIdInput);
         createAClanButton = findViewById(R.id.createAClanButton);
 
         materialToolbar.setOnClickListener(this);
-        newClanButton.setOnClickListener(this);
+        addMemberButton.setOnClickListener(this);
         createAClanButton.setOnClickListener(this);
 
         clanItemList = new LinkedList<>();
@@ -122,7 +127,9 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (id1 == R.id.createAClanButton)
         {
-       startActivity(new Intent(ClanActivity.this, CreateClanActivity.class));
+        Intent intent = new Intent(ClanActivity.this, CreateClanActivity.class);
+        intent.putExtra("USEROBJ", user);
+        startActivity(intent);
         }
     }
 
@@ -141,14 +148,12 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject responseObj = response.getJSONObject(i);
+                        int clanXP = responseObj.getInt("clan_xp");
                         String clanName = responseObj.getString("clanName");
-                        JSONArray members = responseObj.getJSONArray("members");
-                        for (int j = 0; j < members.length(); j++)
-                        {
-                        Log.d("Clan Members", members.toString());
-                        }
+                        String members = responseObj.getString("members");
                         int clanLevel = responseObj.getInt("leader");
-                        clanItemList.add(new ClanItemObject(clanName, String.valueOf(clanLevel)));
+                        clanItemList.add(new ClanItemObject(clanName, String.valueOf(clanLevel),
+                                user, members));
                         constructRecyclerView();
 
                     } catch (JSONException e) {
@@ -206,7 +211,7 @@ public class ClanActivity extends AppCompatActivity implements View.OnClickListe
                            responseString = response.getString("message").replaceAll("\"", "");
                             if(responseString.equals("success"))
                             {
-                                Toast.makeText(ClanActivity.this, "Clan has been successfully added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ClanActivity.this, "Member has been successfully added", Toast.LENGTH_SHORT).show();
                             }
                             else if (responseString.equals("failure"))
                             {

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -74,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ListView matchHistoryList;
     private MatchHistoryListAdapter adapter1;
     private JSONArray quests;
-
+    private JSONArray equippedItems;
     private static final String URL1 =
             "https://7715c946-ec19-485b-aca3-cab84de8d329.mock.pstmn.io/matches";
     /**
@@ -93,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
 
+        assert user != null;
+        equippedItems = user.getEquippedItems();
 
        // quests = user.getQuests();
 
@@ -119,9 +122,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
 
+        if (equippedItems.length() != 0)
+        {
+        assert user != null;
+        welcomeText.setText("Welcome " + user.getUsername());
+        welcomeText.setTextAppearance(2131887200);
+        welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
+        else if (equippedItems.length() == 0)
+        {
         assert user != null;
         welcomeText.setText("Welcome " + user.getUsername());
         welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
+
+        /* assert user != null;
+        welcomeText.setText("Welcome " + user.getUsername());
+        welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER); */
 
         Dialog dialog1 = new Dialog(HomeActivity.this);
 

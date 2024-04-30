@@ -1,11 +1,13 @@
 package com.example.androidapp.Clan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
 
 import org.json.JSONException;
@@ -90,6 +93,9 @@ public class ClanRecyclerViewAdapter extends RecyclerView.Adapter<ClanRecyclerVi
         ClanItemObject item = clanItemList.get(position);
         holder.clanNameLabel.setText(item.getClanName());
         holder.clanAvailability.setText(item.getClanLevel());
+        holder.clanName = item.getClanName();
+        holder.user = item.getUser();
+        holder.members = item.getMembers();
 
     }
 
@@ -115,11 +121,15 @@ public class ClanRecyclerViewAdapter extends RecyclerView.Adapter<ClanRecyclerVi
         //variable declaration
 
         private final TextView clanNameLabel;
+        private String clanName;
         private final TextView clanAvailability;
         private final TextView clanLevel;
         private final Button joinButton;
+        private final ImageButton membersLeaderboardButton;
+        private User user;
+        private String members;
 
-        private static final String CLANS_URL = "http://coms-309-033.class.las.iastate.edu:8080/clans";
+        private static final String JOIN_URL = "http://coms-309-033.class.las.iastate.edu:8080/member";
 
 
 
@@ -131,15 +141,28 @@ public class ClanRecyclerViewAdapter extends RecyclerView.Adapter<ClanRecyclerVi
             clanAvailability = itemView.findViewById(R.id.clanAvailability);
             clanLevel = itemView.findViewById(R.id.clanLevel);
             joinButton = itemView.findViewById(R.id.joinButton);
+            membersLeaderboardButton = itemView.findViewById(R.id.membersLeaderboard);
 
             joinButton.setOnClickListener(this);
+            membersLeaderboardButton.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View v)
         {
+        int id1 = v.getId();
+        if (id1 == R.id.joinButton)
+        {
         joinClanPostRequest();
+        }
+        else if (id1 == R.id.membersLeaderboard)
+        {
+        Intent intent = new Intent(context, ClanLeaderboardActivity.class);
+        intent.putExtra("membersList", members);
+        intent.putExtra("USEROBJ", user);
+        context.startActivity(intent);
+        }
         }
 
         public void joinClanPostRequest()
@@ -150,7 +173,7 @@ public class ClanRecyclerViewAdapter extends RecyclerView.Adapter<ClanRecyclerVi
                 // etRequest should contain a JSON object string as your POST body
                 // similar to what you would have in POSTMAN-body field
                 // and the fields should match with the object structure of @RequestBody on sb
-                postRequestUrl = CLANS_URL;
+                postRequestUrl = JOIN_URL + "/" + clanName + "/" + user.getId();
             } catch (Exception e) {
                 e.printStackTrace();
             }

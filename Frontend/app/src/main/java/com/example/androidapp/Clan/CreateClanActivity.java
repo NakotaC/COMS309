@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidapp.Connectivity.VolleySingleton;
+import com.example.androidapp.Game.User;
 import com.example.androidapp.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.*;
@@ -40,10 +41,17 @@ public class CreateClanActivity extends AppCompatActivity implements View.OnClic
     private Chip chip3;
     private Chip chip4;
     private Button createButton;
+    private String clanType;
+    private String maxMembers;
+    private User user;
+    private static final String CLANS_URL = "http://coms-309-033.class.las.iastate.edu:8080/clans/";
     public void onCreate(Bundle savedInstanceState)
     {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_createclan);
+    Bundle extras = getIntent().getExtras();
+    assert extras != null;
+    user = (User) extras.getSerializable("USEROBJ");
 
     materialToolbar2 = findViewById(R.id.materialToolbar2);
     textView1 = findViewById(R.id.textView1);
@@ -79,27 +87,31 @@ public class CreateClanActivity extends AppCompatActivity implements View.OnClic
     }
     else if (buttonClicked == R.id.createButton)
     {
-
+    postRequest();
     }
     else if (buttonClicked == R.id.chip1)
     {
-    chip1.setSelected(true);
-    chip2.setSelected(false);
+    Log.d("Chip Group 1: ", String.valueOf(chipGroup1.getCheckedChipId()));
+    clanType = "Open";
+    Log.d("Chip Group 1: ", clanType);
     }
     else if (buttonClicked == R.id.chip2)
     {
-    chip2.setSelected(true);
-    chip1.setSelected(false);
+    Log.d("Chip Group 1: ", String.valueOf(chipGroup1.getCheckedChipId()));
+    clanType = "Closed";
+    Log.d("Chip Group 1: ", clanType);
     }
     else if (buttonClicked == R.id.chip3)
     {
-    chip3.setSelected(true);
-    chip4.setSelected(false);
+    Log.d("Chip Group 2: ", String.valueOf(chipGroup2.getCheckedChipId()));
+    maxMembers = "10";
+    Log.d("Chip Group 2: ", maxMembers);
     }
     else if (buttonClicked == R.id.chip4)
     {
-    chip4.setSelected(true);
-    chip3.setSelected(false);
+    Log.d("Chip Group 2: ", String.valueOf(chipGroup2.getCheckedChipId()));
+    maxMembers = "64";
+    Log.d("Chip Group 2: ", maxMembers);
     }
     }
 
@@ -107,7 +119,8 @@ public class CreateClanActivity extends AppCompatActivity implements View.OnClic
 
         // Convert input to JSONObject
         JSONObject postBody = null;
-        String url = "";
+        String url = CLANS_URL + editTextText2.getText().toString() + "/" + user.getId() + "/" + clanType + "/" +
+                maxMembers + "/";
         try {
             // etRequest should contain a JSON object string as your POST body
             // similar to what you would have in POSTMAN-body field

@@ -4,6 +4,7 @@
     <style name="Base.Theme.AndroidApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="textAppearanceButton">@style/buttonFont1</item>
         <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline5.AndroidApp</item>
+        <item name="textAppearanceTitleMedium">@style/titleFont</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -20,6 +21,13 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">38sp</item>
     </style>
+    <style name="titleFont" parent="TextAppearance.AppCompat.Title">
+        <item name="fontFamily">@font/aldrich</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
 
 
 </resources>

@@ -53,12 +53,12 @@
                 android:id="@+id/newClanButton"
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
-                android:text="Add a clan (old way)" />
+                android:text="Add a member" />
 
             <EditText
                 android:id="@+id/clanNameInput"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="text"
@@ -67,7 +67,7 @@
             <EditText
                 android:id="@+id/UserIdInput"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="text"
@@ -84,7 +84,7 @@
                 android:layout_width="186dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Create a clan (new way)" />
+                android:text="Create a clan" />
         </LinearLayout>
 
     </LinearLayout>

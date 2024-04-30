@@ -45,13 +45,14 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup1"
             android:layout_width="match_parent"
-            android:layout_height="122dp">
+            android:layout_height="122dp"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkable="false"
+                android:checkable="true"
                 android:text="@string/openClan"
                 android:textAlignment="center" />
 
@@ -59,7 +60,7 @@
                 android:id="@+id/chip2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkable="false"
+                android:checkable="true"
                 android:text="@string/closedClan"
                 android:textAlignment="center" />
 
@@ -74,13 +75,14 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup2"
             android:layout_width="wrap_content"
-            android:layout_height="93dp">
+            android:layout_height="93dp"
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkable="false"
+                android:checkable="true"
                 android:gravity="center"
                 android:text="10" />
 
@@ -88,7 +90,7 @@
                 android:id="@+id/chip4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checkable="false"
+                android:checkable="true"
                 android:text="64" />
         </com.google.android.material.chip.ChipGroup>
 

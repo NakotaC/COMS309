@@ -61,7 +61,7 @@ class Main {
     CommandLineRunner initUser(UserRepository userRepository, WinsRepository winsRepository, ShopItemsRepository shopItemsRepository, ClanRepository clanRepository, InventoryRepository inventoryRepository, GameRepository gameRepository, EquippedItemsRepository equippedItemsRepository) {
         return args -> {
             //NEEDS TO STAY IN MAIN WHEN GAME IS "RELEASED"
-            if(shopItemsRepository.count() <= 0) {
+             if(shopItemsRepository.count() <= 0) {
                 ShopItem SI1 = new ShopItem("Item1", "Description of Item1");
                 ShopItem SI2 = new ShopItem("Item2", "Description of Item2");
                 ShopItem SI3 = new ShopItem("Item3", "Description of Item3");
