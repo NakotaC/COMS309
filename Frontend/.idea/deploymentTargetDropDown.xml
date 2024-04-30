@@ -5,16 +5,10 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="checkClansListScrolls()">
-        <State />
-      </entry>
-      <entry key="checkLeaderboardWorksProperly()">
+      <entry key="checkClanLeaderboardWorksProperly()">
         <State />
       </entry>
       <entry key="login()">
-        <State />
-      </entry>
-      <entry key="loginTest()">
         <State />
       </entry>
     </value>

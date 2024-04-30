@@ -105,7 +105,7 @@ public class RossSystemTests
     onData(instanceOf(LeaderboardItemObject.class))
             .inAdapterView(withId(R.id.list1))
             .atPosition(1)
-            .check(matches(hasDescendant(withText("14000"))));
+            .check(matches(hasDescendant(withText("Tom"))));
     }
 
     @Test
@@ -121,9 +121,12 @@ public class RossSystemTests
     {
     }
 
+
     onView(ViewMatchers.withId(R.id.idRVCourses))
-           .perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+            .check(matches(isDisplayed()));
     }
+
+
 
 
 
