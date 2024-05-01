@@ -70,6 +70,8 @@ private TextView shopHeader;
         inventory = findViewById(R.id.shopInventoryBtn);
         bankText = findViewById(R.id.bankValTxt);
 
+        bankText.setText("Bank: " + user.getBank());
+        
         // Initialize the adapter with an empty list (data will be added later)
         adapter = new ListAdapterShop(this, new ArrayList<>());
         listView.setAdapter(adapter);
