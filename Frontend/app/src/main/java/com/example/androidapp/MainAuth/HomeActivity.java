@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -122,19 +122,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         adapter1 = new MatchHistoryListAdapter(this, new LinkedList<>());
         matchHistoryList.setAdapter(adapter1);
 
-
-        if (equippedItems.length() != 0)
-        {
-        assert user != null;
         welcomeText.setText("Welcome " + user.getUsername());
-        welcomeText.setTextAppearance(R.style.titleFont);
         welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        String item0;
+        try {
+        JSONObject temp = user.getEquippedItems().getJSONObject(0);
+            item0 = temp.getString("itemName");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
-        else if (equippedItems.length() == 0)
-        {
-        assert user != null;
-        welcomeText.setText("Welcome " + user.getUsername());
-        welcomeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        if (item0.equals("Blue")){
+        welcomeText.setTextColor(ColorStateList.valueOf(Color.BLUE));
+
+        } else if (item0.equals("Red")){
+            welcomeText.setTextColor(ColorStateList.valueOf(Color.RED));
+
+        }else if (item0.equals("Yellow")){
+            welcomeText.setTextColor(ColorStateList.valueOf(Color.YELLOW));
+
         }
 
         /* assert user != null;

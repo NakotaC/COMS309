@@ -94,11 +94,13 @@ public class GameActivity extends AppCompatActivity implements WebSocketListener
         Bundle extras = getIntent().getExtras();
         assert extras != null;
         user = (User) extras.getSerializable("USEROBJ");
+
         if(user.getGameId() != 0) {
             serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game" + user.getGameId() +"/" + user.getUsername();
         }else{
             serverUrl = "ws://coms-309-033.class.las.iastate.edu:8080/game/" + user.getUsername();
         }
+
         /* initialize UI elements */
         turnBtn = (Button) findViewById(R.id.turnBtn);
         drawBtn = findViewById(R.id.drawBtn);
